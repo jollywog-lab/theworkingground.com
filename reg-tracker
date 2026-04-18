@@ -1,0 +1,4 @@
+/
+├── index.html              ← your main site landing page (can be simple for now)
+├── reg-tracker/
+│   └── index.html          ← rename reg_tracker_exec_summary.html to index.html
