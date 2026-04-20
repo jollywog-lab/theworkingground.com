@@ -194,7 +194,7 @@ function NewUpcoming({ visibleCountries, REGS, COUNTRIES, THEMES }) {
   const items = REGS.filter(r => r.isNew && codes.has(r.country)).sort((a,b) => { const da = a.effectiveDate === 'stayed' || a.effectiveDate === 'TBD' ? '9999' : a.effectiveDate; const db = b.effectiveDate === 'stayed' || b.effectiveDate === 'TBD' ? '9999' : b.effectiveDate; return da.localeCompare(db); });
   return (
     <table className="w-full text-[10.5px]">
-      <thead><tr className="border-b-2 border-slate-300"><th className="text-left py-0.5 pr-1.5 w-16">Market</th><th className="text-left py-0.5 pr-1.5">Instrument</th><th className="text-left py-0.5 pr-1.5 w-[44%]">Key obligation</th><th className="text-right py-0.5">Launched / Announced</th></tr></thead>
+      <thead><tr className="border-b-2 border-slate-300"><th className="text-left py-0.5 pr-1.5 w-16">Market</th><th className="text-left py-0.5 pr-1.5">Instrument</th><th className="text-left py-0.5 pr-1.5 w-[44%]">Key obligation</th><th className="text-right py-0.5">Announced</th></tr></thead>
       <tbody>
         {items.map(r => { const c = COUNTRIES.find(x => x.code === r.country); const t = THEMES.find(x => x.code === r.theme);
           return (<tr key={r.id} className="border-b border-slate-100"><td className="py-0.5 pr-1.5 font-medium" style={{color: c?.colour}}>{c?.name}</td><td className="py-0.5 pr-1.5"><span className="inline-block w-1.5 h-1.5 rounded-full mr-1 align-middle" style={{backgroundColor: t?.colour}}></span>{r.name}</td><td className="py-0.5 pr-1.5 text-slate-600">{r.obligation}</td><td className="py-0.5 text-right font-mono text-[9.5px]">{r.effectiveDate === 'TBD' ? 'TBD' : r.effectiveDate === 'stayed' ? 'Stayed' : r.effectiveDate.slice(0,7)}</td></tr>);
@@ -277,7 +277,7 @@ function App() {
               <div className="flex items-center justify-between mb-1.5">
                 <h2 className="text-[10px] font-semibold text-slate-700 uppercase tracking-wide">Regulatory maturity by theme</h2>
                 <div className="flex items-center gap-3 text-[9px] text-slate-500">
-                  <span className="flex items-center gap-1"><span className="inline-block w-3.5 h-3.5 rounded-full border-2 border-yellow-400 bg-slate-300"></span>New / upcoming</span>
+                  <span className="flex items-center gap-1"><span className="inline-block w-3.5 h-3.5 rounded-full border-2 border-yellow-400 bg-slate-300"></span>Recent / Upcoming</span>
                   <span className="flex items-center gap-1"><span className="inline-block w-3.5 h-3.5 rounded-full border-2 border-dashed border-slate-400 bg-slate-300"></span>Europe / Americas</span>
                   <span className="flex items-center gap-1"><span className="inline-block w-3.5 h-3.5 rounded-full bg-slate-300"></span>Asia-Pacific</span>
                 </div>
@@ -288,7 +288,7 @@ function App() {
             <div className="mx-5 border-t border-slate-300 my-1.5"></div>
             <div className="px-5 pb-3">
               <div className="flex items-center justify-between mb-1.5">
-                <h2 className="text-[10px] font-semibold text-slate-700 uppercase tracking-wide">New & upcoming ({newCount} items)</h2>
+                <h2 className="text-[10px] font-semibold text-slate-700 uppercase tracking-wide">Recent / Upcoming ({newCount} items)</h2>
                 <div className="flex gap-3 text-[9px] text-slate-400">{THEMES.map(t => (<span key={t.code} className="flex items-center gap-0.5"><span className="inline-block w-1.5 h-1.5 rounded-full" style={{backgroundColor: t.colour}}></span>{t.short}</span>))}</div>
               </div>
               <NewUpcoming visibleCountries={visibleCountries} REGS={REGS} COUNTRIES={COUNTRIES} THEMES={THEMES} />
