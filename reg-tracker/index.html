@@ -28,209 +28,47 @@
 <div id="root"></div>
 
 <script type="text/babel">
-const { useState, useMemo, useCallback } = React;
+const { useState, useMemo, useCallback, useEffect } = React;
 
-// ============================================================
-// DATA
-// ============================================================
-const PERIOD = 'April 2025 – April 2026';
+function useTrackerData() {
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+  useEffect(() => {
+    Promise.all([
+      fetch('data/countries.json').then(r => r.json()),
+      fetch('data/themes.json').then(r => r.json()),
+      fetch('data/regulations.json').then(r => r.json()),
+    ])
+    .then(([countryData, themeData, regData]) => {
+      setData({
+        COUNTRIES: countryData.countries, REGIONS: countryData.regions,
+        THEMES: themeData.themes, THEME_DEFINITIONS: themeData.definitions,
+        MATURITY_LABELS: themeData.maturityLabels, MATURITY_SHORT: themeData.maturityShort,
+        REGS: regData.regulations, PERIOD: regData.period,
+      });
+    })
+    .catch(e => setError(e.message));
+  }, []);
+  return { data, error };
+}
 
-// Countries grouped by region. France and EU separated.
-const COUNTRIES = [
-  // East Asia
-  { code: 'JP', name: 'Japan',        colour: '#ec4899', region: 'East Asia',    footnote: null },
-  { code: 'KR', name: 'Korea',        colour: '#8b5cf6', region: 'East Asia',    footnote: null },
-  { code: 'CN', name: 'China',        colour: '#ca8a04', region: 'East Asia',    footnote: null },
-  { code: 'HK', name: 'Hong Kong',    colour: '#f97316', region: 'East Asia',    footnote: null },
-  // Oceania
-  { code: 'AU', name: 'Australia',    colour: '#2563eb', region: 'Oceania',      footnote: null },
-  { code: 'NZ', name: 'New Zealand',  colour: '#0369a1', region: 'Oceania',      footnote: 'World-first mandatory climate disclosure (FMC Act, 2024). NABERSNZ aligned with Australia. Provides a regulatory template for AP markets despite smaller market size.' },
-  // Southeast Asia
-  { code: 'SG', name: 'Singapore',    colour: '#dc2626', region: 'Southeast Asia', footnote: null },
-  { code: 'MY', name: 'Malaysia',     colour: '#14b8a6', region: 'Southeast Asia', footnote: 'Growing ASEAN RE investment market. Bursa Malaysia ISSB-aligned reporting now mandatory. GBI adoption increasing.' },
-  { code: 'ID', name: 'Indonesia',    colour: '#65a30d', region: 'Southeast Asia', footnote: 'Largest ASEAN economy. Regulatory depth nascent but market scale warrants monitoring. OJK sustainable finance roadmap in force.' },
-  { code: 'TH', name: 'Thailand',     colour: '#7e22ce', region: 'Southeast Asia', footnote: 'Established ASEAN commercial RE market. TREES rating, mandatory building energy code for designated buildings, SEC One Report for listed companies.' },
-  // South Asia
-  { code: 'IN', name: 'India',        colour: '#b91c1c', region: 'South Asia',   footnote: 'Major and growing RE investment market. SEBI BRSR mandatory for top 1,000 listed (with assurance). ECBC mandatory in adopting states. One of the few AP markets requiring ESG assurance.' },
-  // Europe
-  { code: 'UK', name: 'UK',           colour: '#1e3a5f', region: 'Europe',       footnote: 'International comparator. Leading on MEES (mandatory building energy performance for lettings), TCFD-mandated disclosure, Biodiversity Net Gain. Benchmark for AP markets.' },
-  { code: 'FR', name: 'France',       colour: '#475569', region: 'Europe',       footnote: 'International comparator. France-specific regulations (RE2020, Décret Tertiaire) are often more advanced than EU-wide requirements. Leads globally on whole-life carbon caps and mandatory energy reduction pathways.' },
-  { code: 'EU', name: 'EU',           colour: '#64748b', region: 'Europe',       footnote: 'EU-level directives and regulations (CSRD, EPBD, Nature Restoration) that apply across member states. Shown separately from France because France often exceeds EU minimums and has additional national requirements.' },
-  // Americas
-  { code: 'US', name: 'US',           colour: '#78716c', region: 'Americas',     footnote: 'International comparator. Federal policy stalled (SEC rule stayed), but city/state-level building performance standards (NYC LL97, WA CBPS) are globally significant. Demonstrates fragmented-federal pattern.' },
-  { code: 'CA', name: 'Canada',       colour: '#92400e', region: 'Americas',     footnote: 'International comparator. Provincial energy step codes (BC) and federal green buildings strategy. CSSB adopting ISSB. Similar federal/provincial structure to Australia.' },
-];
-
-const REGIONS = ['East Asia', 'Oceania', 'Southeast Asia', 'South Asia', 'Europe', 'Americas'];
-
-const THEMES = [
-  { code: 'RD', name: 'Reporting &\nDisclosure',      short: 'Reporting',   colour: '#6366f1' },
-  { code: 'TR', name: 'Transition\nRisk',             short: 'Transition',  colour: '#0891b2' },
-  { code: 'PC', name: 'Physical\nClimate Risk',       short: 'Climate Risk',colour: '#dc2626' },
-  { code: 'GB', name: 'Green\nBuildings',             short: 'Green Bldg',  colour: '#16a34a' },
-  { code: 'EO', name: 'Energy &\nOp. Carbon',         short: 'Energy/OpC',  colour: '#0d9488' },
-  { code: 'EC', name: 'Embodied\nCarbon',             short: 'Embodied C',  colour: '#ca8a04' },
-  { code: 'WC', name: 'Waste &\nCircularity',         short: 'Waste',       colour: '#d97706' },
-  { code: 'NB', name: 'Nature &\nBiodiversity',       short: 'Nature',      colour: '#059669' },
-  { code: 'SI', name: 'Social\nImpact',               short: 'Social',      colour: '#7c3aed' },
-];
-
-const MATURITY_SHORT = ['None','Consult','Voluntary','Mand. (ltd)','Mand. (broad)','Mand.+enforced'];
-const MATURITY_LABELS = [
-  'No regulation',
-  'Consultation / draft',
-  'Voluntary in force',
-  'Mandatory (limited scope)',
-  'Mandatory (broad scope)',
-  'Mandatory + enforced',
-];
-
-const THEME_DEFINITIONS = [
-  { code: 'RD', scope: 'Mandatory and voluntary sustainability reporting frameworks, climate-related financial disclosure, ESG governance requirements (board oversight, assurance, data integrity). Governance is included here because regulatory treatment of ESG governance is primarily through disclosure obligations (TCFD governance pillar, ISSB S2 governance requirements, board-level accountability provisions).', examples: 'ISSB S1/S2 local adoption, CSRD/ESRS, SGX 711A/B, HKEX climate rules, TCFD-aligned mandates.' },
-  { code: 'TR', scope: 'Financial risk from the policy and market shift to a low-carbon economy. Regulations requiring entities to plan for, quantify, or manage the risk that assets lose value as decarbonisation standards tighten — stranded asset exposure, carbon pricing, CRREM pathway exceedance, lender/insurer repricing, transition plan mandates. Distinct from physical climate risk: transition risk is that policy changes and the asset is on the wrong side.', examples: 'MAS Transition Planning Guidelines, CRREM pathways, IIGCC PCRAM, green/transition taxonomy requirements.' },
-  { code: 'PC', scope: 'Financial risk from physical climate impacts on the asset. Regulations addressing flood, heat, cyclone, bushfire, sea-level rise, and other climate hazards through building code resilience uplifts, mandatory physical risk disclosure, or planning restrictions. Distinct from transition risk: physical climate risk is that the climate changes and the asset is physically exposed.', examples: 'Building code resilience uplifts (wind, flood, heat), mandatory physical risk assessment, planning overlays for climate hazards, insurability requirements.' },
-  { code: 'GB', scope: 'Whole-building sustainability rating schemes and design standards assessing multiple environmental criteria (energy, water, materials, indoor environment) as an integrated package. Typically certification-based, either voluntary or mandated at minimum tier for new construction.', examples: 'Green Mark, Green Star, BEAM Plus, BREEAM, CASBEE, G-SEED, GBI, IGBC/GRIHA, TREES, Greenship, LEED.' },
-  { code: 'EO', scope: 'Regulations targeting energy consumed and carbon emitted during building operation. Mandatory energy performance codes, minimum efficiency standards for existing buildings, operational energy intensity labelling, building performance standards with emissions caps, and energy audit mandates. Distinct from Green Buildings: these target a single metric (operational energy/carbon) rather than a multi-criteria rating.', examples: 'NABERS, NCC Section J, MEES, Décret Tertiaire, NYC LL97, BCA MEI, ECBC, Building Energy Codes.' },
-  { code: 'EC', scope: 'Regulations targeting the carbon embedded in construction materials and the building lifecycle (cradle-to-grave). Whole-life carbon assessments, material-level carbon benchmarks, Environmental Product Declaration (EPD) requirements, low-carbon procurement mandates.', examples: 'RE2020 (France), London Plan WLC, Singapore concrete carbon benchmark, EPD mandates.' },
-  { code: 'WC', scope: 'Construction and demolition waste regulation, material reuse and recycling mandates, extended producer responsibility schemes, single-use product restrictions affecting retail and commercial tenancies, circular economy requirements.', examples: 'Korea waste policy, Singapore Beverage Container Return Scheme, C&D waste diversion mandates.' },
-  { code: 'NB', scope: 'Regulations addressing nature loss, biodiversity, urban greening, water efficiency, and ecosystem restoration as they apply to the built environment. TNFD-aligned disclosure, biodiversity net gain requirements, urban greening ratios, water recycling mandates.', examples: 'EU Nature Restoration Regulation, UK Biodiversity Net Gain, urban greening ratio requirements.' },
-  { code: 'SI', scope: 'Regulations addressing social outcomes in construction and real estate operation: modern slavery and forced labour in supply chains, construction worker safety, community impact, affordable housing linkages, DEI disclosure where it applies to real estate employers or operators.', examples: 'UK Modern Slavery Act, US UFLPA (solar panel/materials supply chain), construction safety mandates.' },
-];
-
-const REGS = [
-  // JAPAN
-  { id:40, country:'JP', theme:'RD', name:'SSBJ Sustainability Disclosure Standards', maturity:3, isNew:true, effectiveDate:'2027-04-01', obligation:'ISSB-aligned. Mandatory for Prime Market listed from FY2027.' },
-  { id:45, country:'JP', theme:'GB', name:'Building Energy Efficiency Act — All New Residential', maturity:4, isNew:true, effectiveDate:'2025-04-01', obligation:'First time residential under mandatory energy code. All new builds.' },
-  { id:46, country:'JP', theme:'EO', name:'Operational Energy Intensity Labelling (under review)', maturity:1, isNew:true, effectiveDate:'2027-01-01', obligation:'Proposed replacement for BELS. Under consideration H2 2026–2027.' },
-  { id:47, country:'JP', theme:'GB', name:'CASBEE / ZEH-M Programme', maturity:2, isNew:false, effectiveDate:'2018-01-01', obligation:'Voluntary rating and ZEH-M subsidies for multi-family residential.' },
-  { id:49, country:'JP', theme:'NB', name:'Environmental Impact Assessment Act', maturity:4, isNew:false, effectiveDate:'1999-06-12', obligation:'Mandatory EIA for large-scale developments (>100 ha residential, major infrastructure). Scoping, public consultation, mitigation plans required.' },
-  { id:48, country:'JP', theme:'TR', name:'GX-ETS — Mandatory Emissions Trading', maturity:3, isNew:true, effectiveDate:'2026-04-01', obligation:'Mandatory for emitters >100,000 tCO2/yr from FY2026. ~300–400 companies covering 50–60% of national CO2. Carbon levy from FY2028.' },
-  // KOREA
-  { id:50, country:'KR', theme:'GB', name:'ZEB Mandate — Private Residential Extension', maturity:4, isNew:true, effectiveDate:'2025-06-01', obligation:'ZEB Grade 5 (20% onsite renewables) extended to private residential.' },
-  { id:51, country:'KR', theme:'WC', name:'Waste Policy — Mandatory Recycling Before Landfill', maturity:3, isNew:true, effectiveDate:'2026-01-01', obligation:'Mandates recycling/incineration before landfill. Seoul single-use reduction.' },
-  { id:52, country:'KR', theme:'RD', name:'KSSB Sustainability Disclosure Standards', maturity:1, isNew:true, effectiveDate:'2028-01-01', obligation:'Korean ISSB adoption. Phased mandatory from FY2028.' },
-  { id:53, country:'KR', theme:'EO', name:'G-SEED', maturity:3, isNew:false, effectiveDate:'2013-01-01', obligation:'Mandatory for public buildings >3,000 sqm; voluntary for private.' },
-  { id:54, country:'KR', theme:'NB', name:'Environmental Impact Assessment Act', maturity:4, isNew:false, effectiveDate:'2012-07-22', obligation:'Mandatory EIA and Strategic Environmental Assessment for developments above thresholds. Biodiversity offset requirements for habitat loss. Nature baseline surveys required.' },
-  // CHINA
-  { id:20, country:'CN', theme:'RD', name:'SSE/SZSE/BSE Sustainability Reporting', maturity:3, isNew:true, effectiveDate:'2026-01-01', obligation:'Mandatory for index constituents and dual-listed. Phased voluntary for others.' },
-  { id:21, country:'CN', theme:'GB', name:'GB/T 50378 Green Building Standard', maturity:3, isNew:false, effectiveDate:'2019-08-01', obligation:'National standard. Many cities mandate one-star minimum for new construction.' },
-  { id:23, country:'CN', theme:'NB', name:'EIA Law + Ecological Conservation Redlines', maturity:4, isNew:false, effectiveDate:'2018-12-29', obligation:'Mandatory EIA for all construction projects (1998, amended 2018). Ecological redline system prohibits development in designated zones covering ~25% of land area.' },
-  { id:22, country:'CN', theme:'EO', name:'14th FYP Building Energy Conservation Plan', maturity:4, isNew:false, effectiveDate:'2022-03-01', obligation:'Ultra-low energy building targets. 30% of new urban buildings green by 2025.' },
-  // HONG KONG
-  { id:30, country:'HK', theme:'RD', name:'HKEX Climate Disclosure (ISSB-aligned)', maturity:4, isNew:true, effectiveDate:'2025-01-01', obligation:'Mandatory for Main Board issuers. All issuers by 2027.' },
-  { id:31, country:'HK', theme:'EO', name:'Building Energy Efficiency Ordinance (Cap 610)', maturity:4, isNew:false, effectiveDate:'2012-09-21', obligation:'Mandatory BEC compliance for prescribed buildings on major retrofits.' },
-  { id:32, country:'HK', theme:'GB', name:'BEAM Plus v2.0', maturity:2, isNew:false, effectiveDate:'2024-06-01', obligation:'Voluntary. Enhanced climate resilience and wellbeing credits.' },
-  { id:34, country:'HK', theme:'NB', name:'EIA Ordinance (Cap. 499)', maturity:4, isNew:false, effectiveDate:'1998-04-01', obligation:'Mandatory EIA for designated projects (reclamation, major roads, large developments in sensitive areas). Environmental Permit required.' },
-  { id:33, country:'HK', theme:'TR', name:'SFC Climate Risk Management (Fund Managers)', maturity:3, isNew:false, effectiveDate:'2022-11-01', obligation:'Mandatory for SFC-licensed fund managers: integrate climate-related risks into investment and risk management. Cross-Agency Steering Group 2026–2028 priorities include transition plan disclosure.' },
-  // AUSTRALIA
-  { id:1, country:'AU', theme:'RD', name:'AASB S1/S2 Climate Disclosure (Group 1)', maturity:4, isNew:true, effectiveDate:'2025-01-01', obligation:'Mandatory climate disclosure for entities >$500m revenue. Group 2 from Jul 2026.' },
-  { id:2, country:'AU', theme:'GB', name:'Green Star Buildings v1.1', maturity:2, isNew:true, effectiveDate:'2025-07-01', obligation:'Voluntary. Adds nature, biodiversity, circularity credits. New builds + major retrofits.' },
-  { id:3, country:'AU', theme:'EO', name:'NABERS Mandatory Disclosure (CBD Programme)', maturity:5, isNew:false, effectiveDate:'2011-11-01', obligation:'Office >1,000 sqm NLA: NABERS rating at sale/lease. Penalties for non-disclosure.' },
-  { id:4, country:'AU', theme:'EO', name:'NCC 2022 Section J — Energy Efficiency', maturity:4, isNew:false, effectiveDate:'2023-05-01', obligation:'Mandatory energy efficiency standards for all new commercial buildings.' },
-  { id:5, country:'AU', theme:'EO', name:'NABERS Expansion — BTR & PBSA', maturity:1, isNew:true, effectiveDate:'2026-06-01', obligation:'Consultation on extending NABERS to build-to-rent and student accommodation.' },
-  { id:6, country:'AU', theme:'SI', name:'Modern Slavery Act 2018', maturity:4, isNew:false, effectiveDate:'2019-01-01', obligation:'Annual modern slavery statement for entities >$100m revenue. Construction identified as high-risk sector for supply chain risks.' },
-  { id:8, country:'AU', theme:'NB', name:'EPBC Act + Nature Positive Reforms', maturity:3, isNew:true, effectiveDate:'2024-12-01', obligation:'Federal EIA for matters of national environmental significance. Environment Protection Australia established 2024. Nature Positive Plan proposes national environmental standard and nature repair market.' },
-  { id:9, country:'AU', theme:'SI', name:'Social Procurement Frameworks (VIC/NSW)', maturity:3, isNew:false, effectiveDate:'2018-09-01', obligation:'Mandatory social procurement for Victorian government projects >$20m. NSW similar requirements. Employment targets, social enterprises, Aboriginal participation.' },
-  { id:7, country:'AU', theme:'TR', name:'ASFI Sustainable Finance Taxonomy', maturity:2, isNew:true, effectiveDate:'2025-06-01', obligation:'First Australian taxonomy. Defines green and credible transition activities. Treasury transition planning guidance expected. Voluntary.' },
-  // NEW ZEALAND
-  { id:130, country:'NZ', theme:'RD', name:'Mandatory Climate-Related Disclosures (FMC Act)', maturity:4, isNew:false, effectiveDate:'2024-01-01', obligation:'Mandatory for large listed issuers, banks, insurers, asset managers. World-first.' },
-  { id:131, country:'NZ', theme:'EO', name:'NABERSNZ Energy Rating', maturity:2, isNew:false, effectiveDate:'2013-01-01', obligation:'Voluntary energy rating for office buildings. NABERS-aligned.' },
-  { id:132, country:'NZ', theme:'GB', name:'Green Star NZ / Homestar', maturity:2, isNew:false, effectiveDate:'2007-01-01', obligation:'Voluntary. Green Star NZ (commercial) and Homestar (residential) rating tools operated by NZGBC. Growing adoption but no mandatory minimum.' },
-  { id:133, country:'NZ', theme:'NB', name:'Resource Management Act — Assessment of Effects', maturity:3, isNew:false, effectiveDate:'1991-10-01', obligation:'Mandatory assessment of environmental effects for resource consents. Covers ecological impact, landscape, indigenous biodiversity. RMA being replaced by Natural and Built Environment Act.' },
-  // SINGAPORE
-  { id:10, country:'SG', theme:'GB', name:'BCA Green Mark (2021)', maturity:3, isNew:false, effectiveDate:'2021-11-01', obligation:'Mandatory for new buildings >5,000 sqm GFA.' },
-  { id:11, country:'SG', theme:'EO', name:'BCA Mandatory Energy Improvement (MEI)', maturity:3, isNew:true, effectiveDate:'2025-09-01', obligation:'Existing buildings >5,000 sqm: ≥10% EUI reduction target.' },
-  { id:12, country:'SG', theme:'RD', name:'SGX Listing Rules 711A/B', maturity:4, isNew:false, effectiveDate:'2022-01-01', obligation:'ISSB-aligned climate disclosure for all listed issuers, phased.' },
-  { id:13, country:'SG', theme:'TR', name:'MAS Transition Planning Guidelines', maturity:3, isNew:true, effectiveDate:'2027-09-01', obligation:'Banks, insurers, asset managers: transition plans, engagement over divestment.' },
-  { id:14, country:'SG', theme:'WC', name:'Beverage Container Return Scheme', maturity:3, isNew:true, effectiveDate:'2026-04-01', obligation:'Islandwide reverse-vending network. Retail assets must accommodate infrastructure.' },
-  { id:15, country:'SG', theme:'NB', name:'Environmental Impact Assessment (EPMA)', maturity:3, isNew:false, effectiveDate:'2017-12-01', obligation:'Mandatory EIA for designated activities under Environmental Protection & Management Act. Expanded scope for developments near nature reserves.' },
-  { id:16, country:'SG', theme:'NB', name:'BCA Landscape Replacement Areas (LRA)', maturity:4, isNew:false, effectiveDate:'2009-01-01', obligation:'Mandatory greenery replacement for developments that remove existing landscaping. Quantified replacement ratio enforced through planning approval.' },
-  // MALAYSIA
-  { id:60, country:'MY', theme:'RD', name:'Bursa Malaysia Enhanced Sustainability Reporting', maturity:3, isNew:true, effectiveDate:'2025-01-01', obligation:'ISSB-aligned disclosure for Main Market listed issuers.' },
-  { id:61, country:'MY', theme:'GB', name:'Green Building Index (GBI)', maturity:2, isNew:false, effectiveDate:'2009-01-01', obligation:'Voluntary green building rating. No mandatory minimum energy code.' },
-  // INDONESIA
-  { id:70, country:'ID', theme:'RD', name:'OJK Sustainable Finance Roadmap Phase II', maturity:3, isNew:true, effectiveDate:'2025-01-01', obligation:'Enhanced sustainability reporting for FIs. Transition plan expectations.' },
-  { id:71, country:'ID', theme:'GB', name:'Greenship Rating System', maturity:2, isNew:false, effectiveDate:'2010-01-01', obligation:'Voluntary green building rating. Some Jakarta government buildings mandated.' },
-  // THAILAND
-  { id:140, country:'TH', theme:'GB', name:'TREES', maturity:2, isNew:false, effectiveDate:'2009-01-01', obligation:'Voluntary green building rating. Growing adoption in commercial.' },
-  { id:141, country:'TH', theme:'EO', name:'Energy Efficiency Act — Building Energy Code', maturity:3, isNew:false, effectiveDate:'2009-07-01', obligation:'Mandatory for new designated buildings >2,000 sqm. Limited enforcement.' },
-  { id:142, country:'TH', theme:'RD', name:'SEC Sustainability Reporting (One Report)', maturity:3, isNew:false, effectiveDate:'2022-01-01', obligation:'Mandatory for SET-listed companies. Climate disclosure aligned with TCFD.' },
-  // INDIA
-  { id:120, country:'IN', theme:'RD', name:'SEBI BRSR / BRSR Core', maturity:4, isNew:false, effectiveDate:'2023-07-01', obligation:'Mandatory for top 1,000 listed companies. BRSR Core with assurance from FY2024.' },
-  { id:121, country:'IN', theme:'EO', name:'Energy Conservation Building Code (ECBC 2017)', maturity:3, isNew:false, effectiveDate:'2017-06-19', obligation:'Mandatory for commercial >100 kW connected load in adopting states. Patchy enforcement.' },
-  { id:122, country:'IN', theme:'GB', name:'IGBC / GRIHA Rating Systems', maturity:2, isNew:false, effectiveDate:'2007-01-01', obligation:'Voluntary. IGBC (private) and GRIHA (government). Growing adoption.' },
-  { id:124, country:'IN', theme:'NB', name:'EIA Notification 2006', maturity:3, isNew:false, effectiveDate:'2006-09-14', obligation:'Mandatory EIA for construction projects >20,000 sqm built-up area. Category A/B classification. Coastal Regulation Zone restrictions. Compliance variable across states.' },
-  { id:123, country:'IN', theme:'EO', name:'Energy Conservation (Amendment) Act 2022', maturity:3, isNew:true, effectiveDate:'2023-01-01', obligation:'Carbon credit trading, mandatory building energy codes for large commercial.' },
-  // UK
-  { id:80, country:'UK', theme:'EO', name:'MEES — Minimum Energy Efficiency Standards', maturity:5, isNew:false, effectiveDate:'2018-04-01', obligation:'EPC E minimum for all lettings. Penalties up to £150k. Proposed uplift to C/B.' },
-  { id:81, country:'UK', theme:'RD', name:'UK SDS (ISSB endorsement)', maturity:1, isNew:true, effectiveDate:'2026-07-01', obligation:'UK endorsement of ISSB S1/S2. Consultation ongoing.' },
-  { id:82, country:'UK', theme:'GB', name:'Future Homes Standard / Part L Uplift', maturity:4, isNew:true, effectiveDate:'2025-06-01', obligation:'75-80% carbon reduction vs 2013 baseline. All new homes.' },
-  { id:83, country:'UK', theme:'EC', name:'Whole Life Carbon — London Plan', maturity:3, isNew:false, effectiveDate:'2022-03-01', obligation:'Mandatory WLC assessment for GLA-referable developments.' },
-  { id:84, country:'UK', theme:'SI', name:'Modern Slavery Act — Construction Supply Chains', maturity:4, isNew:false, effectiveDate:'2015-10-29', obligation:'Annual modern slavery statement for entities >£36m turnover.' },
-  { id:85, country:'UK', theme:'TR', name:'TPT Disclosure Framework', maturity:2, isNew:true, effectiveDate:'TBD', obligation:'Voluntary best-practice framework for climate transition plans (published Oct 2023). HMG consultation on mandatory transition plan requirements launched. FCA expected to align with UK SDS.' },
-  { id:87, country:'UK', theme:'SI', name:'Social Value Act 2012 (+ Social Value Model 2021)', maturity:4, isNew:false, effectiveDate:'2013-01-31', obligation:'Mandatory for all central government procurement above threshold. Construction is the largest category. Social Value Model (2021) requires measurable social outcomes — employment, skills, community benefit.' },
-  { id:88, country:'UK', theme:'SI', name:'s.106 Planning Obligations / CIL', maturity:4, isNew:false, effectiveDate:'1991-11-01', obligation:'Mandatory planning obligations on major developments — affordable housing quotas, community infrastructure, local employment and training plans. Developer contributions enforced through planning consent.' },
-  { id:86, country:'UK', theme:'NB', name:'Biodiversity Net Gain (BNG)', maturity:4, isNew:true, effectiveDate:'2024-02-12', obligation:'Mandatory 10% BNG for major developments in England. Smaller sites from Apr 2024. 30-year management and maintenance obligation.' },
-  // FRANCE (France-specific)
-  { id:90, country:'FR', theme:'EO', name:'Décret Tertiaire', maturity:5, isNew:false, effectiveDate:'2019-07-23', obligation:'-40% energy by 2030, -50% by 2040, -60% by 2050. Tertiary >1,000 sqm. Penalties.' },
-  { id:91, country:'FR', theme:'EC', name:'RE2020 — Whole-Life Carbon Caps', maturity:5, isNew:false, effectiveDate:'2022-01-01', obligation:'Carbon caps for new residential + tertiary. Tightening pathway to 2031. Penalties.' },
-  { id:97, country:'FR', theme:'NB', name:'Zéro Artificialisation Nette (ZAN)', maturity:3, isNew:true, effectiveDate:'2023-07-20', obligation:'Target of zero net land-take by 2050, 50% reduction by 2031 vs 2011–2021 baseline. Mandatory for local planning documents (PLU/SCoT). Directly constrains greenfield RE development.' },
-  { id:98, country:'FR', theme:'SI', name:'Loi sur le Devoir de Vigilance', maturity:4, isNew:false, effectiveDate:'2017-03-27', obligation:'Mandatory duty of care for companies >5,000 employees (France) or >10,000 (global). Covers human rights, environment, health/safety across supply chain. Broader than modern slavery — includes community impact.' },
-  { id:96, country:'FR', theme:'RD', name:'Article 29 LEC — Financial ESG Disclosure', maturity:4, isNew:false, effectiveDate:'2022-01-01', obligation:'Mandatory ESG/climate disclosure for French asset managers, insurers, pension funds. Exceeds EU SFDR — requires biodiversity impact, fossil fuel exclusion policy, Paris-alignment strategy.' },
-  // EU (EU-level)
-  { id:92, country:'EU', theme:'RD', name:'CSRD — Corporate Sustainability Reporting', maturity:4, isNew:false, effectiveDate:'2024-01-01', obligation:'Phased by entity size. ESRS standards. Double materiality. Assurance required.' },
-  { id:93, country:'EU', theme:'NB', name:'EU Nature Restoration Regulation', maturity:3, isNew:true, effectiveDate:'2024-08-12', obligation:'20% of degraded ecosystems restored by 2030. Urban greening provisions.' },
-  { id:94, country:'EU', theme:'RD', name:'CSRD Omnibus — Scope Narrowing (Draft)', maturity:1, isNew:true, effectiveDate:'TBD', obligation:'Proposes narrowing CSRD to >1,000 employees. Delays wave 2.' },
-  { id:95, country:'EU', theme:'GB', name:'EPBD Recast — Energy Performance of Buildings', maturity:4, isNew:true, effectiveDate:'2025-05-29', obligation:'Zero-emission building standard for new builds from 2030. Renovation passports.' },
-  // US
-  { id:100, country:'US', theme:'RD', name:'SEC Climate Disclosure Rule (stayed)', maturity:1, isNew:false, effectiveDate:'stayed', obligation:'Voluntarily stayed pending litigation. Federal scope uncertain.' },
-  { id:101, country:'US', theme:'EO', name:'NYC Local Law 97', maturity:5, isNew:false, effectiveDate:'2024-01-01', obligation:'Emissions caps for buildings >25,000 sqft. Penalties from 2024. City-level.' },
-  { id:102, country:'US', theme:'EO', name:'WA Clean Buildings Performance Standard', maturity:4, isNew:true, effectiveDate:'2026-06-01', obligation:'Tier 1 >50,000 sqft by Jun 2026, Tier 2 >20,000 sqft by 2028.' },
-  { id:103, country:'US', theme:'SI', name:'UFLPA', maturity:5, isNew:false, effectiveDate:'2022-06-21', obligation:'Import ban on goods from Xinjiang. Affects solar panel + construction materials supply chains.' },
-  // CANADA
-  { id:110, country:'CA', theme:'RD', name:'CSSB IFRS S1/S2 Adoption', maturity:1, isNew:true, effectiveDate:'2027-01-01', obligation:'Canadian ISSB adoption. Consultation phase.' },
-  { id:111, country:'CA', theme:'EO', name:'BC Energy Step Code', maturity:4, isNew:false, effectiveDate:'2017-12-15', obligation:'Mandatory energy performance tiers for new buildings. Provincial (BC only).' },
-  { id:112, country:'CA', theme:'EO', name:'Canada Green Buildings Strategy', maturity:1, isNew:true, effectiveDate:'TBD', obligation:'Net-zero-emissions-ready model code by 2030. Consultation.' },
-];
-
-// ============================================================
-// HELPERS
-// ============================================================
-function buildMatrix(countries) {
+function buildMatrix(countries, themes, regs) {
   const m = {};
-  countries.forEach(c => {
-    m[c.code] = {};
-    THEMES.forEach(t => { m[c.code][t.code] = { maturity: 0, regs: [], hasNew: false }; });
-  });
-  REGS.forEach(r => {
-    const cell = m[r.country]?.[r.theme];
-    if (!cell) return;
-    cell.regs.push(r);
-    if (r.maturity > cell.maturity) cell.maturity = r.maturity;
-    if (r.isNew) cell.hasNew = true;
-  });
+  countries.forEach(c => { m[c.code] = {}; themes.forEach(t => { m[c.code][t.code] = { maturity: 0, regs: [], hasNew: false }; }); });
+  regs.forEach(r => { const cell = m[r.country]?.[r.theme]; if (!cell) return; cell.regs.push(r); if (r.maturity > cell.maturity) cell.maturity = r.maturity; if (r.isNew) cell.hasNew = true; });
   return m;
 }
 
-// ============================================================
-// COUNTRY PICKER (sidebar panel)
-// ============================================================
-function CountryPicker({ selected, setSelected }) {
-  function toggle(code) {
-    setSelected(prev => prev.includes(code) ? prev.filter(c => c !== code) : [...prev, code]);
-  }
+function CountryPicker({ selected, setSelected, COUNTRIES, REGIONS }) {
+  function toggle(code) { setSelected(prev => prev.includes(code) ? prev.filter(c => c !== code) : [...prev, code]); }
   function selectRegion(region) {
     const codes = COUNTRIES.filter(c => c.region === region).map(c => c.code);
     const allSelected = codes.every(c => selected.includes(c));
-    if (allSelected) {
-      setSelected(prev => prev.filter(c => !codes.includes(c)));
-    } else {
-      setSelected(prev => [...new Set([...prev, ...codes])]);
-    }
+    if (allSelected) { setSelected(prev => prev.filter(c => !codes.includes(c))); }
+    else { setSelected(prev => [...new Set([...prev, ...codes])]); }
   }
   function selectAll() { setSelected(COUNTRIES.map(c => c.code)); }
   function clearAll() { setSelected([]); }
-
   return (
     <div className="bg-white rounded-lg border border-slate-200 shadow-sm p-3 no-print">
       <div className="flex items-center justify-between mb-2">
@@ -246,18 +84,10 @@ function CountryPicker({ selected, setSelected }) {
         const allOn = cs.every(c => selected.includes(c.code));
         return (
           <div key={region} className="mb-2">
-            <button onClick={() => selectRegion(region)}
-              className={`text-[9px] font-semibold uppercase tracking-wide mb-0.5 block ${allOn ? 'text-emerald-700' : 'text-slate-400'} hover:text-slate-700`}>
-              {region}
-            </button>
+            <button onClick={() => selectRegion(region)} className={`text-[9px] font-semibold uppercase tracking-wide mb-0.5 block ${allOn ? 'text-emerald-700' : 'text-slate-400'} hover:text-slate-700`}>{region}</button>
             <div className="flex flex-wrap gap-1">
               {cs.map(c => (
-                <button key={c.code} onClick={() => toggle(c.code)}
-                  className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] border transition ${
-                    selected.includes(c.code)
-                      ? 'border-slate-400 bg-white font-medium'
-                      : 'border-transparent bg-slate-100 text-slate-400'
-                  }`}>
+                <button key={c.code} onClick={() => toggle(c.code)} className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] border transition ${selected.includes(c.code) ? 'border-slate-400 bg-white font-medium' : 'border-transparent bg-slate-100 text-slate-400'}`}>
                   <span className="w-2 h-2 rounded-full inline-block" style={{backgroundColor: selected.includes(c.code) ? c.colour : '#cbd5e1'}}></span>
                   {c.code}
                   {c.footnote && <span className="text-[7px] text-amber-500">*</span>}
@@ -267,37 +97,24 @@ function CountryPicker({ selected, setSelected }) {
           </div>
         );
       })}
-      <div className="mt-2 text-[8px] text-slate-400">
-        <span className="text-amber-500">*</span> = see footnote for inclusion rationale
-      </div>
+      <div className="mt-2 text-[8px] text-slate-400"><span className="text-amber-500">*</span> = see footnote for inclusion rationale</div>
     </div>
   );
 }
 
-// ============================================================
-// DOT MATRIX
-// ============================================================
-function RegPopover({ country, theme, cell, onClose, anchorRect }) {
+function RegPopover({ country, theme, cell, onClose, anchorRect, THEMES, MATURITY_SHORT }) {
   const themeDef = THEMES.find(t => t.code === theme);
-  const popW = 360;
-  const popH = Math.min(320, 60 + cell.regs.length * 70);
+  const popW = 360; const popH = Math.min(320, 60 + cell.regs.length * 70);
   let top, left;
-  if (anchorRect) {
-    left = Math.max(8, Math.min(window.innerWidth - popW - 8, anchorRect.left + anchorRect.width / 2 - popW / 2));
-    top = anchorRect.top > popH + 12 ? anchorRect.top - popH - 8 : anchorRect.bottom + 8;
-  }
+  if (anchorRect) { left = Math.max(8, Math.min(window.innerWidth - popW - 8, anchorRect.left + anchorRect.width / 2 - popW / 2)); top = anchorRect.top > popH + 12 ? anchorRect.top - popH - 8 : anchorRect.bottom + 8; }
   return (
     <div className="popover-card" style={anchorRect ? {top, left} : {}} onClick={e => e.stopPropagation()}>
       <div className="px-3 py-2 border-b border-slate-100 flex items-center justify-between">
-        <div>
-          <span className="font-semibold text-[11px]">{country.name}</span>
-          <span className="text-[10px] text-slate-400 ml-1.5">· {themeDef?.short}</span>
-        </div>
+        <div><span className="font-semibold text-[11px]">{country.name}</span><span className="text-[10px] text-slate-400 ml-1.5">· {themeDef?.short}</span></div>
         <button onClick={onClose} className="text-slate-400 hover:text-slate-700 text-xs px-1">✕</button>
       </div>
       <div className="px-3 py-2">
-        {cell.regs.length === 0 ? (
-          <div className="text-[10px] text-slate-400 py-2">No regulations recorded.</div>
+        {cell.regs.length === 0 ? (<div className="text-[10px] text-slate-400 py-2">No regulations recorded.</div>
         ) : cell.regs.map(r => (
           <div key={r.id} className="mb-2 last:mb-0">
             <div className="flex items-start gap-1.5">
@@ -321,87 +138,42 @@ function RegPopover({ country, theme, cell, onClose, anchorRect }) {
   );
 }
 
-function DotMatrix({ matrix, visibleCountries }) {
+function DotMatrix({ matrix, visibleCountries, THEMES, MATURITY_SHORT, MATURITY_LABELS }) {
   const [activePopover, setActivePopover] = useState(null);
-
   const grid = {};
-  THEMES.forEach(t => {
-    grid[t.code] = {};
-    for (let lvl = 0; lvl <= 5; lvl++) grid[t.code][lvl] = [];
-    visibleCountries.forEach(c => {
-      const lvl = matrix[c.code]?.[t.code]?.maturity || 0;
-      grid[t.code][lvl].push(c);
-    });
-  });
-
-  const levels = [5,4,3,2,1,0];
-  const dotSize = 21;
-
-  function togglePopover(countryCode, themeCode, e) {
-    if (activePopover && activePopover.country === countryCode && activePopover.theme === themeCode) {
-      setActivePopover(null);
-    } else {
-      const rect = e.currentTarget.getBoundingClientRect();
-      setActivePopover({ country: countryCode, theme: themeCode, rect });
-    }
-  }
-
-  function handleTableClick(e) {
-    if (!e.target.closest('.popover-card') && !e.target.closest('.dot')) setActivePopover(null);
-  }
-
+  THEMES.forEach(t => { grid[t.code] = {}; for (let lvl = 0; lvl <= 5; lvl++) grid[t.code][lvl] = []; visibleCountries.forEach(c => { const lvl = matrix[c.code]?.[t.code]?.maturity || 0; grid[t.code][lvl].push(c); }); });
+  const levels = [5,4,3,2,1,0]; const dotSize = 21;
+  function togglePopover(countryCode, themeCode, e) { if (activePopover && activePopover.country === countryCode && activePopover.theme === themeCode) { setActivePopover(null); } else { const rect = e.currentTarget.getBoundingClientRect(); setActivePopover({ country: countryCode, theme: themeCode, rect }); } }
+  function handleTableClick(e) { if (!e.target.closest('.popover-card') && !e.target.closest('.dot')) setActivePopover(null); }
   const isIntl = (c) => ['Europe','Americas'].includes(c.region);
-
   return (
     <div className="overflow-auto" onClick={handleTableClick}>
       <table className="w-full" style={{borderCollapse:'separate', borderSpacing:'0'}}>
-        <thead>
-          <tr>
-            <th className="w-20 pr-2 text-right text-[10px] text-slate-400 font-normal align-bottom pb-1">Maturity</th>
-            {THEMES.map((t, i) => (
-              <th key={t.code} className="text-center pb-1 px-0.5" style={{borderLeft: i > 0 ? '1px solid #e2e8f0' : 'none'}}>
-                <div className="text-[9px] font-semibold leading-tight text-slate-700 whitespace-pre-line">{t.name}</div>
-              </th>
-            ))}
-          </tr>
-        </thead>
+        <thead><tr>
+          <th className="w-20 pr-2 text-right text-[10px] text-slate-400 font-normal align-bottom pb-1">Maturity</th>
+          {THEMES.map((t, i) => (<th key={t.code} className="text-center pb-1 px-0.5" style={{borderLeft: i > 0 ? '1px solid #e2e8f0' : 'none'}}><div className="text-[9px] font-semibold leading-tight text-slate-700 whitespace-pre-line">{t.name}</div></th>))}
+        </tr></thead>
         <tbody>
           {levels.map((lvl, rowIdx) => (
             <tr key={lvl} className={lvl === 0 ? 'border-t-2 border-dashed border-slate-300 border-b border-slate-100' : 'border-b border-slate-100'} style={{backgroundColor: rowIdx % 2 === 0 ? '#f8fafc' : '#ffffff'}}>
-              <td className="pr-2 text-right align-middle py-0.5">
-                <div className="text-[9px] text-slate-500 leading-tight">{MATURITY_SHORT[lvl]}</div>
-              </td>
+              <td className="pr-2 text-right align-middle py-0.5"><div className="text-[9px] text-slate-500 leading-tight">{MATURITY_SHORT[lvl]}</div></td>
               {THEMES.map((t, i) => {
                 const dots = grid[t.code][lvl];
                 return (
                   <td key={t.code} className="align-middle px-0.5 py-0.5" style={{borderLeft: i > 0 ? '1px solid #f1f5f9' : 'none'}}>
                     <div className="flex flex-wrap justify-center gap-0.5 min-h-[24px]">
                       {dots.map(c => {
-                        const cell = matrix[c.code]?.[t.code];
-                        const intl = isIntl(c);
+                        const cell = matrix[c.code]?.[t.code]; const intl = isIntl(c);
                         const isActive = activePopover && activePopover.country === c.code && activePopover.theme === t.code;
                         return (
                           <div key={c.code} className="tooltip-wrap" style={{position:'relative'}}>
                             <div className="dot rounded-full flex items-center justify-center text-white font-bold"
                               onClick={(e) => { e.stopPropagation(); togglePopover(c.code, t.code, e); }}
-                              style={{
-                                width: dotSize, height: dotSize, fontSize: 7.5,
-                                backgroundColor: c.colour,
+                              style={{ width: dotSize, height: dotSize, fontSize: 7.5, backgroundColor: c.colour,
                                 border: isActive ? '2px solid #0f172a' : cell?.hasNew ? '2px solid #facc15' : intl ? '2px dashed #94a3b8' : 'none',
-                              }}>
-                              {c.code}
-                            </div>
-                            {!isActive && (
-                              <div className="tip">
-                                {c.name} · {MATURITY_LABELS[lvl]}
-                                {cell?.hasNew && ' · NEW/UPCOMING'}
-                                {cell?.regs.length > 0 && ` · Click for ${cell.regs.length} reg${cell.regs.length > 1 ? 's' : ''}`}
-                              </div>
-                            )}
-                            {isActive && cell && (
-                              <RegPopover country={c} theme={t.code} cell={cell}
-                                onClose={() => setActivePopover(null)} anchorRect={activePopover.rect} />
-                            )}
+                              }}>{c.code}</div>
+                            {!isActive && (<div className="tip">{c.name} · {MATURITY_LABELS[lvl]}{cell?.hasNew && ' · NEW/UPCOMING'}{cell?.regs.length > 0 && ` · Click for ${cell.regs.length} reg${cell.regs.length > 1 ? 's' : ''}`}</div>)}
+                            {isActive && cell && (<RegPopover country={c} theme={t.code} cell={cell} onClose={() => setActivePopover(null)} anchorRect={activePopover.rect} THEMES={THEMES} MATURITY_SHORT={MATURITY_SHORT} />)}
                           </div>
                         );
                       })}
@@ -417,53 +189,22 @@ function DotMatrix({ matrix, visibleCountries }) {
   );
 }
 
-// ============================================================
-// NEW & UPCOMING
-// ============================================================
-function NewUpcoming({ visibleCountries }) {
+function NewUpcoming({ visibleCountries, REGS, COUNTRIES, THEMES }) {
   const codes = new Set(visibleCountries.map(c => c.code));
-  const items = REGS.filter(r => r.isNew && codes.has(r.country))
-    .sort((a,b) => {
-      const da = a.effectiveDate === 'stayed' || a.effectiveDate === 'TBD' ? '9999' : a.effectiveDate;
-      const db = b.effectiveDate === 'stayed' || b.effectiveDate === 'TBD' ? '9999' : b.effectiveDate;
-      return da.localeCompare(db);
-    });
-
+  const items = REGS.filter(r => r.isNew && codes.has(r.country)).sort((a,b) => { const da = a.effectiveDate === 'stayed' || a.effectiveDate === 'TBD' ? '9999' : a.effectiveDate; const db = b.effectiveDate === 'stayed' || b.effectiveDate === 'TBD' ? '9999' : b.effectiveDate; return da.localeCompare(db); });
   return (
     <table className="w-full text-[10.5px]">
-      <thead>
-        <tr className="border-b-2 border-slate-300">
-          <th className="text-left py-0.5 pr-1.5 w-16">Market</th>
-          <th className="text-left py-0.5 pr-1.5">Instrument</th>
-          <th className="text-left py-0.5 pr-1.5 w-[44%]">Key obligation</th>
-          <th className="text-right py-0.5 w-16">Effective</th>
-        </tr>
-      </thead>
+      <thead><tr className="border-b-2 border-slate-300"><th className="text-left py-0.5 pr-1.5 w-16">Market</th><th className="text-left py-0.5 pr-1.5">Instrument</th><th className="text-left py-0.5 pr-1.5 w-[44%]">Key obligation</th><th className="text-right py-0.5 w-16">Effective</th></tr></thead>
       <tbody>
-        {items.map(r => {
-          const c = COUNTRIES.find(x => x.code === r.country);
-          const t = THEMES.find(x => x.code === r.theme);
-          return (
-            <tr key={r.id} className="border-b border-slate-100">
-              <td className="py-0.5 pr-1.5 font-medium" style={{color: c?.colour}}>{c?.name}</td>
-              <td className="py-0.5 pr-1.5">
-                <span className="inline-block w-1.5 h-1.5 rounded-full mr-1 align-middle" style={{backgroundColor: t?.colour}}></span>
-                {r.name}
-              </td>
-              <td className="py-0.5 pr-1.5 text-slate-600">{r.obligation}</td>
-              <td className="py-0.5 text-right font-mono text-[9.5px]">{r.effectiveDate === 'TBD' ? 'TBD' : r.effectiveDate === 'stayed' ? 'Stayed' : r.effectiveDate.slice(0,7)}</td>
-            </tr>
-          );
+        {items.map(r => { const c = COUNTRIES.find(x => x.code === r.country); const t = THEMES.find(x => x.code === r.theme);
+          return (<tr key={r.id} className="border-b border-slate-100"><td className="py-0.5 pr-1.5 font-medium" style={{color: c?.colour}}>{c?.name}</td><td className="py-0.5 pr-1.5"><span className="inline-block w-1.5 h-1.5 rounded-full mr-1 align-middle" style={{backgroundColor: t?.colour}}></span>{r.name}</td><td className="py-0.5 pr-1.5 text-slate-600">{r.obligation}</td><td className="py-0.5 text-right font-mono text-[9.5px]">{r.effectiveDate === 'TBD' ? 'TBD' : r.effectiveDate === 'stayed' ? 'Stayed' : r.effectiveDate.slice(0,7)}</td></tr>);
         })}
       </tbody>
     </table>
   );
 }
 
-// ============================================================
-// FOOTNOTES
-// ============================================================
-function Footnotes({ visibleCountries, showPanel, setShowPanel }) {
+function Footnotes({ visibleCountries, showPanel, setShowPanel, THEMES, THEME_DEFINITIONS, MATURITY_LABELS, COUNTRIES }) {
   if (!showPanel) return null;
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 z-50 flex items-start justify-center pt-8 no-print" onClick={() => setShowPanel(false)}>
@@ -475,71 +216,25 @@ function Footnotes({ visibleCountries, showPanel, setShowPanel }) {
         <div className="px-6 py-4">
           <h3 className="text-[11px] font-semibold text-slate-700 uppercase tracking-wide mb-2">Theme definitions</h3>
           <table className="w-full text-[10.5px] mb-6">
-            <thead><tr className="border-b-2 border-slate-300">
-              <th className="text-left py-1 pr-3 w-32">Theme</th>
-              <th className="text-left py-1 pr-3">Scope</th>
-              <th className="text-left py-1 w-[35%]">Real estate examples</th>
-            </tr></thead>
+            <thead><tr className="border-b-2 border-slate-300"><th className="text-left py-1 pr-3 w-32">Theme</th><th className="text-left py-1 pr-3">Scope</th><th className="text-left py-1 w-[35%]">Real estate examples</th></tr></thead>
             <tbody className="text-slate-700">
-              {THEME_DEFINITIONS.map(td => {
-                const t = THEMES.find(x => x.code === td.code);
-                return (
-                  <tr key={td.code} className="border-b border-slate-100">
-                    <td className="py-1.5 pr-3 font-medium align-top">
-                      <span className="inline-block w-2 h-2 rounded-full mr-1" style={{backgroundColor: t?.colour}}></span>
-                      {t?.short}
-                    </td>
-                    <td className="py-1.5 pr-3">{td.scope}</td>
-                    <td className="py-1.5">{td.examples}</td>
-                  </tr>
-                );
+              {THEME_DEFINITIONS.map(td => { const t = THEMES.find(x => x.code === td.code);
+                return (<tr key={td.code} className="border-b border-slate-100"><td className="py-1.5 pr-3 font-medium align-top"><span className="inline-block w-2 h-2 rounded-full mr-1" style={{backgroundColor: t?.colour}}></span>{t?.short}</td><td className="py-1.5 pr-3">{td.scope}</td><td className="py-1.5">{td.examples}</td></tr>);
               })}
             </tbody>
           </table>
-
           <h3 className="text-[11px] font-semibold text-slate-700 uppercase tracking-wide mb-2">Maturity ladder</h3>
           <table className="w-full text-[10.5px] mb-6">
-            <thead><tr className="border-b-2 border-slate-300">
-              <th className="text-left py-1 w-10">Level</th>
-              <th className="text-left py-1 pr-3 w-32">Label</th>
-              <th className="text-left py-1">Observable test</th>
-            </tr></thead>
+            <thead><tr className="border-b-2 border-slate-300"><th className="text-left py-1 w-10">Level</th><th className="text-left py-1 pr-3 w-32">Label</th><th className="text-left py-1">Observable test</th></tr></thead>
             <tbody className="text-slate-700">
-              {MATURITY_LABELS.map((label, i) => (
-                <tr key={i} className="border-b border-slate-100">
-                  <td className="py-1">{i}</td>
-                  <td className="py-1 pr-3 font-medium">{label}</td>
-                  <td className="py-1">{[
-                    'No regulation, standard, or rating scheme recorded for this country × theme.',
-                    'An instrument exists (consultation paper, draft regulation, or standard under development) but has not been finalised or brought into force.',
-                    'A voluntary rating, standard, or incentive scheme is in force but there is no mandatory requirement.',
-                    'A mandatory requirement exists but scope is limited — by building size threshold, entity type, geography, or asset class.',
-                    'A mandatory requirement captures the majority of the relevant building stock or entity base in that jurisdiction.',
-                    'A mandatory requirement is in force with active enforcement mechanisms: financial penalties, compliance audits, mandatory assurance, or licence/consent conditions.',
-                  ][i]}</td>
-                </tr>
-              ))}
+              {MATURITY_LABELS.map((label, i) => (<tr key={i} className="border-b border-slate-100"><td className="py-1">{i}</td><td className="py-1 pr-3 font-medium">{label}</td><td className="py-1">{['No regulation, standard, or rating scheme recorded for this country × theme.','An instrument exists (consultation paper, draft regulation, or standard under development) but has not been finalised or brought into force.','A voluntary rating, standard, or incentive scheme is in force but there is no mandatory requirement.','A mandatory requirement exists but scope is limited — by building size threshold, entity type, geography, or asset class.','A mandatory requirement captures the majority of the relevant building stock or entity base in that jurisdiction.','A mandatory requirement is in force with active enforcement mechanisms: financial penalties, compliance audits, mandatory assurance, or licence/consent conditions.'][i]}</td></tr>))}
             </tbody>
           </table>
-
           <h3 className="text-[11px] font-semibold text-slate-700 uppercase tracking-wide mb-2">Market inclusion rationale</h3>
           <table className="w-full text-[10.5px]">
-            <thead><tr className="border-b-2 border-slate-300">
-              <th className="text-left py-1 pr-3 w-28">Market</th>
-              <th className="text-left py-1 pr-3 w-24">Region</th>
-              <th className="text-left py-1">Rationale</th>
-            </tr></thead>
+            <thead><tr className="border-b-2 border-slate-300"><th className="text-left py-1 pr-3 w-28">Market</th><th className="text-left py-1 pr-3 w-24">Region</th><th className="text-left py-1">Rationale</th></tr></thead>
             <tbody className="text-slate-700">
-              {COUNTRIES.map(c => (
-                <tr key={c.code} className="border-b border-slate-100">
-                  <td className="py-1 pr-3 font-medium">
-                    <span className="inline-block w-2 h-2 rounded-full mr-1" style={{backgroundColor: c.colour}}></span>
-                    {c.name}
-                  </td>
-                  <td className="py-1 pr-3">{c.region}</td>
-                  <td className="py-1">{c.footnote || 'Core Asia-Pacific market.'}</td>
-                </tr>
-              ))}
+              {COUNTRIES.map(c => (<tr key={c.code} className="border-b border-slate-100"><td className="py-1 pr-3 font-medium"><span className="inline-block w-2 h-2 rounded-full mr-1" style={{backgroundColor: c.colour}}></span>{c.name}</td><td className="py-1 pr-3">{c.region}</td><td className="py-1">{c.footnote || 'Core Asia-Pacific market.'}</td></tr>))}
             </tbody>
           </table>
         </div>
@@ -548,125 +243,63 @@ function Footnotes({ visibleCountries, showPanel, setShowPanel }) {
   );
 }
 
-// ============================================================
-// APP
-// ============================================================
 function App() {
-  const [selected, setSelected] = useState(
-    COUNTRIES.filter(c => ['East Asia','Oceania','Southeast Asia','South Asia'].includes(c.region)).map(c => c.code)
-  );
+  const { data, error } = useTrackerData();
+  const [selected, setSelected] = useState([]);
   const [showNotes, setShowNotes] = useState(false);
-
+  const [initialised, setInitialised] = useState(false);
+  useEffect(() => { if (data && !initialised) { setSelected(data.COUNTRIES.filter(c => ['East Asia','Oceania','Southeast Asia','South Asia'].includes(c.region)).map(c => c.code)); setInitialised(true); } }, [data, initialised]);
+  if (error) return <div className="p-8 text-red-600">Failed to load data: {error}</div>;
+  if (!data) return <div className="p-8 text-slate-400">Loading tracker data…</div>;
+  const { COUNTRIES, REGIONS, THEMES, THEME_DEFINITIONS, MATURITY_LABELS, MATURITY_SHORT, REGS, PERIOD } = data;
   const visibleCountries = COUNTRIES.filter(c => selected.includes(c.code));
-  const matrix = useMemo(() => buildMatrix(COUNTRIES), []);
+  const matrix = useMemo(() => buildMatrix(COUNTRIES, THEMES, REGS), [COUNTRIES, THEMES, REGS]);
   const newCount = REGS.filter(r => r.isNew && selected.includes(r.country)).length;
-
   return (
     <div className="min-h-screen flex gap-3 p-3">
-      {/* Sidebar */}
       <div className="w-44 flex-shrink-0 no-print">
-        <CountryPicker selected={selected} setSelected={setSelected} />
-        <button onClick={() => setShowNotes(true)}
-          className="mt-2 w-full text-left bg-white rounded-lg border border-slate-200 shadow-sm p-3 text-[10px] text-slate-600 hover:text-emerald-700 hover:border-emerald-300">
-          Definitions & notes ↗
-        </button>
-        <button onClick={() => window.print()}
-          className="mt-2 w-full bg-slate-700 text-white px-3 py-1.5 rounded text-[10px] hover:bg-slate-800">
-          Print
-        </button>
+        <CountryPicker selected={selected} setSelected={setSelected} COUNTRIES={COUNTRIES} REGIONS={REGIONS} />
+        <button onClick={() => setShowNotes(true)} className="mt-2 w-full text-left bg-white rounded-lg border border-slate-200 shadow-sm p-3 text-[10px] text-slate-600 hover:text-emerald-700 hover:border-emerald-300">Definitions & notes ↗</button>
+        <button onClick={() => window.print()} className="mt-2 w-full bg-slate-700 text-white px-3 py-1.5 rounded text-[10px] hover:bg-slate-800">Print</button>
       </div>
-
-      {/* Main */}
       <div className="flex-1 min-w-0">
         <div className="page bg-white shadow-lg rounded border border-slate-200">
-          {/* Header */}
           <div className="px-5 pt-4 pb-2 border-b border-slate-200">
             <h1 className="text-sm font-semibold text-slate-900">APAC Sustainability Regulatory Tracker</h1>
-            <p className="text-[10px] text-slate-500 mt-0.5">
-              Real estate, building & construction · {PERIOD} · Showing {visibleCountries.length} of {COUNTRIES.length} markets · {REGS.length} regulations
-            </p>
+            <p className="text-[10px] text-slate-500 mt-0.5">Real estate, building & construction · {PERIOD} · Showing {visibleCountries.length} of {COUNTRIES.length} markets · {REGS.length} regulations</p>
           </div>
-
-          {/* Empty state */}
-          {visibleCountries.length === 0 && (
-            <div className="px-5 py-12 text-center text-slate-400 text-sm">Select markets from the left panel to display the tracker.</div>
-          )}
-
-          {visibleCountries.length > 0 && (
-            <>
-              {/* Dot matrix */}
-              <div className="px-5 pt-3 pb-1.5">
-                <div className="flex items-center justify-between mb-1.5">
-                  <h2 className="text-[10px] font-semibold text-slate-700 uppercase tracking-wide">Regulatory maturity by theme</h2>
-                  <div className="flex items-center gap-3 text-[9px] text-slate-500">
-                    <span className="flex items-center gap-1">
-                      <span className="inline-block w-3.5 h-3.5 rounded-full border-2 border-yellow-400 bg-slate-300"></span>
-                      New / upcoming
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <span className="inline-block w-3.5 h-3.5 rounded-full border-2 border-dashed border-slate-400 bg-slate-300"></span>
-                      Europe / Americas
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <span className="inline-block w-3.5 h-3.5 rounded-full bg-slate-300"></span>
-                      Asia-Pacific
-                    </span>
-                  </div>
-                </div>
-                <DotMatrix matrix={matrix} visibleCountries={visibleCountries} />
-              </div>
-
-              {/* Country legend */}
-              <div className="px-5 pb-1">
-                <div className="flex flex-wrap gap-x-2.5 gap-y-0 text-[9px]">
-                  {visibleCountries.map(c => (
-                    <span key={c.code} className="flex items-center gap-0.5">
-                      <span className="inline-block w-2 h-2 rounded-full" style={{backgroundColor: c.colour}}></span>
-                      <span className="text-slate-500">{c.code} {c.name}</span>
-                      {c.footnote && <span className="text-amber-500 text-[7px]">*</span>}
-                    </span>
-                  ))}
+          {visibleCountries.length === 0 && (<div className="px-5 py-12 text-center text-slate-400 text-sm">Select markets from the left panel to display the tracker.</div>)}
+          {visibleCountries.length > 0 && (<>
+            <div className="px-5 pt-3 pb-1.5">
+              <div className="flex items-center justify-between mb-1.5">
+                <h2 className="text-[10px] font-semibold text-slate-700 uppercase tracking-wide">Regulatory maturity by theme</h2>
+                <div className="flex items-center gap-3 text-[9px] text-slate-500">
+                  <span className="flex items-center gap-1"><span className="inline-block w-3.5 h-3.5 rounded-full border-2 border-yellow-400 bg-slate-300"></span>New / upcoming</span>
+                  <span className="flex items-center gap-1"><span className="inline-block w-3.5 h-3.5 rounded-full border-2 border-dashed border-slate-400 bg-slate-300"></span>Europe / Americas</span>
+                  <span className="flex items-center gap-1"><span className="inline-block w-3.5 h-3.5 rounded-full bg-slate-300"></span>Asia-Pacific</span>
                 </div>
               </div>
-
-              {/* Divider */}
-              <div className="mx-5 border-t border-slate-300 my-1.5"></div>
-
-              {/* New & Upcoming */}
-              <div className="px-5 pb-3">
-                <div className="flex items-center justify-between mb-1.5">
-                  <h2 className="text-[10px] font-semibold text-slate-700 uppercase tracking-wide">
-                    New & upcoming ({newCount} items)
-                  </h2>
-                  <div className="flex gap-3 text-[9px] text-slate-400">
-                    {THEMES.map(t => (
-                      <span key={t.code} className="flex items-center gap-0.5">
-                        <span className="inline-block w-1.5 h-1.5 rounded-full" style={{backgroundColor: t.colour}}></span>
-                        {t.short}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <NewUpcoming visibleCountries={visibleCountries} />
+              <DotMatrix matrix={matrix} visibleCountries={visibleCountries} THEMES={THEMES} MATURITY_SHORT={MATURITY_SHORT} MATURITY_LABELS={MATURITY_LABELS} />
+            </div>
+            <div className="px-5 pb-1"><div className="flex flex-wrap gap-x-2.5 gap-y-0 text-[9px]">{visibleCountries.map(c => (<span key={c.code} className="flex items-center gap-0.5"><span className="inline-block w-2 h-2 rounded-full" style={{backgroundColor: c.colour}}></span><span className="text-slate-500">{c.code} {c.name}</span>{c.footnote && <span className="text-amber-500 text-[7px]">*</span>}</span>))}</div></div>
+            <div className="mx-5 border-t border-slate-300 my-1.5"></div>
+            <div className="px-5 pb-3">
+              <div className="flex items-center justify-between mb-1.5">
+                <h2 className="text-[10px] font-semibold text-slate-700 uppercase tracking-wide">New & upcoming ({newCount} items)</h2>
+                <div className="flex gap-3 text-[9px] text-slate-400">{THEMES.map(t => (<span key={t.code} className="flex items-center gap-0.5"><span className="inline-block w-1.5 h-1.5 rounded-full" style={{backgroundColor: t.colour}}></span>{t.short}</span>))}</div>
               </div>
-
-              {/* Footer */}
-              <div className="px-5 py-2 bg-slate-50 border-t border-slate-200 rounded-b">
-                <div className="flex items-center justify-between text-[8px] text-slate-400">
-                  <span>
-                    Illustrative data — verify before citing ·
-                    <button onClick={() => setShowNotes(true)} className="text-emerald-600 hover:underline ml-1">Definitions & notes</button>
-                  </span>
-                  <span>Generated {new Date().toLocaleDateString('en-GB', {day:'numeric', month:'long', year:'numeric'})}</span>
-                </div>
+              <NewUpcoming visibleCountries={visibleCountries} REGS={REGS} COUNTRIES={COUNTRIES} THEMES={THEMES} />
+            </div>
+            <div className="px-5 py-2 bg-slate-50 border-t border-slate-200 rounded-b">
+              <div className="flex items-center justify-between text-[8px] text-slate-400">
+                <span>Illustrative data — verify before citing ·<button onClick={() => setShowNotes(true)} className="text-emerald-600 hover:underline ml-1">Definitions & notes</button></span>
+                <span>Generated {new Date().toLocaleDateString('en-GB', {day:'numeric', month:'long', year:'numeric'})}</span>
               </div>
-            </>
-          )}
+            </div>
+          </>)}
         </div>
       </div>
-
-      {/* Footnotes modal */}
-      <Footnotes visibleCountries={visibleCountries} showPanel={showNotes} setShowPanel={setShowNotes} />
+      <Footnotes visibleCountries={visibleCountries} showPanel={showNotes} setShowPanel={setShowNotes} THEMES={THEMES} THEME_DEFINITIONS={THEME_DEFINITIONS} MATURITY_LABELS={MATURITY_LABELS} COUNTRIES={COUNTRIES} />
     </div>
   );
 }
