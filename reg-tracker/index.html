@@ -123,7 +123,7 @@ function RegPopover({ country, theme, cell, onClose, anchorRect, THEMES, MATURIT
                 <div className="text-[10.5px] font-medium leading-tight">{r.name}</div>
                 <div className="text-[9.5px] text-slate-500 mt-0.5">{r.obligation}</div>
                 <div className="text-[9px] text-slate-400 mt-0.5">
-                  Eff: {r.effectiveDate === 'TBD' ? 'TBD' : r.effectiveDate === 'stayed' ? 'Stayed' : r.effectiveDate}
+                  Effective: {r.effectiveDate === 'TBD' ? 'TBD' : r.effectiveDate === 'stayed' ? 'Stayed' : r.effectiveDate}
                   <span className="mx-1">·</span>
                   <span className={r.isNew ? 'text-emerald-600 font-medium' : ''}>{r.isNew ? 'New / upcoming' : 'Pre-existing'}</span>
                   <span className="mx-1">·</span>
@@ -194,7 +194,7 @@ function NewUpcoming({ visibleCountries, REGS, COUNTRIES, THEMES }) {
   const items = REGS.filter(r => r.isNew && codes.has(r.country)).sort((a,b) => { const da = a.effectiveDate === 'stayed' || a.effectiveDate === 'TBD' ? '9999' : a.effectiveDate; const db = b.effectiveDate === 'stayed' || b.effectiveDate === 'TBD' ? '9999' : b.effectiveDate; return da.localeCompare(db); });
   return (
     <table className="w-full text-[10.5px]">
-      <thead><tr className="border-b-2 border-slate-300"><th className="text-left py-0.5 pr-1.5 w-16">Market</th><th className="text-left py-0.5 pr-1.5">Instrument</th><th className="text-left py-0.5 pr-1.5 w-[44%]">Key obligation</th><th className="text-right py-0.5 w-16">Effective</th></tr></thead>
+      <thead><tr className="border-b-2 border-slate-300"><th className="text-left py-0.5 pr-1.5 w-16">Market</th><th className="text-left py-0.5 pr-1.5">Instrument</th><th className="text-left py-0.5 pr-1.5 w-[44%]">Key obligation</th><th className="text-right py-0.5">Launched / Announced</th></tr></thead>
       <tbody>
         {items.map(r => { const c = COUNTRIES.find(x => x.code === r.country); const t = THEMES.find(x => x.code === r.theme);
           return (<tr key={r.id} className="border-b border-slate-100"><td className="py-0.5 pr-1.5 font-medium" style={{color: c?.colour}}>{c?.name}</td><td className="py-0.5 pr-1.5"><span className="inline-block w-1.5 h-1.5 rounded-full mr-1 align-middle" style={{backgroundColor: t?.colour}}></span>{r.name}</td><td className="py-0.5 pr-1.5 text-slate-600">{r.obligation}</td><td className="py-0.5 text-right font-mono text-[9.5px]">{r.effectiveDate === 'TBD' ? 'TBD' : r.effectiveDate === 'stayed' ? 'Stayed' : r.effectiveDate.slice(0,7)}</td></tr>);
