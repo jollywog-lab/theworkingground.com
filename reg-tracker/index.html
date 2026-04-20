@@ -249,11 +249,14 @@ function App() {
   const [showNotes, setShowNotes] = useState(false);
   const [initialised, setInitialised] = useState(false);
   useEffect(() => { if (data && !initialised) { setSelected(data.COUNTRIES.filter(c => ['East Asia','Oceania','Southeast Asia','South Asia'].includes(c.region)).map(c => c.code)); setInitialised(true); } }, [data, initialised]);
+  const COUNTRIES = data?.COUNTRIES ?? [];
+  const THEMES = data?.THEMES ?? [];
+  const REGS = data?.REGS ?? [];
+  const matrix = useMemo(() => buildMatrix(COUNTRIES, THEMES, REGS), [COUNTRIES, THEMES, REGS]);
   if (error) return <div className="p-8 text-red-600">Failed to load data: {error}</div>;
   if (!data) return <div className="p-8 text-slate-400">Loading tracker data…</div>;
-  const { COUNTRIES, REGIONS, THEMES, THEME_DEFINITIONS, MATURITY_LABELS, MATURITY_SHORT, REGS, PERIOD } = data;
+  const { REGIONS, THEME_DEFINITIONS, MATURITY_LABELS, MATURITY_SHORT, PERIOD } = data;
   const visibleCountries = COUNTRIES.filter(c => selected.includes(c.code));
-  const matrix = useMemo(() => buildMatrix(COUNTRIES, THEMES, REGS), [COUNTRIES, THEMES, REGS]);
   const newCount = REGS.filter(r => r.isNew && selected.includes(r.country)).length;
   return (
     <div className="min-h-screen flex gap-3 p-3">
