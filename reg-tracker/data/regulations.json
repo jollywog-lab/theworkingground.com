@@ -1,0 +1,775 @@
+{
+  "period": "April 2025 – April 2026",
+  "regulations": [
+    {
+      "id": 40,
+      "country": "JP",
+      "theme": "RD",
+      "name": "SSBJ Sustainability Disclosure Standards",
+      "maturity": 3,
+      "isNew": true,
+      "effectiveDate": "2027-04-01",
+      "obligation": "ISSB-aligned. Mandatory for Prime Market listed from FY2027."
+    },
+    {
+      "id": 45,
+      "country": "JP",
+      "theme": "GB",
+      "name": "Building Energy Efficiency Act — All New Residential",
+      "maturity": 4,
+      "isNew": true,
+      "effectiveDate": "2025-04-01",
+      "obligation": "First time residential under mandatory energy code. All new builds."
+    },
+    {
+      "id": 46,
+      "country": "JP",
+      "theme": "EO",
+      "name": "Operational Energy Intensity Labelling (under review)",
+      "maturity": 1,
+      "isNew": true,
+      "effectiveDate": "2027-01-01",
+      "obligation": "Proposed replacement for BELS. Under consideration H2 2026–2027."
+    },
+    {
+      "id": 47,
+      "country": "JP",
+      "theme": "GB",
+      "name": "CASBEE / ZEH-M Programme",
+      "maturity": 2,
+      "isNew": false,
+      "effectiveDate": "2018-01-01",
+      "obligation": "Voluntary rating and ZEH-M subsidies for multi-family residential."
+    },
+    {
+      "id": 49,
+      "country": "JP",
+      "theme": "NB",
+      "name": "Environmental Impact Assessment Act",
+      "maturity": 4,
+      "isNew": false,
+      "effectiveDate": "1999-06-12",
+      "obligation": "Mandatory EIA for large-scale developments (>100 ha residential, major infrastructure). Scoping, public consultation, mitigation plans required."
+    },
+    {
+      "id": 48,
+      "country": "JP",
+      "theme": "TR",
+      "name": "GX-ETS — Mandatory Emissions Trading",
+      "maturity": 3,
+      "isNew": true,
+      "effectiveDate": "2026-04-01",
+      "obligation": "Mandatory for emitters >100,000 tCO2/yr from FY2026. ~300–400 companies covering 50–60% of national CO2. Carbon levy from FY2028."
+    },
+    {
+      "id": 50,
+      "country": "KR",
+      "theme": "GB",
+      "name": "ZEB Mandate — Private Residential Extension",
+      "maturity": 4,
+      "isNew": true,
+      "effectiveDate": "2025-06-01",
+      "obligation": "ZEB Grade 5 (20% onsite renewables) extended to private residential."
+    },
+    {
+      "id": 51,
+      "country": "KR",
+      "theme": "WC",
+      "name": "Waste Policy — Mandatory Recycling Before Landfill",
+      "maturity": 3,
+      "isNew": true,
+      "effectiveDate": "2026-01-01",
+      "obligation": "Mandates recycling/incineration before landfill. Seoul single-use reduction."
+    },
+    {
+      "id": 52,
+      "country": "KR",
+      "theme": "RD",
+      "name": "KSSB Sustainability Disclosure Standards",
+      "maturity": 1,
+      "isNew": true,
+      "effectiveDate": "2028-01-01",
+      "obligation": "Korean ISSB adoption. Phased mandatory from FY2028."
+    },
+    {
+      "id": 53,
+      "country": "KR",
+      "theme": "EO",
+      "name": "G-SEED",
+      "maturity": 3,
+      "isNew": false,
+      "effectiveDate": "2013-01-01",
+      "obligation": "Mandatory for public buildings >3,000 sqm; voluntary for private."
+    },
+    {
+      "id": 54,
+      "country": "KR",
+      "theme": "NB",
+      "name": "Environmental Impact Assessment Act",
+      "maturity": 4,
+      "isNew": false,
+      "effectiveDate": "2012-07-22",
+      "obligation": "Mandatory EIA and Strategic Environmental Assessment for developments above thresholds. Biodiversity offset requirements for habitat loss. Nature baseline surveys required."
+    },
+    {
+      "id": 20,
+      "country": "CN",
+      "theme": "RD",
+      "name": "SSE/SZSE/BSE Sustainability Reporting",
+      "maturity": 3,
+      "isNew": true,
+      "effectiveDate": "2026-01-01",
+      "obligation": "Mandatory for index constituents and dual-listed. Phased voluntary for others."
+    },
+    {
+      "id": 21,
+      "country": "CN",
+      "theme": "GB",
+      "name": "GB/T 50378 Green Building Standard",
+      "maturity": 3,
+      "isNew": false,
+      "effectiveDate": "2019-08-01",
+      "obligation": "National standard. Many cities mandate one-star minimum for new construction."
+    },
+    {
+      "id": 23,
+      "country": "CN",
+      "theme": "NB",
+      "name": "EIA Law + Ecological Conservation Redlines",
+      "maturity": 4,
+      "isNew": false,
+      "effectiveDate": "2018-12-29",
+      "obligation": "Mandatory EIA for all construction projects (1998, amended 2018). Ecological redline system prohibits development in designated zones covering ~25% of land area."
+    },
+    {
+      "id": 22,
+      "country": "CN",
+      "theme": "EO",
+      "name": "14th FYP Building Energy Conservation Plan",
+      "maturity": 4,
+      "isNew": false,
+      "effectiveDate": "2022-03-01",
+      "obligation": "Ultra-low energy building targets. 30% of new urban buildings green by 2025."
+    },
+    {
+      "id": 30,
+      "country": "HK",
+      "theme": "RD",
+      "name": "HKEX Climate Disclosure (ISSB-aligned)",
+      "maturity": 4,
+      "isNew": true,
+      "effectiveDate": "2025-01-01",
+      "obligation": "Mandatory for Main Board issuers. All issuers by 2027."
+    },
+    {
+      "id": 31,
+      "country": "HK",
+      "theme": "EO",
+      "name": "Building Energy Efficiency Ordinance (Cap 610)",
+      "maturity": 4,
+      "isNew": false,
+      "effectiveDate": "2012-09-21",
+      "obligation": "Mandatory BEC compliance for prescribed buildings on major retrofits."
+    },
+    {
+      "id": 32,
+      "country": "HK",
+      "theme": "GB",
+      "name": "BEAM Plus v2.0",
+      "maturity": 2,
+      "isNew": false,
+      "effectiveDate": "2024-06-01",
+      "obligation": "Voluntary. Enhanced climate resilience and wellbeing credits."
+    },
+    {
+      "id": 34,
+      "country": "HK",
+      "theme": "NB",
+      "name": "EIA Ordinance (Cap. 499)",
+      "maturity": 4,
+      "isNew": false,
+      "effectiveDate": "1998-04-01",
+      "obligation": "Mandatory EIA for designated projects (reclamation, major roads, large developments in sensitive areas). Environmental Permit required."
+    },
+    {
+      "id": 33,
+      "country": "HK",
+      "theme": "TR",
+      "name": "SFC Climate Risk Management (Fund Managers)",
+      "maturity": 3,
+      "isNew": false,
+      "effectiveDate": "2022-11-01",
+      "obligation": "Mandatory for SFC-licensed fund managers: integrate climate-related risks into investment and risk management. Cross-Agency Steering Group 2026–2028 priorities include transition plan disclosure."
+    },
+    {
+      "id": 1,
+      "country": "AU",
+      "theme": "RD",
+      "name": "AASB S1/S2 Climate Disclosure (Group 1)",
+      "maturity": 4,
+      "isNew": true,
+      "effectiveDate": "2025-01-01",
+      "obligation": "Mandatory climate disclosure for entities >$500m revenue. Group 2 from Jul 2026."
+    },
+    {
+      "id": 2,
+      "country": "AU",
+      "theme": "GB",
+      "name": "Green Star Buildings v1.1",
+      "maturity": 2,
+      "isNew": true,
+      "effectiveDate": "2025-07-01",
+      "obligation": "Voluntary. Adds nature, biodiversity, circularity credits. New builds + major retrofits."
+    },
+    {
+      "id": 3,
+      "country": "AU",
+      "theme": "EO",
+      "name": "NABERS Mandatory Disclosure (CBD Programme)",
+      "maturity": 5,
+      "isNew": false,
+      "effectiveDate": "2011-11-01",
+      "obligation": "Office >1,000 sqm NLA: NABERS rating at sale/lease. Penalties for non-disclosure."
+    },
+    {
+      "id": 4,
+      "country": "AU",
+      "theme": "EO",
+      "name": "NCC 2022 Section J — Energy Efficiency",
+      "maturity": 4,
+      "isNew": false,
+      "effectiveDate": "2023-05-01",
+      "obligation": "Mandatory energy efficiency standards for all new commercial buildings."
+    },
+    {
+      "id": 5,
+      "country": "AU",
+      "theme": "EO",
+      "name": "NABERS Expansion — BTR & PBSA",
+      "maturity": 1,
+      "isNew": true,
+      "effectiveDate": "2026-06-01",
+      "obligation": "Consultation on extending NABERS to build-to-rent and student accommodation."
+    },
+    {
+      "id": 6,
+      "country": "AU",
+      "theme": "SI",
+      "name": "Modern Slavery Act 2018",
+      "maturity": 4,
+      "isNew": false,
+      "effectiveDate": "2019-01-01",
+      "obligation": "Annual modern slavery statement for entities >$100m revenue. Construction identified as high-risk sector for supply chain risks."
+    },
+    {
+      "id": 8,
+      "country": "AU",
+      "theme": "NB",
+      "name": "EPBC Act + Nature Positive Reforms",
+      "maturity": 3,
+      "isNew": true,
+      "effectiveDate": "2024-12-01",
+      "obligation": "Federal EIA for matters of national environmental significance. Environment Protection Australia established 2024. Nature Positive Plan proposes national environmental standard and nature repair market."
+    },
+    {
+      "id": 9,
+      "country": "AU",
+      "theme": "SI",
+      "name": "Social Procurement Frameworks (VIC/NSW)",
+      "maturity": 3,
+      "isNew": false,
+      "effectiveDate": "2018-09-01",
+      "obligation": "Mandatory social procurement for Victorian government projects >$20m. NSW similar requirements. Employment targets, social enterprises, Aboriginal participation."
+    },
+    {
+      "id": 7,
+      "country": "AU",
+      "theme": "TR",
+      "name": "ASFI Sustainable Finance Taxonomy",
+      "maturity": 2,
+      "isNew": true,
+      "effectiveDate": "2025-06-01",
+      "obligation": "First Australian taxonomy. Defines green and credible transition activities. Treasury transition planning guidance expected. Voluntary."
+    },
+    {
+      "id": 130,
+      "country": "NZ",
+      "theme": "RD",
+      "name": "Mandatory Climate-Related Disclosures (FMC Act)",
+      "maturity": 4,
+      "isNew": false,
+      "effectiveDate": "2024-01-01",
+      "obligation": "Mandatory for large listed issuers, banks, insurers, asset managers. World-first."
+    },
+    {
+      "id": 131,
+      "country": "NZ",
+      "theme": "EO",
+      "name": "NABERSNZ Energy Rating",
+      "maturity": 2,
+      "isNew": false,
+      "effectiveDate": "2013-01-01",
+      "obligation": "Voluntary energy rating for office buildings. NABERS-aligned."
+    },
+    {
+      "id": 132,
+      "country": "NZ",
+      "theme": "GB",
+      "name": "Green Star NZ / Homestar",
+      "maturity": 2,
+      "isNew": false,
+      "effectiveDate": "2007-01-01",
+      "obligation": "Voluntary. Green Star NZ (commercial) and Homestar (residential) rating tools operated by NZGBC. Growing adoption but no mandatory minimum."
+    },
+    {
+      "id": 133,
+      "country": "NZ",
+      "theme": "NB",
+      "name": "Resource Management Act — Assessment of Effects",
+      "maturity": 3,
+      "isNew": false,
+      "effectiveDate": "1991-10-01",
+      "obligation": "Mandatory assessment of environmental effects for resource consents. Covers ecological impact, landscape, indigenous biodiversity. RMA being replaced by Natural and Built Environment Act."
+    },
+    {
+      "id": 10,
+      "country": "SG",
+      "theme": "GB",
+      "name": "BCA Green Mark (2021)",
+      "maturity": 3,
+      "isNew": false,
+      "effectiveDate": "2021-11-01",
+      "obligation": "Mandatory for new buildings >5,000 sqm GFA."
+    },
+    {
+      "id": 11,
+      "country": "SG",
+      "theme": "EO",
+      "name": "BCA Mandatory Energy Improvement (MEI)",
+      "maturity": 3,
+      "isNew": true,
+      "effectiveDate": "2025-09-01",
+      "obligation": "Existing buildings >5,000 sqm: ≥10% EUI reduction target."
+    },
+    {
+      "id": 12,
+      "country": "SG",
+      "theme": "RD",
+      "name": "SGX Listing Rules 711A/B",
+      "maturity": 4,
+      "isNew": false,
+      "effectiveDate": "2022-01-01",
+      "obligation": "ISSB-aligned climate disclosure for all listed issuers, phased."
+    },
+    {
+      "id": 13,
+      "country": "SG",
+      "theme": "TR",
+      "name": "MAS Transition Planning Guidelines",
+      "maturity": 3,
+      "isNew": true,
+      "effectiveDate": "2027-09-01",
+      "obligation": "Banks, insurers, asset managers: transition plans, engagement over divestment."
+    },
+    {
+      "id": 14,
+      "country": "SG",
+      "theme": "WC",
+      "name": "Beverage Container Return Scheme",
+      "maturity": 3,
+      "isNew": true,
+      "effectiveDate": "2026-04-01",
+      "obligation": "Islandwide reverse-vending network. Retail assets must accommodate infrastructure."
+    },
+    {
+      "id": 15,
+      "country": "SG",
+      "theme": "NB",
+      "name": "Environmental Impact Assessment (EPMA)",
+      "maturity": 3,
+      "isNew": false,
+      "effectiveDate": "2017-12-01",
+      "obligation": "Mandatory EIA for designated activities under Environmental Protection & Management Act. Expanded scope for developments near nature reserves."
+    },
+    {
+      "id": 16,
+      "country": "SG",
+      "theme": "NB",
+      "name": "BCA Landscape Replacement Areas (LRA)",
+      "maturity": 4,
+      "isNew": false,
+      "effectiveDate": "2009-01-01",
+      "obligation": "Mandatory greenery replacement for developments that remove existing landscaping. Quantified replacement ratio enforced through planning approval."
+    },
+    {
+      "id": 60,
+      "country": "MY",
+      "theme": "RD",
+      "name": "Bursa Malaysia Enhanced Sustainability Reporting",
+      "maturity": 3,
+      "isNew": true,
+      "effectiveDate": "2025-01-01",
+      "obligation": "ISSB-aligned disclosure for Main Market listed issuers."
+    },
+    {
+      "id": 61,
+      "country": "MY",
+      "theme": "GB",
+      "name": "Green Building Index (GBI)",
+      "maturity": 2,
+      "isNew": false,
+      "effectiveDate": "2009-01-01",
+      "obligation": "Voluntary green building rating. No mandatory minimum energy code."
+    },
+    {
+      "id": 70,
+      "country": "ID",
+      "theme": "RD",
+      "name": "OJK Sustainable Finance Roadmap Phase II",
+      "maturity": 3,
+      "isNew": true,
+      "effectiveDate": "2025-01-01",
+      "obligation": "Enhanced sustainability reporting for FIs. Transition plan expectations."
+    },
+    {
+      "id": 71,
+      "country": "ID",
+      "theme": "GB",
+      "name": "Greenship Rating System",
+      "maturity": 2,
+      "isNew": false,
+      "effectiveDate": "2010-01-01",
+      "obligation": "Voluntary green building rating. Some Jakarta government buildings mandated."
+    },
+    {
+      "id": 140,
+      "country": "TH",
+      "theme": "GB",
+      "name": "TREES",
+      "maturity": 2,
+      "isNew": false,
+      "effectiveDate": "2009-01-01",
+      "obligation": "Voluntary green building rating. Growing adoption in commercial."
+    },
+    {
+      "id": 141,
+      "country": "TH",
+      "theme": "EO",
+      "name": "Energy Efficiency Act — Building Energy Code",
+      "maturity": 3,
+      "isNew": false,
+      "effectiveDate": "2009-07-01",
+      "obligation": "Mandatory for new designated buildings >2,000 sqm. Limited enforcement."
+    },
+    {
+      "id": 142,
+      "country": "TH",
+      "theme": "RD",
+      "name": "SEC Sustainability Reporting (One Report)",
+      "maturity": 3,
+      "isNew": false,
+      "effectiveDate": "2022-01-01",
+      "obligation": "Mandatory for SET-listed companies. Climate disclosure aligned with TCFD."
+    },
+    {
+      "id": 120,
+      "country": "IN",
+      "theme": "RD",
+      "name": "SEBI BRSR / BRSR Core",
+      "maturity": 4,
+      "isNew": false,
+      "effectiveDate": "2023-07-01",
+      "obligation": "Mandatory for top 1,000 listed companies. BRSR Core with assurance from FY2024."
+    },
+    {
+      "id": 121,
+      "country": "IN",
+      "theme": "EO",
+      "name": "Energy Conservation Building Code (ECBC 2017)",
+      "maturity": 3,
+      "isNew": false,
+      "effectiveDate": "2017-06-19",
+      "obligation": "Mandatory for commercial >100 kW connected load in adopting states. Patchy enforcement."
+    },
+    {
+      "id": 122,
+      "country": "IN",
+      "theme": "GB",
+      "name": "IGBC / GRIHA Rating Systems",
+      "maturity": 2,
+      "isNew": false,
+      "effectiveDate": "2007-01-01",
+      "obligation": "Voluntary. IGBC (private) and GRIHA (government). Growing adoption."
+    },
+    {
+      "id": 124,
+      "country": "IN",
+      "theme": "NB",
+      "name": "EIA Notification 2006",
+      "maturity": 3,
+      "isNew": false,
+      "effectiveDate": "2006-09-14",
+      "obligation": "Mandatory EIA for construction projects >20,000 sqm built-up area. Category A/B classification. Coastal Regulation Zone restrictions. Compliance variable across states."
+    },
+    {
+      "id": 123,
+      "country": "IN",
+      "theme": "EO",
+      "name": "Energy Conservation (Amendment) Act 2022",
+      "maturity": 3,
+      "isNew": true,
+      "effectiveDate": "2023-01-01",
+      "obligation": "Carbon credit trading, mandatory building energy codes for large commercial."
+    },
+    {
+      "id": 80,
+      "country": "UK",
+      "theme": "EO",
+      "name": "MEES — Minimum Energy Efficiency Standards",
+      "maturity": 5,
+      "isNew": false,
+      "effectiveDate": "2018-04-01",
+      "obligation": "EPC E minimum for all lettings. Penalties up to £150k. Proposed uplift to C/B."
+    },
+    {
+      "id": 81,
+      "country": "UK",
+      "theme": "RD",
+      "name": "UK SDS (ISSB endorsement)",
+      "maturity": 1,
+      "isNew": true,
+      "effectiveDate": "2026-07-01",
+      "obligation": "UK endorsement of ISSB S1/S2. Consultation ongoing."
+    },
+    {
+      "id": 82,
+      "country": "UK",
+      "theme": "GB",
+      "name": "Future Homes Standard / Part L Uplift",
+      "maturity": 4,
+      "isNew": true,
+      "effectiveDate": "2025-06-01",
+      "obligation": "75-80% carbon reduction vs 2013 baseline. All new homes."
+    },
+    {
+      "id": 83,
+      "country": "UK",
+      "theme": "EC",
+      "name": "Whole Life Carbon — London Plan",
+      "maturity": 3,
+      "isNew": false,
+      "effectiveDate": "2022-03-01",
+      "obligation": "Mandatory WLC assessment for GLA-referable developments."
+    },
+    {
+      "id": 84,
+      "country": "UK",
+      "theme": "SI",
+      "name": "Modern Slavery Act — Construction Supply Chains",
+      "maturity": 4,
+      "isNew": false,
+      "effectiveDate": "2015-10-29",
+      "obligation": "Annual modern slavery statement for entities >£36m turnover."
+    },
+    {
+      "id": 85,
+      "country": "UK",
+      "theme": "TR",
+      "name": "TPT Disclosure Framework",
+      "maturity": 2,
+      "isNew": true,
+      "effectiveDate": "TBD",
+      "obligation": "Voluntary best-practice framework for climate transition plans (published Oct 2023). HMG consultation on mandatory transition plan requirements launched. FCA expected to align with UK SDS."
+    },
+    {
+      "id": 87,
+      "country": "UK",
+      "theme": "SI",
+      "name": "Social Value Act 2012 (+ Social Value Model 2021)",
+      "maturity": 4,
+      "isNew": false,
+      "effectiveDate": "2013-01-31",
+      "obligation": "Mandatory for all central government procurement above threshold. Construction is the largest category. Social Value Model (2021) requires measurable social outcomes — employment, skills, community benefit."
+    },
+    {
+      "id": 88,
+      "country": "UK",
+      "theme": "SI",
+      "name": "s.106 Planning Obligations / CIL",
+      "maturity": 4,
+      "isNew": false,
+      "effectiveDate": "1991-11-01",
+      "obligation": "Mandatory planning obligations on major developments — affordable housing quotas, community infrastructure, local employment and training plans. Developer contributions enforced through planning consent."
+    },
+    {
+      "id": 86,
+      "country": "UK",
+      "theme": "NB",
+      "name": "Biodiversity Net Gain (BNG)",
+      "maturity": 4,
+      "isNew": true,
+      "effectiveDate": "2024-02-12",
+      "obligation": "Mandatory 10% BNG for major developments in England. Smaller sites from Apr 2024. 30-year management and maintenance obligation."
+    },
+    {
+      "id": 90,
+      "country": "FR",
+      "theme": "EO",
+      "name": "Décret Tertiaire",
+      "maturity": 5,
+      "isNew": false,
+      "effectiveDate": "2019-07-23",
+      "obligation": "-40% energy by 2030, -50% by 2040, -60% by 2050. Tertiary >1,000 sqm. Penalties."
+    },
+    {
+      "id": 91,
+      "country": "FR",
+      "theme": "EC",
+      "name": "RE2020 — Whole-Life Carbon Caps",
+      "maturity": 5,
+      "isNew": false,
+      "effectiveDate": "2022-01-01",
+      "obligation": "Carbon caps for new residential + tertiary. Tightening pathway to 2031. Penalties."
+    },
+    {
+      "id": 97,
+      "country": "FR",
+      "theme": "NB",
+      "name": "Zéro Artificialisation Nette (ZAN)",
+      "maturity": 3,
+      "isNew": true,
+      "effectiveDate": "2023-07-20",
+      "obligation": "Target of zero net land-take by 2050, 50% reduction by 2031 vs 2011–2021 baseline. Mandatory for local planning documents (PLU/SCoT). Directly constrains greenfield RE development."
+    },
+    {
+      "id": 98,
+      "country": "FR",
+      "theme": "SI",
+      "name": "Loi sur le Devoir de Vigilance",
+      "maturity": 4,
+      "isNew": false,
+      "effectiveDate": "2017-03-27",
+      "obligation": "Mandatory duty of care for companies >5,000 employees (France) or >10,000 (global). Covers human rights, environment, health/safety across supply chain. Broader than modern slavery — includes community impact."
+    },
+    {
+      "id": 96,
+      "country": "FR",
+      "theme": "RD",
+      "name": "Article 29 LEC — Financial ESG Disclosure",
+      "maturity": 4,
+      "isNew": false,
+      "effectiveDate": "2022-01-01",
+      "obligation": "Mandatory ESG/climate disclosure for French asset managers, insurers, pension funds. Exceeds EU SFDR — requires biodiversity impact, fossil fuel exclusion policy, Paris-alignment strategy."
+    },
+    {
+      "id": 92,
+      "country": "EU",
+      "theme": "RD",
+      "name": "CSRD — Corporate Sustainability Reporting",
+      "maturity": 4,
+      "isNew": false,
+      "effectiveDate": "2024-01-01",
+      "obligation": "Phased by entity size. ESRS standards. Double materiality. Assurance required."
+    },
+    {
+      "id": 93,
+      "country": "EU",
+      "theme": "NB",
+      "name": "EU Nature Restoration Regulation",
+      "maturity": 3,
+      "isNew": true,
+      "effectiveDate": "2024-08-12",
+      "obligation": "20% of degraded ecosystems restored by 2030. Urban greening provisions."
+    },
+    {
+      "id": 94,
+      "country": "EU",
+      "theme": "RD",
+      "name": "CSRD Omnibus — Scope Narrowing (Draft)",
+      "maturity": 1,
+      "isNew": true,
+      "effectiveDate": "TBD",
+      "obligation": "Proposes narrowing CSRD to >1,000 employees. Delays wave 2."
+    },
+    {
+      "id": 95,
+      "country": "EU",
+      "theme": "GB",
+      "name": "EPBD Recast — Energy Performance of Buildings",
+      "maturity": 4,
+      "isNew": true,
+      "effectiveDate": "2025-05-29",
+      "obligation": "Zero-emission building standard for new builds from 2030. Renovation passports."
+    },
+    {
+      "id": 100,
+      "country": "US",
+      "theme": "RD",
+      "name": "SEC Climate Disclosure Rule (stayed)",
+      "maturity": 1,
+      "isNew": false,
+      "effectiveDate": "stayed",
+      "obligation": "Voluntarily stayed pending litigation. Federal scope uncertain."
+    },
+    {
+      "id": 101,
+      "country": "US",
+      "theme": "EO",
+      "name": "NYC Local Law 97",
+      "maturity": 5,
+      "isNew": false,
+      "effectiveDate": "2024-01-01",
+      "obligation": "Emissions caps for buildings >25,000 sqft. Penalties from 2024. City-level."
+    },
+    {
+      "id": 102,
+      "country": "US",
+      "theme": "EO",
+      "name": "WA Clean Buildings Performance Standard",
+      "maturity": 4,
+      "isNew": true,
+      "effectiveDate": "2026-06-01",
+      "obligation": "Tier 1 >50,000 sqft by Jun 2026, Tier 2 >20,000 sqft by 2028."
+    },
+    {
+      "id": 103,
+      "country": "US",
+      "theme": "SI",
+      "name": "UFLPA",
+      "maturity": 5,
+      "isNew": false,
+      "effectiveDate": "2022-06-21",
+      "obligation": "Import ban on goods from Xinjiang. Affects solar panel + construction materials supply chains."
+    },
+    {
+      "id": 110,
+      "country": "CA",
+      "theme": "RD",
+      "name": "CSSB IFRS S1/S2 Adoption",
+      "maturity": 1,
+      "isNew": true,
+      "effectiveDate": "2027-01-01",
+      "obligation": "Canadian ISSB adoption. Consultation phase."
+    },
+    {
+      "id": 111,
+      "country": "CA",
+      "theme": "EO",
+      "name": "BC Energy Step Code",
+      "maturity": 4,
+      "isNew": false,
+      "effectiveDate": "2017-12-15",
+      "obligation": "Mandatory energy performance tiers for new buildings. Provincial (BC only)."
+    },
+    {
+      "id": 112,
+      "country": "CA",
+      "theme": "EO",
+      "name": "Canada Green Buildings Strategy",
+      "maturity": 1,
+      "isNew": true,
+      "effectiveDate": "TBD",
+      "obligation": "Net-zero-emissions-ready model code by 2030. Consultation."
+    }
+  ]
+}
