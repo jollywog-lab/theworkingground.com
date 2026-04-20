@@ -770,6 +770,16 @@
       "isNew": true,
       "effectiveDate": "TBD",
       "obligation": "Net-zero-emissions-ready model code by 2030. Consultation."
+    },
+    {
+      "id": 143,
+      "country": "SG",
+      "theme": "EC",
+      "name": "Market-Wide Concrete Carbon Benchmark",
+      "maturity": 2,
+      "isNew": true,
+      "effectiveDate": "2026-02-26",
+      "obligation": "Voluntary industry benchmark establishing a market-wide embodied carbon baseline for concrete. Developed by CapitaLand Development and Climate Group ConcreteZero initiative."
     }
   ]
 }
