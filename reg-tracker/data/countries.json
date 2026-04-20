@@ -1,0 +1,124 @@
+{
+  "regions": [
+    "East Asia",
+    "Oceania",
+    "Southeast Asia",
+    "South Asia",
+    "Europe",
+    "Americas"
+  ],
+  "countries": [
+    {
+      "code": "JP",
+      "name": "Japan",
+      "colour": "#ec4899",
+      "region": "East Asia",
+      "footnote": null
+    },
+    {
+      "code": "KR",
+      "name": "Korea",
+      "colour": "#8b5cf6",
+      "region": "East Asia",
+      "footnote": null
+    },
+    {
+      "code": "CN",
+      "name": "China",
+      "colour": "#ca8a04",
+      "region": "East Asia",
+      "footnote": null
+    },
+    {
+      "code": "HK",
+      "name": "Hong Kong",
+      "colour": "#f97316",
+      "region": "East Asia",
+      "footnote": null
+    },
+    {
+      "code": "AU",
+      "name": "Australia",
+      "colour": "#2563eb",
+      "region": "Oceania",
+      "footnote": null
+    },
+    {
+      "code": "NZ",
+      "name": "New Zealand",
+      "colour": "#0369a1",
+      "region": "Oceania",
+      "footnote": "World-first mandatory climate disclosure (FMC Act, 2024). NABERSNZ aligned with Australia. Provides a regulatory template for AP markets despite smaller market size."
+    },
+    {
+      "code": "SG",
+      "name": "Singapore",
+      "colour": "#dc2626",
+      "region": "Southeast Asia",
+      "footnote": null
+    },
+    {
+      "code": "MY",
+      "name": "Malaysia",
+      "colour": "#14b8a6",
+      "region": "Southeast Asia",
+      "footnote": "Growing ASEAN RE investment market. Bursa Malaysia ISSB-aligned reporting now mandatory. GBI adoption increasing."
+    },
+    {
+      "code": "ID",
+      "name": "Indonesia",
+      "colour": "#65a30d",
+      "region": "Southeast Asia",
+      "footnote": "Largest ASEAN economy. Regulatory depth nascent but market scale warrants monitoring. OJK sustainable finance roadmap in force."
+    },
+    {
+      "code": "TH",
+      "name": "Thailand",
+      "colour": "#7e22ce",
+      "region": "Southeast Asia",
+      "footnote": "Established ASEAN commercial RE market. TREES rating, mandatory building energy code for designated buildings, SEC One Report for listed companies."
+    },
+    {
+      "code": "IN",
+      "name": "India",
+      "colour": "#b91c1c",
+      "region": "South Asia",
+      "footnote": "Major and growing RE investment market. SEBI BRSR mandatory for top 1,000 listed (with assurance). ECBC mandatory in adopting states. One of the few AP markets requiring ESG assurance."
+    },
+    {
+      "code": "UK",
+      "name": "UK",
+      "colour": "#1e3a5f",
+      "region": "Europe",
+      "footnote": "International comparator. Leading on MEES (mandatory building energy performance for lettings), TCFD-mandated disclosure, Biodiversity Net Gain. Benchmark for AP markets."
+    },
+    {
+      "code": "FR",
+      "name": "France",
+      "colour": "#475569",
+      "region": "Europe",
+      "footnote": "International comparator. France-specific regulations (RE2020, Décret Tertiaire) are often more advanced than EU-wide requirements. Leads globally on whole-life carbon caps and mandatory energy reduction pathways."
+    },
+    {
+      "code": "EU",
+      "name": "EU",
+      "colour": "#64748b",
+      "region": "Europe",
+      "footnote": "EU-level directives and regulations (CSRD, EPBD, Nature Restoration) that apply across member states. Shown separately from France because France often exceeds EU minimums and has additional national requirements."
+    },
+    {
+      "code": "US",
+      "name": "US",
+      "colour": "#78716c",
+      "region": "Americas",
+      "footnote": "International comparator. Federal policy stalled (SEC rule stayed), but city/state-level building performance standards (NYC LL97, WA CBPS) are globally significant. Demonstrates fragmented-federal pattern."
+    },
+    {
+      "code": "CA",
+      "name": "Canada",
+      "colour": "#92400e",
+      "region": "Americas",
+      "footnote": "International comparator. Provincial energy step codes (BC) and federal green buildings strategy. CSSB adopting ISSB. Similar federal/provincial structure to Australia."
+    }
+  ]
+}
