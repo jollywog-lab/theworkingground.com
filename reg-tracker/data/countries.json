@@ -127,6 +127,27 @@
       "footnote": null,
       "name": "International",
       "region": "International"
+    },
+    {
+      "code": "NL",
+      "name": "Netherlands",
+      "colour": "#1d3557",
+      "region": "Europe",
+      "footnote": "International comparator. World leader in embodied carbon regulation — MPG (Milieuprestatie Gebouwen) mandatory for all new buildings >100m² since 2013, tightened 2023. Also leads on circular economy transition. Key reference for EC and WC themes."
+    },
+    {
+      "code": "DK",
+      "name": "Denmark",
+      "colour": "#2e4a7b",
+      "region": "Europe",
+      "footnote": "International comparator. Mandatory whole-life carbon calculation under BR18 for new buildings, with tightening performance limits. Progressive building regulation; relevant for EC theme."
+    },
+    {
+      "code": "FI",
+      "name": "Finland",
+      "colour": "#3d5c8a",
+      "region": "Europe",
+      "footnote": "International comparator. Mandatory low-carbon building regulation in force from April 2025 — one of first countries to mandate embodied carbon performance limits for new construction. Relevant for EC theme."
     }
   ]
 }
