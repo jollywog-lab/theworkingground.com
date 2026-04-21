@@ -780,6 +780,86 @@
       "isNew": true,
       "effectiveDate": "2026-02-26",
       "obligation": "Voluntary industry benchmark establishing a market-wide embodied carbon baseline for concrete. Developed by CapitaLand Development and Climate Group ConcreteZero initiative."
+    },
+    {
+      "id": 144,
+      "country": "AU",
+      "theme": "PC",
+      "name": "AASB S1/S2 — Physical Climate Risk Disclosure",
+      "maturity": 4,
+      "isNew": false,
+      "effectiveDate": "2025-01-01",
+      "obligation": "Mandatory physical climate risk scenario analysis and metric disclosure under AASB S2 (ISSB-aligned). Group 1 entities from Jan 2025. Requires identification of acute and chronic physical risks and disclosure of associated financial impacts on real estate assets."
+    },
+    {
+      "id": 145,
+      "country": "HK",
+      "theme": "PC",
+      "name": "HKEX Climate Disclosure — Physical Risk Requirements",
+      "maturity": 4,
+      "isNew": false,
+      "effectiveDate": "2025-01-01",
+      "obligation": "Mandatory physical climate risk disclosure under HKEX Listing Rules (ISSB S2-aligned). Listed issuers required to disclose exposure to physical climate risks including scenario analysis. Effective for financial years commencing on or after 1 Jan 2025."
+    },
+    {
+      "id": 146,
+      "country": "NZ",
+      "theme": "PC",
+      "name": "Mandatory Climate Disclosures — Physical Risk (FMC Act)",
+      "maturity": 4,
+      "isNew": false,
+      "effectiveDate": "2023-01-01",
+      "obligation": "Mandatory physical climate risk disclosure under the Financial Markets Conduct Act. TCFD-aligned framework explicitly requiring physical risk scenario analysis for large listed issuers, registered banks, and licensed insurers."
+    },
+    {
+      "id": 147,
+      "country": "EU",
+      "theme": "PC",
+      "name": "CSRD / ESRS E1 — Physical Climate Risk",
+      "maturity": 3,
+      "isNew": false,
+      "effectiveDate": "2024-01-01",
+      "obligation": "CSRD requires double materiality assessment including physical climate risk impacts. ESRS E1 mandates disclosure of physical risk exposure, scenario analysis, and resilience of strategy against acute and chronic physical risks. Large companies from FY2024."
+    },
+    {
+      "id": 148,
+      "country": "UK",
+      "theme": "PC",
+      "name": "UK Mandatory TCFD — Physical Risk Reporting",
+      "maturity": 3,
+      "isNew": false,
+      "effectiveDate": "2022-04-06",
+      "obligation": "Mandatory TCFD-aligned reporting for UK listed companies and large private companies explicitly includes physical climate risk disclosures covering acute and chronic risks. FCA Listing Rules and Companies Act provisions."
+    },
+    {
+      "id": 149,
+      "country": "INTL",
+      "theme": "PC",
+      "name": "PCRAM — Physical Climate Risk Assessment Methodology (IIGCC)",
+      "maturity": 2,
+      "isNew": true,
+      "effectiveDate": "2022-06-01",
+      "obligation": "Voluntary framework by IIGCC providing standardised methodology for assessing physical climate risks in real estate portfolios. Covers flood, heat stress, wind, subsidence, and sea-level rise at asset level. Increasingly referenced in institutional investor mandates and real estate fund due diligence."
+    },
+    {
+      "id": 150,
+      "country": "FR",
+      "theme": "PC",
+      "name": "Article 173-VI / Art 29 LEC — Physical Risk Disclosure",
+      "maturity": 4,
+      "isNew": false,
+      "effectiveDate": "2016-01-01",
+      "obligation": "Pioneer mandatory physical climate risk disclosure for institutional investors. Article 173 (2015 Energy Transition Law) and successor Article 29 (2019 Energy-Climate Law) require institutional investors to disclose physical climate risk exposure in portfolios including real estate."
+    },
+    {
+      "id": 151,
+      "country": "SG",
+      "theme": "PC",
+      "name": "SGX Listing Rules — Physical Climate Risk Disclosure",
+      "maturity": 3,
+      "isNew": false,
+      "effectiveDate": "2023-01-01",
+      "obligation": "SGX sustainability reporting requirements (TCFD-aligned) mandate physical climate risk disclosure for listed issuers. Climate reporting expanding to all issuers from FY2025. MAS guidance reinforces physical risk scenario analysis requirements for financial institutions with real estate exposures."
     }
   ]
 }
