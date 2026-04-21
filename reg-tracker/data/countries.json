@@ -119,6 +119,13 @@
       "colour": "#92400e",
       "region": "Americas",
       "footnote": "International comparator. Provincial energy step codes (BC) and federal green buildings strategy. CSSB adopting ISSB. Similar federal/provincial structure to Australia."
+    },
+    {
+      "code": "INTL",
+      "colour": "#64748b",
+      "footnote": null,
+      "name": "International",
+      "region": "International"
     }
   ]
 }
