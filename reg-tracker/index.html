@@ -155,7 +155,7 @@ function DotMatrix({ matrix, visibleCountries, THEMES, MATURITY_SHORT, MATURITY_
         </tr></thead>
         <tbody>
           {levels.map((lvl, rowIdx) => (
-            <tr key={lvl} className={lvl === 0 ? 'border-t-2 border-dashed border-slate-300 border-b border-slate-100' : 'border-b border-slate-100'} style={{backgroundColor: rowIdx % 2 === 0 ? '#f8fafc' : '#ffffff'}}>
+            <tr key={lvl} className={lvl === 0 ? 'border-t-2 border-slate-300 border-b border-slate-100' : 'border-b border-slate-100'} style={{backgroundColor: lvl === 0 ? '#f1f5f9' : rowIdx % 2 === 0 ? '#f8fafc' : '#ffffff'}}>
               <td className="pr-2 text-right align-middle py-0.5"><div className="text-[9px] text-slate-500 leading-tight">{MATURITY_SHORT[lvl]}</div></td>
               {THEMES.map((t, i) => {
                 const dots = grid[t.code][lvl];
@@ -169,7 +169,7 @@ function DotMatrix({ matrix, visibleCountries, THEMES, MATURITY_SHORT, MATURITY_
                           <div key={c.code} className="tooltip-wrap" style={{position:'relative'}}>
                             <div className="dot rounded-full flex items-center justify-center text-white font-bold"
                               onClick={(e) => { e.stopPropagation(); togglePopover(c.code, t.code, e); }}
-                              style={{ width: dotSize, height: dotSize, fontSize: 7.5, backgroundColor: c.colour,
+                              style={{ width: dotSize, height: dotSize, fontSize: 7.5, backgroundColor: lvl === 0 ? '#c8d0db' : c.colour,
                                 border: isActive ? '2px solid #0f172a' : cell?.hasNew ? '2px solid #facc15' : intl ? '2px dashed #94a3b8' : 'none',
                               }}>{c.code}</div>
                             {!isActive && (<div className="tip">{c.name} · {MATURITY_LABELS[lvl]}{cell?.hasNew && ' · NEW/UPCOMING'}{cell?.regs.length > 0 && ` · Click for ${cell.regs.length} reg${cell.regs.length > 1 ? 's' : ''}`}</div>)}
