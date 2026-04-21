@@ -145,7 +145,7 @@ function DotMatrix({ matrix, visibleCountries, THEMES, MATURITY_SHORT, MATURITY_
   const levels = [5,4,3,2,1,0]; const dotSize = 21;
   function togglePopover(countryCode, themeCode, e) { if (activePopover && activePopover.country === countryCode && activePopover.theme === themeCode) { setActivePopover(null); } else { const rect = e.currentTarget.getBoundingClientRect(); setActivePopover({ country: countryCode, theme: themeCode, rect }); } }
   function handleTableClick(e) { if (!e.target.closest('.popover-card') && !e.target.closest('.dot')) setActivePopover(null); }
-  const isIntl = (c) => ['Europe','Americas'].includes(c.region);
+  const isIntl = (c) => ['Europe','Americas','International'].includes(c.region);
   return (
     <div className="overflow-auto" onClick={handleTableClick}>
       <table className="w-full" style={{borderCollapse:'separate', borderSpacing:'0'}}>
