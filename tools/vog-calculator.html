@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Value of Sustainability Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #fafaf9;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f5f5f4;
+            --text-primary: #1c1917;
+            --text-secondary: #57534e;
+            --text-tertiary: #78716c;
+            --border: #e7e5e4;
+            --accent-green: #16a34a;
+            --accent-green-light: #dcfce7;
+            --accent-blue: #0284c7;
+            --accent-blue-light: #e0f2fe;
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.025em;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .section h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            letter-spacing: -0.025em;
+        }
+
+        .section h3 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 1rem 0 0.75rem 0;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .input-group {
+            margin-bottom: 0.75rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 0.4rem;
+            color: var(--text-primary);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.5rem 0.65rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-tertiary);
+            transition: all 0.2s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            background: var(--bg-secondary);
+        }
+
+        input[type="number"] {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .intervention-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        .intervention-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+
+        .intervention-item input[type="checkbox"] {
+            width: auto;
+        }
+
+        .intervention-item label {
+            margin: 0;
+            font-weight: 400;
+            font-size: 0.85rem;
+        }
+
+        .button {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 1rem;
+        }
+
+        .button:hover {
+            background: #0369a1;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .metric-card {
+            background: var(--bg-tertiary);
+            padding: 1rem;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+
+        .metric-label {
+            font-size: 0.7rem;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .metric-value.positive {
+            color: var(--accent-green);
+        }
+
+        .intervention-breakdown {
+            margin-bottom: 2rem;
+        }
+
+        .intervention-card {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .intervention-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .intervention-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .intervention-capex {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .value-items {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+        }
+
+        .value-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        .value-item-label {
+            color: var(--text-secondary);
+        }
+
+        .value-item-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            color: var(--accent-green);
+        }
+
+        .category-tag {
+            display: inline-block;
+            font-size: 0.65rem;
+            padding: 0.125rem 0.4rem;
+            border-radius: 3px;
+            margin-left: 0.5rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .category-tag.driver {
+            background: var(--accent-green-light);
+            color: var(--accent-green);
+        }
+
+        .category-tag.protector {
+            background: var(--accent-blue-light);
+            color: var(--accent-blue);
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-top: 2px solid var(--border);
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .total-label {
+            font-size: 0.9rem;
+        }
+
+        .total-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--accent-green);
+        }
+
+        .collapsible {
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .collapsible::after {
+            content: '▼';
+            font-size: 0.7rem;
+            color: var(--text-tertiary);
+            transition: transform 0.2s;
+        }
+
+        .collapsible.collapsed::after {
+            transform: rotate(-90deg);
+        }
+
+        .collapsible-content {
+            max-height: 2000px;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .collapsible-content.collapsed {
+            max-height: 0;
+        }
+
+        @media (max-width: 1024px) {
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Value of Sustainability Calculator</h1>
+            <p class="subtitle">Quantifying sustainability interventions using Preserve methodology + LaSalle Value Drivers/Protectors framework*</p>
+        </header>
+
+        <div class="section">
+            <h2>Asset &amp; Intervention Details</h2>
+            <div class="input-grid">
+                <div class="input-group">
+                    <label for="asset-class">Asset Class</label>
+                    <select id="asset-class">
+                        <option value="office">Office</option>
+                        <option value="logistics">Logistics</option>
+                        <option value="residential">Residential</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="jurisdiction">Jurisdiction</label>
+                    <select id="jurisdiction">
+                        <option value="singapore">Singapore</option>
+                        <option value="australia">Australia</option>
+                        <option value="japan">Japan</option>
+                        <option value="hong-kong">Hong Kong</option>
+                        <option value="china">China</option>
+                        <option value="korea">South Korea</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="gfa">GFA (sqm)</label>
+                    <input type="number" id="gfa" value="10000" min="100" step="100">
+                </div>
+                <div class="input-group">
+                    <label for="current-eui">Current EUI (kWh/sqm/yr)</label>
+                    <input type="number" id="current-eui" value="250" min="50" step="10">
+                </div>
+                <div class="input-group">
+                    <label for="noi">Annual NOI (USD)</label>
+                    <input type="number" id="noi" value="2000000" min="0" step="10000">
+                </div>
+                <div class="input-group">
+                    <label for="holding-period">Holding Period (years)</label>
+                    <input type="number" id="holding-period" value="7" min="1" max="20">
+                </div>
+                <div class="input-group">
+                    <label for="discount-rate">Discount Rate (%)</label>
+                    <input type="number" id="discount-rate" value="8.0" min="0" max="20" step="0.1">
+                </div>
+            </div>
+            <h3>Select Interventions</h3>
+            <div class="intervention-grid">
+                <div class="intervention-item"><input type="checkbox" id="int-hvac" value="hvac"><label for="int-hvac">HVAC Upgrade</label></div>
+                <div class="intervention-item"><input type="checkbox" id="int-led" value="led"><label for="int-led">LED Retrofit</label></div>
+                <div class="intervention-item"><input type="checkbox" id="int-bms" value="bms"><label for="int-bms">BMS Install</label></div>
+                <div class="intervention-item"><input type="checkbox" id="int-facade" value="facade"><label for="int-facade">Facade Upgrade</label></div>
+                <div class="intervention-item"><input type="checkbox" id="int-pv" value="pv"><label for="int-pv">Solar PV</label></div>
+                <div class="intervention-item"><input type="checkbox" id="int-cert" value="cert" checked><label for="int-cert">Certification</label></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="collapsible" onclick="toggleSection('coefficients')">Value Driver &amp; Protector Assumptions</h2>
+            <div id="coefficients" class="collapsible-content">
+                <h3>Intervention Costs (USD/sqm)</h3>
+                <div class="input-grid">
+                    <div class="input-group"><label for="capex-hvac">HVAC Upgrade</label><input type="number" id="capex-hvac" value="180" step="10"></div>
+                    <div class="input-group"><label for="capex-led">LED Retrofit</label><input type="number" id="capex-led" value="30" step="5"></div>
+                    <div class="input-group"><label for="capex-bms">BMS Install</label><input type="number" id="capex-bms" value="50" step="5"></div>
+                    <div class="input-group"><label for="capex-facade">Facade Upgrade</label><input type="number" id="capex-facade" value="250" step="10"></div>
+                    <div class="input-group"><label for="capex-pv">Solar PV</label><input type="number" id="capex-pv" value="200" step="10"></div>
+                    <div class="input-group"><label for="capex-cert">Certification</label><input type="number" id="capex-cert" value="20" step="5"></div>
+                </div>
+                <h3>Energy Savings (% EUI reduction per intervention)</h3>
+                <div class="input-grid">
+                    <div class="input-group"><label for="energy-hvac">HVAC Upgrade (%)</label><input type="number" id="energy-hvac" value="20" step="1" min="0" max="100"></div>
+                    <div class="input-group"><label for="energy-led">LED Retrofit (%)</label><input type="number" id="energy-led" value="12" step="1" min="0" max="100"></div>
+                    <div class="input-group"><label for="energy-bms">BMS Install (%)</label><input type="number" id="energy-bms" value="8" step="1" min="0" max="100"></div>
+                    <div class="input-group"><label for="energy-fade">Facade Upgrade (%)</label><input type="number" id="energy-facade" value="15" step="1" min="0" max="100"></div>
+                    <div class="input-group"><label for="energy-pv">Solar PV (%)</label><input type="number" id="energy-pv" value="12" step="1" min="0" max="100"></div>
+                    <div class="input-group"><label for="energy-cert">Certification (%)</label><input type="number" id="energy-cert" value="3" step="1" min="0" max="100"></div>
+                </div>
+                <h3>Value Drivers</h3>
+                <div class="input-grid">
+                    <div class="input-group"><label for="energy-rate">Energy Rate (USD/kWh)</label><input type="number" id="energy-rate" value="0.24" step="0.01"></div>
+                    <div class="input-group"><label for="rent-premium">Rent Premium (% of NOI)</label><input type="number" id="rent-premium" value="2.5" step="0.1"></div>
+                    <div class="input-group"><label for="occupancy-gain">Occupancy Gain (percentage points)</label><input type="number" id="occupancy-gain" value="1.5" step="0.1"></div>
+                    <div class="input-group"><label for="cap-rate-compression">Cap Rate Compression (bps)</label><input type="number" id="cap-rate-compression" value="20" step="1"></div>
+                </div>
+                <h3>Value Protectors</h3>
+                <div class="input-grid">
+                    <div class="input-group"><label for="carbon-price">Current Carbon Price (USD/tonne)</label><input type="number" id="carbon-price" value="25" step="1"></div>
+                    <div class="input-group"><label for="carbon-growth">Carbon Price Growth (%/year)</label><input type="number" id="carbon-growth" value="12" step="1"></div>
+                    <div class="input-group"><label for="carbon-intensity">Grid Carbon Intensity (kgCO2e/kWh)</label><input type="number" id="carbon-intensity" value="0.45" step="0.01"></div>
+                    <div class="input-group"><label for="obsolescence-risk">Obsolescence Risk (% NOI at risk)</label><input type="number" id="obsolescence-risk" value="5" step="0.5"></div>
+                </div>
+            </div>
+        </div>
+
+        <button class="button" onclick="calculate()">Calculate Impact</button>
+
+        <div class="section" id="results" style="display: none;">
+            <h2>Financial Impact Summary</h2>
+            <div class="results-grid">
+                <div class="metric-card"><div class="metric-label">Total NPV</div><div class="metric-value positive" id="result-npv">—</div></div>
+                <div class="metric-card"><div class="metric-label">Est. IRR</div><div class="metric-value" id="result-irr">—</div></div>
+                <div class="metric-card"><div class="metric-label">Payback Period</div><div class="metric-value" id="result-payback">—</div></div>
+            </div>
+            <h3>Value by Intervention</h3>
+            <div id="intervention-breakdown"></div>
+            <div class="total-row"><span class="total-label">Total Capex Required</span><span class="total-value" id="total-capex">—</span></div>
+            <div class="total-row"><span class="total-label">Total Value Created (PV)</span><span class="total-value" id="total-value">—</span></div>
+            <div class="total-row" style="border-top: 3px double var(--border); padding-top: 1rem; margin-top: 1rem;"><span class="total-label">Net Present Value</span><span class="total-value" id="total-npv">—</span></div>
+        </div>
+
+        <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border); font-size: 0.75rem; color: var(--text-tertiary);">
+            * Using industry benchmark coefficients (GRESB, CBRE, JLL, CoStar). Replace with calibrated data for internal use.
+        </div>
+    </div>
+
+    <script>
+        const INTERVENTION_NAMES = { hvac: 'HVAC Upgrade', led: 'LED Retrofit', bms: 'BMS Installation', facade: 'Facade Upgrade', pv: 'Solar PV', cert: 'Green Certification' };
+
+        function toggleSection(id) {
+            const content = document.getElementById(id);
+            const header = content.previousElementSibling;
+            content.classList.toggle('collapsed');
+            header.classList.toggle('collapsed');
+        }
+
+        function getCoefficients() {
+            return {
+                capex: { hvac: parseFloat(document.getElementById('capex-hvac').value), led: parseFloat(document.getElementById('capex-led').value), bms: parseFloat(document.getElementById('capex-bms').value), facade: parseFloat(document.getElementById('capex-facade').value), pv: parseFloat(document.getElementById('capex-pv').value), cert: parseFloat(document.getElementById('capex-cert').value) },
+                energySavings: { hvac: parseFloat(document.getElementById('energy-hvac').value)/100, led: parseFloat(document.getElementById('energy-led').value)/100, bms: parseFloat(document.getElementById('energy-bms').value)/100, facade: parseFloat(document.getElementById('energy-facade').value)/100, pv: parseFloat(document.getElementById('energy-pv').value)/100, cert: parseFloat(document.getElementById('energy-cert').value)/100 },
+                energyRate: parseFloat(document.getElementById('energy-rate').value),
+                rentPremium: parseFloat(document.getElementById('rent-premium').value)/100,
+                occupancyGain: parseFloat(document.getElementById('occupancy-gain').value),
+                capRateCompression: parseFloat(document.getElementById('cap-rate-compression').value),
+                carbonPrice: parseFloat(document.getElementById('carbon-price').value),
+                carbonGrowth: parseFloat(document.getElementById('carbon-growth').value)/100,
+                carbonIntensity: parseFloat(document.getElementById('carbon-intensity').value),
+                obsolescenceRisk: parseFloat(document.getElementById('obsolescence-risk').value)/100
+            };
+        }
+
+        function calculate() {
+            const gfa = parseFloat(document.getElementById('gfa').value);
+            const currentEUI = parseFloat(document.getElementById('current-eui').value);
+            const noi = parseFloat(document.getElementById('noi').value);
+            const holdingPeriod = parseInt(document.getElementById('holding-period').value);
+            const discountRate = parseFloat(document.getElementById('discount-rate').value)/100;
+            const interventions = [];
+            ['hvac','led','bms','facade','pv','cert'].forEach(int => { if (document.getElementById('int-'+int).checked) interventions.push(int); });
+            if (interventions.length === 0) { alert('Please select at least one intervention'); return; }
+            const coef = getCoefficients();
+            const annualEnergyUse = currentEUI * gfa;
+            let totalCapex = 0, totalValue = 0, interventionResults = [];
+            interventions.forEach(int => {
+                const capex = coef.capex[int] * gfa;
+                const energySaved = annualEnergyUse * coef.energySavings[int];
+                const annualEnergySavings = energySaved * coef.energyRate;
+                let energySavingsPV = 0;
+                for (let y=1; y<=holdingPeriod; y++) energySavingsPV += annualEnergySavings / Math.pow(1+discountRate, y);
+                const carbonSaved = energySaved * coef.carbonIntensity / 1000;
+                let carbonValue = 0;
+                for (let y=1; y<=holdingPeriod; y++) carbonValue += (carbonSaved * coef.carbonPrice * Math.pow(1+coef.carbonGrowth,y-1)) / Math.pow(1+discountRate,y);
+                let rentPremiumPV=0, occupancyPV=0, exitValuePV=0;
+                if (int==='cert') {
+                    for (let y=1; y<=holdingPeriod; y++) { rentPremiumPV += (noi*coef.rentPremium)/Math.pow(1+discountRate,y); occupancyPV += (coef.occupancyGain/100*noi)/Math.pow(1+discountRate,y); }
+                    exitValuePV = (noi*1.02/(coef.capRateCompression/10000)) / Math.pow(1+discountRate,holdingPeriod);
+                }
+                let obsolescencePV=0;
+                if (['hvac','facade','bms'].includes(int)) for (let y=1; y<=holdingPeriod; y++) obsolescencePV += (noi*coef.obsolescenceRisk)/Math.pow(1+discountRate,y);
+                const total = energySavingsPV+carbonValue+rentPremiumPV+occupancyPV+exitValuePV+obsolescencePV;
+                interventionResults.push({name:int,capex,energySavingsPV,carbonValue,rentPremiumPV,occupancyPV,exitValuePV,obsolescencePV,total});
+                totalCapex+=capex; totalValue+=total;
+            });
+            const npv = totalValue-totalCapex;
+            const totalAnnual = interventionResults.reduce((s,r)=>s+(r.energySavingsPV+r.carbonValue+r.rentPremiumPV+r.occupancyPV+r.obsolescencePV)/holdingPeriod,0);
+            document.getElementById('result-npv').textContent='$'+(npv/1e6).toFixed(2)+'M';
+            document.getElementById('result-irr').textContent=(totalAnnual/totalCapex*100).toFixed(1)+'%';
+            document.getElementById('result-payback').textContent=(totalCapex/totalAnnual).toFixed(1)+' yrs';
+            const NAMES=INTERVENTION_NAMES;
+            document.getElementById('intervention-breakdown').innerHTML=interventionResults.map(r=>`<div class="intervention-card"><div class="intervention-header"><span class="intervention-name">${NAMES[r.name]}</span><span class="intervention-capex">Capex: $${(r.capex/1000).toFixed(0)}k</span></div><div class="value-items">${r.energySavingsPV>0?`<div class="value-item"><span class="value-item-label">Energy Savings <span class="category-tag driver">Driver</span></span><span class="value-item-value">$${(r.energySavingsPV/1000).toFixed(0)}k</span></div>`:''  }${r.carbonValue>0?`<div class="value-item"><span class="value-item-label">Carbon Risk <span class="category-tag protector">Protector</span></span><span class="value-item-value">$${(r.carbonValue/1000).toFixed(0)}k</span></div>`:''  }${r.rentPremiumPV>0?`<div class="value-item"><span class="value-item-label">Rent Premium <span class="category-tag driver">Driver</span></span><span class="value-item-value">$${(r.rentPremiumPV/1000).toFixed(0)}k</span></div>`:''  }${r.occupancyPV>0?`<div class="value-item"><span class="value-item-label">Occupancy <span class="category-tag driver">Driver</span></span><span class="value-item-value">$${(r.occupancyPV/1000).toFixed(0)}k</span></div>`:''  }${r.exitValuePV>0?`<div class="value-item"><span class="value-item-label">Exit Value <span class="category-tag driver">Driver</span></span><span class="value-item-value">$${(r.exitValuePV/1e6).toFixed(2)}M</span></div>`:''  }${r.obsolescencePV>0?`<div class="value-item"><span class="value-item-label">Obsolescence <span class="category-tag protector">Protector</span></span><span class="value-item-value">$${(r.obsolescencePV/1000).toFixed(0)}k</span></div>`:''  }</div><div class="total-row" style="border-top:1px solid var(--border);margin-top:.75rem;padding-top:.75rem"><span class="total-label">Total Value</span><span class="total-value">$${(r.total/1000).toFixed(0)}k</span></div></div>`).join('');
+            document.getElementById('total-capex').textContent='$'+(totalCapex/1e6).toFixed(2)+'M';
+            document.getElementById('total-value').textContent='$'+(totalValue/1e6).toFixed(2)+'M';
+            document.getElementById('total-npv').textContent='$'+(npv/1e6).toFixed(2)+'M';
+            document.getElementById('results').style.display='block';
+            document.getElementById('results').scrollIntoView({behavior:'smooth',block:'nearest'});
+        }
+        document.getElementById('jurisdiction').addEventListener('change',function(){
+            const rates={singapore:{energy:0.24,carbon:25,growth:12},australia:{energy:0.20,carbon:38,growth:6},japan:{energy:0.27,carbon:28,growth:8},'hong-kong':{energy:0.18,carbon:0,growth:20},china:{energy:0.12,carbon:12,growth:10},korea:{energy:0.14,carbon:32,growth:7}};
+            const r=rates[this.value];
+            if(r){document.getElementById('energy-rate').value=r.energy;document.getElementById('carbon-price').value=r.carbon;document.getElementById('carbon-growth').value=r.growth;}
+        });
+    </script>
+</body>
+</html>
