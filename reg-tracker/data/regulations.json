@@ -870,6 +870,176 @@
       "isNew": true,
       "effectiveDate": "2023-01-01",
       "obligation": "Pilot voluntary rating for upfront embodied carbon in new buildings and major refurbishments. NABERS developing standardised methodology to benchmark and compare whole-life embodied carbon intensity."
+    },
+    {
+      "id": 153,
+      "country": "EU",
+      "theme": "TR",
+      "name": "EU Taxonomy for Sustainable Activities",
+      "maturity": 4,
+      "isNew": false,
+      "effectiveDate": "2020-07-12",
+      "obligation": "Mandatory classification system for environmentally sustainable economic activities. Applies to large EU corporates, financial products, and green bonds. Real estate activities classified under climate change mitigation/adaptation objectives."
+    },
+    {
+      "id": 154,
+      "country": "NZ",
+      "theme": "TR",
+      "name": "NZ Climate Standards — Transition Plan Disclosure",
+      "maturity": 3,
+      "isNew": false,
+      "effectiveDate": "2023-01-01",
+      "obligation": "Mandatory climate-related financial disclosures including transition plans for large listed issuers, banks, insurers, and investment managers under the Financial Sector (Climate-related Disclosures and Other Matters) Amendment Act."
+    },
+    {
+      "id": 155,
+      "country": "MY",
+      "theme": "TR",
+      "name": "JC3 Principles-based Taxonomy (PBT)",
+      "maturity": 3,
+      "isNew": false,
+      "effectiveDate": "2021-05-01",
+      "obligation": "Principles-based taxonomy for climate change by the Joint Committee on Climate Change (JC3). Guides financial institutions on classifying green and transition activities. Applied to financing and investment decisions."
+    },
+    {
+      "id": 156,
+      "country": "CN",
+      "theme": "TR",
+      "name": "Green Bond Endorsed Projects Catalogue / Transition Finance Guidance",
+      "maturity": 3,
+      "isNew": false,
+      "effectiveDate": "2021-04-01",
+      "obligation": "PBOC-led green finance taxonomy covering green bonds and transition finance. Mandatory for green bond issuance. Guidance on transition activities includes energy-efficient buildings and green real estate."
+    },
+    {
+      "id": 157,
+      "country": "FR",
+      "theme": "WC",
+      "name": "AGEC — Anti-Waste for Circular Economy Law",
+      "maturity": 4,
+      "isNew": false,
+      "effectiveDate": "2020-02-10",
+      "obligation": "Comprehensive anti-waste legislation phasing out single-use plastics, mandating waste sorting and labelling, producer responsibility, and right-to-repair. Applies to commercial premises and real estate asset management."
+    },
+    {
+      "id": 158,
+      "country": "UK",
+      "theme": "WC",
+      "name": "Simpler Recycling (Mandatory Workplace Recycling)",
+      "maturity": 4,
+      "isNew": true,
+      "effectiveDate": "2025-04-01",
+      "obligation": "Mandatory separation of dry recyclables and food waste for all non-household premises in England. Landlords and building managers must provide adequate infrastructure. Enforced from April 2025."
+    },
+    {
+      "id": 159,
+      "country": "AU",
+      "theme": "WC",
+      "name": "National Waste Policy / State Mandatory Recycling Frameworks",
+      "maturity": 3,
+      "isNew": false,
+      "effectiveDate": "2019-01-01",
+      "obligation": "Federal waste reduction targets under National Waste Policy 2018. State-level mandatory waste separation and diversion requirements (VIC, NSW, QLD, WA). Commercial premises required to separate recyclables in most jurisdictions."
+    },
+    {
+      "id": 160,
+      "country": "JP",
+      "theme": "WC",
+      "name": "Container & Packaging Recycling Act / Construction Material Recycling Act",
+      "maturity": 4,
+      "isNew": false,
+      "effectiveDate": "1997-04-01",
+      "obligation": "Mandatory recycling of containers, packaging, and construction materials. Contractors must separate and recycle concrete, asphalt, timber, and metal from demolition works. Strictly enforced with penalties."
+    },
+    {
+      "id": 161,
+      "country": "HK",
+      "theme": "WC",
+      "name": "Municipal Solid Waste Charging Scheme",
+      "maturity": 2,
+      "isNew": false,
+      "effectiveDate": "2021-08-26",
+      "obligation": "Waste Disposal (Charge for Disposal of Waste) Regulation enacted 2021. Requires designated bags for household and commercial waste disposal. Implementation delayed multiple times; status uncertain as of 2025."
+    },
+    {
+      "id": 162,
+      "country": "EU",
+      "theme": "WC",
+      "name": "EU Circular Economy Action Plan / Packaging & Packaging Waste Regulation",
+      "maturity": 3,
+      "isNew": false,
+      "effectiveDate": "2020-03-11",
+      "obligation": "Framework legislation driving mandatory packaging reduction, reuse targets, and recyclability requirements. Packaging & Packaging Waste Regulation (PPWR) adopted 2025 — binding targets for real estate and facilities management procurement."
+    },
+    {
+      "id": 163,
+      "country": "EU",
+      "theme": "EO",
+      "name": "EPBD Recast 2024 — Zero Emission Buildings Standard",
+      "maturity": 3,
+      "isNew": true,
+      "effectiveDate": "2024-05-28",
+      "obligation": "Recast Energy Performance of Buildings Directive requires all new buildings to be Zero Emission Buildings (ZEB) from 2030 (public buildings 2028). Mandates Minimum Energy Performance Standards (MEPS) for worst-performing existing stock. Member states transposing to national law by 2026."
+    },
+    {
+      "id": 164,
+      "country": "NL",
+      "theme": "EC",
+      "name": "MPG — Milieuprestatie Gebouwen (Environmental Performance of Buildings)",
+      "maturity": 5,
+      "isNew": false,
+      "effectiveDate": "2013-01-01",
+      "obligation": "World's oldest and most enforced mandatory embodied carbon regulation. Requires lifecycle environmental performance assessment for all new residential and non-residential buildings >100m² NLA. Performance limit (MPG ≤ 0.5 for residential) tightened in 2023. Enforced at building permit."
+    },
+    {
+      "id": 165,
+      "country": "DK",
+      "theme": "EC",
+      "name": "BR18 — Mandatory Whole-Life Carbon Calculation",
+      "maturity": 4,
+      "isNew": false,
+      "effectiveDate": "2023-01-01",
+      "obligation": "Mandatory LCA calculation and reporting under Danish Building Regulations BR18 for new buildings >1,000m² GFA from 2023, extended to >600m². Performance limits being phased in. Targets set to tighten progressively to 2029."
+    },
+    {
+      "id": 166,
+      "country": "FI",
+      "theme": "EC",
+      "name": "National Low Carbon Building Regulation",
+      "maturity": 4,
+      "isNew": true,
+      "effectiveDate": "2025-04-01",
+      "obligation": "Mandatory carbon footprint calculation and performance limit for new construction. Buildings must demonstrate compliance with embodied and operational carbon cap at permit stage. One of first countries to mandate embodied carbon performance limits. In force April 2025."
+    },
+    {
+      "id": 167,
+      "country": "EU",
+      "theme": "NB",
+      "name": "CSRD ESRS E4 — Biodiversity & Ecosystems",
+      "maturity": 3,
+      "isNew": false,
+      "effectiveDate": "2024-01-01",
+      "obligation": "Mandatory biodiversity and ecosystems disclosure under CSRD for large companies (phase 1 from FY2024). Requires assessment of impacts, dependencies, risks and opportunities related to biodiversity. Applies to real estate companies with material nature-related exposures."
+    },
+    {
+      "id": 168,
+      "country": "INTL",
+      "theme": "NB",
+      "name": "TNFD — Taskforce on Nature-related Financial Disclosures",
+      "maturity": 2,
+      "isNew": true,
+      "effectiveDate": "2023-09-18",
+      "obligation": "Voluntary global framework for nature-related risk assessment and disclosure, launched September 2023. Structured parallel to TCFD. Anticipated to follow TCFD trajectory toward regulatory adoption; ISSB monitoring for potential future standard (indicative S3). Relevant for real estate portfolios with land-use, water, and biodiversity exposures."
+    },
+    {
+      "id": 169,
+      "country": "FR",
+      "theme": "GB",
+      "name": "HQE — Haute Qualité Environnementale",
+      "maturity": 3,
+      "isNew": false,
+      "effectiveDate": "1996-01-01",
+      "obligation": "French high environmental quality certification for buildings. Mandatory for certain public buildings and housing schemes. Covers energy, water, indoor air quality, and comfort. Widely adopted for premium commercial assets; increasingly referenced in green finance criteria."
     }
   ]
 }
