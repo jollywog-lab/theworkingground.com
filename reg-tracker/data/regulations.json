@@ -860,6 +860,16 @@
       "isNew": false,
       "effectiveDate": "2023-01-01",
       "obligation": "SGX sustainability reporting requirements (TCFD-aligned) mandate physical climate risk disclosure for listed issuers. Climate reporting expanding to all issuers from FY2025. MAS guidance reinforces physical risk scenario analysis requirements for financial institutions with real estate exposures."
+    },
+    {
+      "id": 152,
+      "country": "AU",
+      "theme": "EC",
+      "name": "NABERS Embodied Carbon Rating (Pilot)",
+      "maturity": 1,
+      "isNew": true,
+      "effectiveDate": "2023-01-01",
+      "obligation": "Pilot voluntary rating for upfront embodied carbon in new buildings and major refurbishments. NABERS developing standardised methodology to benchmark and compare whole-life embodied carbon intensity."
     }
   ]
 }
