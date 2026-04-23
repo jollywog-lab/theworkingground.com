@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sanzo Wada Color Palette Selector — The Working Ground</title>
+    <title>Sanzo Wada Colour Palette Selector — The Working Ground</title>
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -60,18 +60,18 @@
     <div class="container">
         <header>
             <h1>Sanzo Wada Colour Palette Selector</h1>
-            <p class="subtitle">Colour combinations from Sanzo Wada's <em>Dictionary of Colour Combinations</em> (1933). Each palette references the actual combination number from Wada's 348-palette catalogue — colour values derived from his original CMYK specifications. These pairings embrace contrast, unexpected juxtapositions, and temperature balance.</p>
+            <p class="subtitle">Colour combinations from Sanzo Wada's <em>Dictionary of Colour Combinations</em> (1933). Each palette references the actual combination number from Wada's 348-palette catalogue — colour values derived from his original CMYK specifications.</p>
         </header>
         <div class="primer-section">
             <div class="primer-title">Colour Theory Principles</div>
-            <p class="about-text" style="font-size:0.9rem;color:var(--text-muted);margin-bottom:0">Wada's palettes work because they balance multiple colour relationships simultaneously. Understanding these principles helps explain why "wrong" combinations feel right.</p>
+            <p class="about-text" style="font-size:0.9rem;color:var(--text-muted);margin-bottom:0">Wada's palettes work because they balance multiple colour relationships simultaneously.</p>
             <div class="primer-grid">
-                <div class="primer-card"><div class="primer-card-title">Temperature Contrast</div><div class="primer-card-text">Warm colours (reds, oranges, yellows) paired with cool colours (blues, greens, purples). The tension creates visual interest while shared value or saturation maintains harmony.</div></div>
-                <div class="primer-card"><div class="primer-card-title">Complementary Harmony</div><div class="primer-card-text">Colours opposite on the colour wheel (orange/blue, red/green, yellow/purple). Pure complements clash; muted or shifted versions harmonise — Wada's preferred approach.</div></div>
-                <div class="primer-card"><div class="primer-card-title">Value Structure</div><div class="primer-card-text">Distribution of light, medium, and dark tones. Varied values create depth. Wada frequently anchors palettes with black or near-black to give lighter colours room to breathe.</div></div>
-                <div class="primer-card"><div class="primer-card-title">Saturation Contrast</div><div class="primer-card-text">Vibrant colours anchored by muted tones. A saturated hue alongside neutrals becomes sophisticated rather than garish. The muted colours provide visual rest.</div></div>
-                <div class="primer-card"><div class="primer-card-title">Tonal Relationships</div><div class="primer-card-text">Colours sharing undertones despite different hues — all slightly warm, all slightly greyed. Creates cohesion even when hues differ considerably.</div></div>
-                <div class="primer-card"><div class="primer-card-title">Cultural Juxtaposition</div><div class="primer-card-text">Wada drew from Japanese dye traditions and natural observation. These pairings carry cultural memory, making them feel inevitable rather than arbitrary.</div></div>
+                <div class="primer-card"><div class="primer-card-title">Temperature Contrast</div><div class="primer-card-text">Warm colours paired with cool colours. The tension creates visual interest while shared value or saturation maintains harmony.</div></div>
+                <div class="primer-card"><div class="primer-card-title">Complementary Harmony</div><div class="primer-card-text">Colours opposite on the colour wheel. Pure complements clash; muted versions harmonise — Wada's preferred approach.</div></div>
+                <div class="primer-card"><div class="primer-card-title">Value Structure</div><div class="primer-card-text">Distribution of light, medium, and dark tones. Wada frequently anchors palettes with black or near-black.</div></div>
+                <div class="primer-card"><div class="primer-card-title">Saturation Contrast</div><div class="primer-card-text">Vibrant colours anchored by muted tones. The muted colours provide visual rest while the vibrant colour provides energy.</div></div>
+                <div class="primer-card"><div class="primer-card-title">Tonal Relationships</div><div class="primer-card-text">Colours sharing undertones despite different hues — all slightly warm, all slightly greyed. Creates cohesion even when hues differ.</div></div>
+                <div class="primer-card"><div class="primer-card-title">Cultural Juxtaposition</div><div class="primer-card-text">Wada drew from Japanese dye traditions and natural observation. These pairings carry cultural memory, making them feel inevitable.</div></div>
             </div>
         </div>
         <div class="filter-container">
@@ -87,62 +87,75 @@
         <div class="palettes-grid" id="palettes-grid"></div>
         <div class="about-section">
             <div class="about-title">About Sanzo Wada</div>
-            <p class="about-text">Sanzo Wada (1883–1967) was a Japanese artist, costume designer, and professor who compiled the <em>Dictionary of Colour Combinations</em> from his six-volume <em>Haishoku Soukan</em>, originally published in the 1930s for kimono and fashion design. Seigensha published the collected edition in 2010. The work contains 348 palettes grounded in natural observation and cultural memory.</p>
-            <p class="about-text">His approach prioritises surprising harmony over safe gradation. Where algorithmic generators produce colours that share obvious relationships, Wada juxtaposes temperatures, saturations, and cultural contexts to create combinations that shouldn't work but do.</p>
+            <p class="about-text">Sanzo Wada (1883–1967) was a Japanese artist, costume designer, and professor who compiled the <em>Dictionary of Colour Combinations</em> from his six-volume <em>Haishoku Soukan</em>, originally published in the 1930s for kimono and fashion design.</p>
             <p class="about-text">All colour values are derived from Wada's original CMYK specifications, converted to hex via the open-source dataset compiled by Dain M. Blodorn Kim. Combination numbers reference Wada's original catalogue. Click any swatch to copy its hex code.</p>
         </div>
     </div>
     <script>
-        const palettes = [
-            { name: "Eosine Pink, Yellow Green & Black", source: "Combination No. 276", colors: ["#f37f94","#fdd4bd","#afd472","#111314"], description: "Vivid pink and fresh yellow-green against near-black — high-contrast trio bridged by seashell", theory: "Value extremes create maximum tension. The black grounds both warm and cool mid-tones; seashell serves as the mediating neutral.", approaches: ["saturation","unexpected"] },
-            { name: "Olive, Dusky Green & Deep Slate Green", source: "Combination No. 318", colors: ["#806e4b","#42533e","#004f46","#112f2c"], description: "Four tones of forest and earth — deep tonal harmony from warm olive to cold slate-green", theory: "Tonal monochromatic descent. All share the green-brown family but span warm to cool and light to dark, creating depth without contrast.", approaches: ["saturation","unexpected"] },
-            { name: "Hermosa Pink, Seashell & Calamine Blue", source: "Combination No. 176", colors: ["#f9c1ce","#fdd4bd","#78cdd0"], description: "Soft blush and cream against cool aqua — delicate temperature play in high key", theory: "Temperature contrast at high value. All three colours are light; the distinction is entirely thermal — warm pinks against cool blue-green.", approaches: ["temperature","unexpected"] },
-            { name: "Sulphur Yellow, Green Blue & Antwerp Blue", source: "Combination No. 208", colors: ["#f5ecc2","#099197","#007190"], description: "Pale yellow cream against two depths of teal — unexpected but grounded", theory: "Value contrast anchors a near-monochromatic blue-green pair. The pale yellow reads as neutral against the saturated teals, allowing them to read as one unit.", approaches: ["temperature","complementary"] },
-            { name: "Rosolanc Purple, Orange & Black", source: "Combination No. 144", colors: ["#b73f74","#f37420","#111314"], description: "Hot pink-purple against vivid orange, anchored by black — bold and unapologetic", theory: "Wada's rare high-saturation trio. The black prevents the two warm colours from clashing; without it this combination would be unworkable.", approaches: ["saturation","unexpected"] },
-            { name: "Yellow Ochre, Yellow Orange & Orange Rufous", source: "Combination No. 222", colors: ["#e2b540","#f99d1b","#c16b27"], description: "Three registers of amber and ochre — analogue warmth from golden to russet", theory: "Analogue harmony within the yellow-orange family. Closely related hues create richness through value and temperature shifts within the same family.", approaches: ["temperature","saturation"] },
-            { name: "Vinaceous Cinnamon, Apricot Yellow & Pale King's Blue", source: "Combination No. 213", colors: ["#eea78c","#ffdd00","#a7d4e4"], description: "Warm salmon and saturated yellow against cool powder blue — Japanese sunrise palette", theory: "Three-way temperature opposition. Warm terracotta, hot yellow, and cool blue occupy different temperature zones, yet all are high-key enough to cohere.", approaches: ["temperature","unexpected"] },
-            { name: "Cinnamon Buff, Deep Lyons Blue, Aconite Violet & Black", source: "Combination No. 344", colors: ["#fdc57e","#1c4286","#a36aa5","#111314"], description: "Warm sandy buff against deep navy and purple, grounded in black — dramatic four-colour study", theory: "Value structure drives this combination. Black and deep blue anchor the warm buff; violet bridges warm and cool. The buff glows against the dark field.", approaches: ["temperature","complementary"] },
-            { name: "Hermosa Pink, Light Glaucous Blue & Cerulean Blue", source: "Combination No. 227", colors: ["#f9c1ce","#a5c8d1","#0093a5"], description: "Blush pink against two depths of blue-green — cherry blossoms over water", theory: "Cultural juxtaposition. These three colours describe spring in Japan — sakura against sky and still water. The temperature contrast is gentle; all are cool-leaning.", approaches: ["temperature","unexpected"] },
-            { name: "Khaki, Deep Grayish Olive & Diamine Green", source: "Combination No. 146", colors: ["#bc892b","#635a3a","#1a7444"], description: "Warm golden-brown against two greens — earth and moss, a naturalist palette", theory: "Complementary tendency (yellow-brown / green) expressed through three naturalistic tones. Khaki's warmth anchors the two cool greens.", approaches: ["complementary","temperature"] },
-            { name: "Raw Sienna, Lemon Yellow, Peach Red & Black", source: "Combination No. 298", colors: ["#bb7125","#f8ed43","#f15a30","#111314"], description: "Autumnal fire — orange, yellow and red against black", theory: "Analogous warm trio anchored by black. These three colours share the fire spectrum (sienna, yellow, red-orange); black prevents mutual cancellation.", approaches: ["saturation","temperature"] },
-            { name: "Eosine Pink, Light Mauve & Red Violet", source: "Combination No. 134", colors: ["#f37f94","#9a72aa","#59256a"], description: "Pink graduating to deep purple — analogue descent through the red-violet family", theory: "Tonal analogue. All three sit in the pink-purple arc of the colour wheel. The depth range (light pink to dark violet) creates the structural interest.", approaches: ["saturation","unexpected"] },
-            { name: "Carmine Red, Violet & Cotinga Purple", source: "Combination No. 181", colors: ["#a62c37","#4f4086","#501345"], description: "Three deep jewel tones — crimson, indigo, and dark plum in close value range", theory: "Near-complementary triptych at low value. All are dark and saturated; their differences are entirely in hue. Velvet-like and rich.", approaches: ["complementary","saturation"] },
-            { name: "Helvetia Blue, Grayish Lavender & Aconite Violet", source: "Combination No. 187", colors: ["#005b8d","#c0a9b3","#a36aa5"], description: "Deep cobalt against muted lavender-rose and purple — cool harmony spanning light to dark", theory: "Value contrast in a cool-temperature family. The deep blue anchors the two softer, lighter tones. All share a blue-purple undertone creating tonal unity.", approaches: ["saturation","temperature"] },
-            { name: "Cinnamon Buff, Light Mauve & Neutral Grey", source: "Combination No. 180", colors: ["#fdc57e","#9a72aa","#b6bfc1"], description: "Warm peach against soft purple and silver grey — the palette of a faded silk kimono", theory: "Complementary (orange/purple) both muted and high-key. Grey acts as mediator, neutralising the temperature tension between warm buff and cool mauve.", approaches: ["complementary","unexpected"] },
-            { name: "Cinnamon Buff, Lemon Yellow & Lincoln Green", source: "Combination No. 210", colors: ["#fdc57e","#f8ed43","#555832"], description: "Pale peach and bright yellow against deep olive — autumn harvest palette", theory: "Complementary (yellow / dark green). The two warm lights intensify against the dark cool green, which anchors the composition with strong value contrast.", approaches: ["complementary","temperature"] },
-            { name: "Lemon Yellow, Deep Slate Olive & Venice Green", source: "Combination No. 189", colors: ["#f8ed43","#253122","#62c6bf"], description: "Vivid yellow against near-black green and aqua — maximum value contrast with unexpected cool note", theory: "Three-way contrast: value (yellow vs. dark), temperature (warm vs. cool), hue (yellow / green / teal). Each colour opposes the others on multiple axes.", approaches: ["temperature","complementary"] },
-            { name: "Yellow Green, Sea Green, Cobalt Green & Calamine Blue", source: "Combination No. 291", colors: ["#c7d14f","#00b49b","#96d1aa","#78cdd0"], description: "Four tones of green and blue-green — a cool aquatic symphony", theory: "Analogue cool harmony spanning yellow-green to blue-green. Four closely related hues at varying saturations; the result feels fresh and cohesive.", approaches: ["saturation","unexpected"] },
-            { name: "Raw Sienna, Vandyke Brown & Deep Indigo", source: "Combination No. 182", colors: ["#bb7125","#4b3317","#051230"], description: "Warm amber and dark brown against near-black indigo — old lacquerware and midnight", theory: "Temperature reversal at low value. The two warm earth tones deepen to near-black; the indigo is equally dark but cold. Tension exists within the shadow register.", approaches: ["temperature","unexpected"] },
-            { name: "Grenadine, Sulphur Yellow, Golden Yellow & Eupatorium Purple", source: "Combination No. 315", colors: ["#f48067","#f5ecc2","#f3a257","#bf5892"], description: "Coral, two yellows and pink-purple — the palette of a late-summer garden", theory: "Warm analogues (coral, gold, cream) disrupted by a complementary purple. The three warm tones create a base; the purple provides the unexpected counterpoint.", approaches: ["complementary","temperature"] },
-            { name: "Cream Yellow, Vandyke Brown & Plumbeous", source: "Combination No. 192", colors: ["#fdbf68","#4b3317","#70727c"], description: "Warm cream against dark brown and cool blue-grey — restrained three-tone contrast", theory: "Temperature triangle: warm cream, warm-dark brown, cool grey. Three values and two temperatures create balance without complexity.", approaches: ["temperature","saturation"] },
-            { name: "Spectrum Red, Brick Red, Eupatorium Purple & Blue Violet", source: "Combination No. 322", colors: ["#e31f26","#a84222","#bf5892","#4f4086"], description: "Vivid red spanning to purple through brick and pink-violet — fiery and dramatic", theory: "Analogue sweep from red to violet through four hues. Each step shifts slightly cooler; the composition reads as a single colour family with enormous internal variety.", approaches: ["saturation","unexpected"] },
-            { name: "Light Cadmium Orange, Cinnamon Buff & Hooker's Green", source: "Combination No. 263", colors: ["#f3a257","#fdc57e","#3a6b4a"], description: "Two warm oranges against deep forest green — complementary pairing in natural register", theory: "Complementary (orange / green) with the warm side doubled. The two orange-yellows create warmth mass against a single deep cool anchor — stable and resolved.", approaches: ["complementary","temperature"] },
-            { name: "Deep Slate Olive, Blackish Olive & Bottle Green", source: "Combination No. 245", colors: ["#253122","#42533e","#1c4d35"], description: "Three dark greens — near-black through forest to bottle, a study in depth and restraint", theory: "Tonal monochromatic at low value. Three very similar dark greens create spatial depth through subtle value shifts rather than hue contrast.", approaches: ["saturation","unexpected"] }
+        var palettes = [
+            {name:"Eosine Pink, Yellow Green & Black",source:"Combination No. 276",colors:["#f37f94","#fdd4bd","#afd472","#111314"],description:"Vivid pink and fresh yellow-green against near-black",theory:"Value extremes create maximum tension. The black grounds both warm and cool mid-tones.",approaches:["saturation","unexpected"]},
+            {name:"Olive, Dusky Green & Deep Slate Green",source:"Combination No. 318",colors:["#806e4b","#42533e","#004f46","#112f2c"],description:"Four tones of forest and earth — deep tonal harmony",theory:"Tonal monochromatic descent. All share the green-brown family but span warm to cool.",approaches:["saturation","unexpected"]},
+            {name:"Hermosa Pink, Seashell & Calamine Blue",source:"Combination No. 176",colors:["#f9c1ce","#fdd4bd","#78cdd0"],description:"Soft blush and cream against cool aqua — delicate temperature play",theory:"Temperature contrast at high value. All are light; the distinction is entirely thermal.",approaches:["temperature","unexpected"]},
+            {name:"Sulphur Yellow, Green Blue & Antwerp Blue",source:"Combination No. 208",colors:["#f5ecc2","#099197","#007190"],description:"Pale yellow cream against two depths of teal",theory:"Value contrast anchors a near-monochromatic blue-green pair. The pale yellow reads as neutral.",approaches:["temperature","complementary"]},
+            {name:"Rosolanc Purple, Orange & Black",source:"Combination No. 144",colors:["#b73f74","#f37420","#111314"],description:"Hot pink-purple against vivid orange, anchored by black",theory:"Wada's rare high-saturation trio. Black prevents the two warm colours from clashing.",approaches:["saturation","unexpected"]},
+            {name:"Yellow Ochre, Yellow Orange & Orange Rufous",source:"Combination No. 222",colors:["#e2b540","#f99d1b","#c16b27"],description:"Three registers of amber — analogue warmth from golden to russet",theory:"Analogue harmony within the yellow-orange family. Value and temperature shifts create richness.",approaches:["temperature","saturation"]},
+            {name:"Vinaceous Cinnamon, Apricot Yellow & Pale King's Blue",source:"Combination No. 213",colors:["#eea78c","#ffdd00","#a7d4e4"],description:"Warm salmon and yellow against cool powder blue",theory:"Three-way temperature opposition. All are high-key enough to cohere despite temperature differences.",approaches:["temperature","unexpected"]},
+            {name:"Cinnamon Buff, Deep Lyons Blue, Aconite Violet & Black",source:"Combination No. 344",colors:["#fdc57e","#1c4286","#a36aa5","#111314"],description:"Warm buff against deep navy and purple, grounded in black",theory:"Value structure drives this. Black and deep blue anchor the warm buff; violet bridges warm and cool.",approaches:["temperature","complementary"]},
+            {name:"Hermosa Pink, Light Glaucous Blue & Cerulean Blue",source:"Combination No. 227",colors:["#f9c1ce","#a5c8d1","#0093a5"],description:"Blush pink against two depths of blue-green — cherry blossoms over water",theory:"Cultural juxtaposition. These colours describe spring in Japan — sakura against sky and still water.",approaches:["temperature","unexpected"]},
+            {name:"Khaki, Deep Grayish Olive & Diamine Green",source:"Combination No. 146",colors:["#bc892b","#635a3a","#1a7444"],description:"Warm golden-brown against two greens — earth and moss",theory:"Complementary tendency (yellow-brown / green). Khaki's warmth anchors the two cool greens.",approaches:["complementary","temperature"]},
+            {name:"Raw Sienna, Lemon Yellow, Peach Red & Black",source:"Combination No. 298",colors:["#bb7125","#f8ed43","#f15a30","#111314"],description:"Autumnal fire — orange, yellow and red against black",theory:"Analogous warm trio anchored by black. Black prevents mutual cancellation of the warm colours.",approaches:["saturation","temperature"]},
+            {name:"Eosine Pink, Light Mauve & Red Violet",source:"Combination No. 134",colors:["#f37f94","#9a72aa","#59256a"],description:"Pink graduating to deep purple — analogue descent through red-violet",theory:"Tonal analogue. All sit in the pink-purple arc. The depth range creates the structural interest.",approaches:["saturation","unexpected"]},
+            {name:"Carmine Red, Violet & Cotinga Purple",source:"Combination No. 181",colors:["#a62c37","#4f4086","#501345"],description:"Three deep jewel tones — crimson, indigo, and dark plum",theory:"Near-complementary triptych at low value. All are dark and saturated; differences are entirely in hue.",approaches:["complementary","saturation"]},
+            {name:"Helvetia Blue, Grayish Lavender & Aconite Violet",source:"Combination No. 187",colors:["#005b8d","#c0a9b3","#a36aa5"],description:"Deep cobalt against muted lavender-rose and purple",theory:"Value contrast in a cool family. Deep blue anchors the softer tones. All share blue-purple undertones.",approaches:["saturation","temperature"]},
+            {name:"Cinnamon Buff, Light Mauve & Neutral Grey",source:"Combination No. 180",colors:["#fdc57e","#9a72aa","#b6bfc1"],description:"Warm peach against soft purple and silver grey — faded silk kimono",theory:"Complementary (orange/purple) both muted. Grey mediates the temperature tension.",approaches:["complementary","unexpected"]},
+            {name:"Cinnamon Buff, Lemon Yellow & Lincoln Green",source:"Combination No. 210",colors:["#fdc57e","#f8ed43","#555832"],description:"Pale peach and bright yellow against deep olive — autumn harvest",theory:"Complementary (yellow/dark green). The warm lights intensify against the dark cool green.",approaches:["complementary","temperature"]},
+            {name:"Lemon Yellow, Deep Slate Olive & Venice Green",source:"Combination No. 189",colors:["#f8ed43","#253122","#62c6bf"],description:"Vivid yellow against near-black green and aqua",theory:"Three-way contrast: value, temperature, and hue. Each colour opposes the others on multiple axes.",approaches:["temperature","complementary"]},
+            {name:"Yellow Green, Sea Green, Cobalt Green & Calamine Blue",source:"Combination No. 291",colors:["#c7d14f","#00b49b","#96d1aa","#78cdd0"],description:"Four tones of green and blue-green — cool aquatic symphony",theory:"Analogue cool harmony. Four closely related hues at varying saturations; fresh and cohesive.",approaches:["saturation","unexpected"]},
+            {name:"Raw Sienna, Vandyke Brown & Deep Indigo",source:"Combination No. 182",colors:["#bb7125","#4b3317","#051230"],description:"Warm amber and brown against near-black indigo — lacquerware and midnight",theory:"Temperature reversal at low value. Warm earth tones deepen; indigo is equally dark but cold.",approaches:["temperature","unexpected"]},
+            {name:"Grenadine, Sulphur Yellow, Golden Yellow & Eupatorium Purple",source:"Combination No. 315",colors:["#f48067","#f5ecc2","#f3a257","#bf5892"],description:"Coral, two yellows and pink-purple — late-summer garden",theory:"Warm analogues disrupted by a complementary purple. The purple provides the unexpected counterpoint.",approaches:["complementary","temperature"]},
+            {name:"Cream Yellow, Vandyke Brown & Plumbeous",source:"Combination No. 192",colors:["#fdbf68","#4b3317","#70727c"],description:"Warm cream against dark brown and cool blue-grey",theory:"Temperature triangle: warm cream, warm-dark brown, cool grey. Three values, two temperatures.",approaches:["temperature","saturation"]},
+            {name:"Spectrum Red, Brick Red, Eupatorium Purple & Blue Violet",source:"Combination No. 322",colors:["#e31f26","#a84222","#bf5892","#4f4086"],description:"Vivid red spanning to purple — fiery and dramatic",theory:"Analogue sweep from red to violet. Each step shifts cooler; reads as one family with internal variety.",approaches:["saturation","unexpected"]},
+            {name:"Light Cadmium Orange, Cinnamon Buff & Hooker's Green",source:"Combination No. 263",colors:["#f3a257","#fdc57e","#3a6b4a"],description:"Two warm oranges against deep forest green — natural complementary",theory:"Complementary (orange/green) with warm side doubled. Two orange-yellows against one deep cool anchor.",approaches:["complementary","temperature"]},
+            {name:"Deep Slate Olive, Blackish Olive & Bottle Green",source:"Combination No. 245",colors:["#253122","#42533e","#1c4d35"],description:"Three dark greens — near-black through forest to bottle",theory:"Tonal monochromatic at low value. Subtle value shifts create spatial depth without hue contrast.",approaches:["saturation","unexpected"]}
         ];
-        let currentFilter = 'all';
+        var currentFilter = "all";
+        var tagLabels = {temperature:"Temperature Contrast",complementary:"Complementary",saturation:"Saturation Contrast",unexpected:"Unexpected Pair"};
         function renderPalettes() {
-            const grid = document.getElementById('palettes-grid');
-            const fp = currentFilter === 'all' ? palettes : palettes.filter(p => p.approaches.includes(currentFilter));
+            var grid = document.getElementById("palettes-grid");
+            var fp = currentFilter === "all" ? palettes : palettes.filter(function(p){ return p.approaches.indexOf(currentFilter) > -1; });
             if (fp.length === 0) { grid.innerHTML = '<div class="empty-state">No palettes match this filter.</div>'; return; }
-            grid.innerHTML = fp.map((p, i) => `
-                <div class="palette-card">
-                    <div class="palette-colors">
-                        ${p.colors.map(c => `<div class="color-swatch" style="background-color:${c}" onclick="copyColor('${c}')"><div class="hex-code">${c}</div></div>`).join('')}
-                    </div>
-                    <div class="palette-info">
-                        <div class="palette-name">${p.name}</div>
-                        <div class="palette-source">${p.source}</div>
-                        <div class="palette-description">${p.description}</div>
-                        <div class="theory-callout"><div class="theory-callout-label">Why this works</div><div class="theory-callout-text">${p.theory}</div></div>
-                        <div class="palette-meta">${p.approaches.map(a => `<span class="tag">${{temperature:'Temperature Contrast',complementary:'Complementary',saturation:'Saturation Contrast',unexpected:'Unexpected Pair'}[a]}</span>`).join('')}</div>
-                        <button class="copy-button" onclick="copyAllCodes(${currentFilter==='all'?i:palettes.findIndex(x=>x.name===p.name)},this)">Copy All Codes</button>
-                    </div>
-                </div>
-            `).join('');
+            var html = "";
+            for (var i = 0; i < fp.length; i++) {
+                var p = fp[i];
+                var pi = palettes.indexOf(p);
+                var swatches = "";
+                for (var j = 0; j < p.colors.length; j++) {
+                    swatches += '<div class="color-swatch" style="background-color:' + p.colors[j] + '" onclick="copyColor(\''  + p.colors[j] + '\')"><div class="hex-code">' + p.colors[j] + '</div></div>';
+                }
+                var tags = "";
+                for (var k = 0; k < p.approaches.length; k++) {
+                    tags += '<span class="tag">' + tagLabels[p.approaches[k]] + '</span>';
+                }
+                html += '<div class="palette-card"><div class="palette-colors">' + swatches + '</div><div class="palette-info"><div class="palette-name">' + p.name + '</div><div class="palette-source">' + p.source + '</div><div class="palette-description">' + p.description + '</div><div class="theory-callout"><div class="theory-callout-label">Why this works</div><div class="theory-callout-text">' + p.theory + '</div></div><div class="palette-meta">' + tags + '</div><button class="copy-button" onclick="copyAllCodes(' + pi + ',this)">Copy All Codes</button></div></div>';
+            }
+            grid.innerHTML = html;
         }
         function copyColor(c) { navigator.clipboard.writeText(c); }
-        function copyAllCodes(i, btn) { navigator.clipboard.writeText(palettes[i].colors.join(', ')).then(()=>{ btn.textContent='Copied!'; btn.classList.add('copied'); setTimeout(()=>{ btn.textContent='Copy All Codes'; btn.classList.remove('copied'); },2000); }); }
-        document.querySelectorAll('.filter-btn').forEach(btn => { btn.addEventListener('click', () => { document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); currentFilter=btn.dataset.filter; renderPalettes(); }); });
+        function copyAllCodes(i, btn) {
+            navigator.clipboard.writeText(palettes[i].colors.join(", ")).then(function(){
+                btn.textContent = "Copied!";
+                btn.classList.add("copied");
+                setTimeout(function(){ btn.textContent = "Copy All Codes"; btn.classList.remove("copied"); }, 2000);
+            });
+        }
+        document.querySelectorAll(".filter-btn").forEach(function(btn){
+            btn.addEventListener("click", function(){
+                document.querySelectorAll(".filter-btn").forEach(function(b){ b.classList.remove("active"); });
+                btn.classList.add("active");
+                currentFilter = btn.dataset.filter;
+                renderPalettes();
+            });
+        });
         renderPalettes();
     </script>
 </body>
