@@ -13,13 +13,13 @@
     .container { max-width: 860px; margin: 0 auto; padding: 4rem 2rem 6rem; }
 
     header { margin-bottom: 3rem; }
-    header h1 { font-size: 1.6rem; font-weight: 600; letter-spacing: -0.03em; margin-bottom: 0.25rem; }
+    header h1 { font-size: 1.6rem; font-weight: 600; letter-spacing: -0.03em; margina-bottom: 0.25rem; }
     header .tagline { font-size: 0.9rem; color: #6b6b62; }
 
     .filters { display: flex; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap; }
     .filter-btn {
       font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 500;
-      padding: 0.3rem 0.75rem; border-radius: 999px; border: 1px solid #ddddd8;
+      padding: 0.3rem 0.75rem; border-radius: 999px; border: 1px solid #ddddd8;h
       background: transparent; color: #6b6b62; cursor: pointer; transition: all 0.15s;
     }
     .filter-btn:hover { border-color: #999; color: #1a1a18; }
@@ -42,6 +42,7 @@
     .tag.regulatory { background: #e8f4e8; color: #2d7a2d; }
     .tag.tool { background: #e8eef8; color: #2a5ab5; }
     .tag.pare { background: #f5e8f5; color: #8b2d8b; }
+        .tag.design { background: #f5ede8; color: #b55a2a; }
 
     .card h2 { font-size: 0.95rem; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 0.35rem; line-height: 1.4; }
     .card p { font-size: 0.82rem; color: #6b6b62; line-height: 1.55; max-width: 600px; }
@@ -56,13 +57,14 @@
   <div class="container">
     <header>
       <h1>The Working Ground</h1>
-      <p class="tagline">Work grounded in the art of the possible.</p>
+            <p class="tagline">Tools for work or wonder: built for usefulness, clarity &amp; delight.</p>p>
     </header>
 
     <div class="filters">
       <button class="filter-btn active" data-filter="all">All</button>
       <button class="filter-btn" data-filter="regulatory">Regulatory intelligence</button>
       <button class="filter-btn" data-filter="tool">Tools</button>
+            <button class="filter-btn" data-filter="design">Design</button>button>
     </div>
 
     <div class="cards" id="card-list">
@@ -84,7 +86,23 @@
         <h2>Value of Sustainability Calculator</h2>
         <p>Quantify the financial impact of sustainability interventions across office, logistics, and residential assets in key APAC markets. Outputs NPV, IRR, and payback by intervention type.</p>
       </a>
-
+      <a href="/sustainability-value-framework/" class="card" data-category="tool">
+                <div class="card-meta">
+                            <div class="card-tags"><span class="tag tool">Tool</span>span></div>
+                            <span class="card-arrow">&#x2197;</span>span>
+                </div>
+                <h2>Sustainability Value Framework</h2>
+              <p>Interactive framework linking investment cycle opportunities to valuation mechanics. Click each stage to see how green interventions flow through to NOI, cap rates, and exit value.</p>
+      </a>a>
+          <a href="/sanzo-wada/" class="card" data-category="design">
+                  <div class="card-meta">
+                            <div class="card-tags"><span class="tag design">Design</span>span></div>
+                            <span class="card-arrow">&#x2197;</span>span>
+                  </div>
+                  <h2>Sanzo Wada Color Palette Selector</h2>
+                  <p>Harmonious color combinations inspired by Wada's 1933 Dictionary of Colour Combinations. Temperature contrast, unexpected pairings, saturation balance — with color theory explanations.</p>
+          </a>a></p></p></h2>
+      
     </div>
 
     <footer>The Working Ground</footer>
