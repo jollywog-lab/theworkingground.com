@@ -4,96 +4,71 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Working Ground</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', sans-serif; background: #f7f6f3; color: #1a1a18; line-height: 1.6; min-height: 100vh; }
-    a { text-decoration: none; color: inherit; }
-    .container { max-width: 860px; margin: 0 auto; padding: 4rem 2rem 6rem; }
-    header { margin-bottom: 3rem; }
-    header h1 { font-size: 1.6rem; font-weight: 600; letter-spacing: -0.03em; margin-bottom: 0.25rem; }
-    header .tagline { font-size: 0.9rem; color: #6b6b62; }
-    .filters { display: flex; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap; }
-    .filter-btn { font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 500; padding: 0.3rem 0.75rem; border-radius: 999px; border: 1px solid #ddddd8; background: transparent; color: #6b6b62; cursor: pointer; transition: all 0.15s; }
-    .filter-btn:hover { border-color: #999; color: #1a1a18; }
-    .filter-btn.active { background: #1a1a18; color: #fff; border-color: #1a1a18; }
-    .cards { display: flex; flex-direction: column; gap: 1px; background: #ddddd8; border: 1px solid #ddddd8; border-radius: 8px; overflow: hidden; }
-    .card { background: #fff; padding: 1.5rem; display: block; transition: background 0.15s; }
-    .card:hover { background: #fafaf7; }
-    .card.hidden { display: none; }
-    .card-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem; }
-    .card-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
-    .tag { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; padding: 0.2rem 0.55rem; border-radius: 3px; background: #f0efeb; color: #6b6b62; }
-    .tag.regulatory { background: #e8f4e8; color: #2d7a2d; }
-    .tag.tool { background: #e8eef8; color: #2a5ab5; }
-    .tag.design { background: #f5ede8; color: #b55a2a; }
-    .card h2 { font-size: 0.95rem; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 0.35rem; line-height: 1.4; }
-    .card p { font-size: 0.82rem; color: #6b6b62; line-height: 1.55; max-width: 600px; }
-    .card-arrow { color: #ccc; font-size: 0.9rem; flex-shrink: 0; margin-left: 1rem; }
-    footer { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid #ddddd8; font-size: 0.75rem; color: #9b9b90; }
+    :root { --cream: #F7F4EF; --warm-dark: #1C1A17; --muted: #7A7167; --accent: #B87333; --card-bg: #FFFFFF; --border: #E2DDD6; --tag-bg: #EDE9E2; }
+    body { background: var(--cream); color: var(--warm-dark); font-family: 'DM Sans', sans-serif; font-weight: 300; min-height: 100vh; display: flex; flex-direction: column; }
+    header { padding: 3rem 2rem 2rem; max-width: 1100px; margin: 0 auto; width: 100%; }
+    .site-name { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -0.02em; color: var(--warm-dark); line-height: 1.1; }
+    .site-tagline { margin-top: 0.6rem; color: var(--muted); font-size: 0.95rem; font-weight: 300; }
+    main { flex: 1; max-width: 1100px; margin: 0 auto; width: 100%; padding: 1rem 2rem 4rem; }
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 0.5rem; }
+    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px; padding: 1.75rem; text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 0.75rem; transition: border-color 0.2s, box-shadow 0.2s; }
+    .card:hover { border-color: var(--accent); box-shadow: 0 2px 16px rgba(184,115,51,0.08); }
+    .card-tag { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); background: var(--tag-bg); display: inline-block; padding: 0.25rem 0.6rem; border-radius: 2px; width: fit-content; }
+    .card-title { font-family: 'DM Serif Display', serif; font-size: 1.2rem; line-height: 1.3; color: var(--warm-dark); }
+    .card-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.65; flex: 1; }
+    .card-arrow { font-size: 0.82rem; color: var(--accent); margin-top: 0.25rem; }
+    footer { border-top: 1px solid var(--border); padding: 1.5rem 2rem; max-width: 1100px; margin: 0 auto; width: 100%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-copy { font-size: 0.78rem; color: var(--muted); }
+    .footer-nav { display: flex; gap: 1.5rem; list-style: none; }
+    .footer-nav a { font-size: 0.82rem; color: var(--muted); text-decoration: none; transition: color 0.15s; }
+    .footer-nav a:hover { color: var(--warm-dark); }
+    @media (max-width: 600px) { header { padding: 2rem 1.25rem 1.5rem; } main { padding: 0.75rem 1.25rem 3rem; } footer { padding: 1.25rem; flex-direction: column; align-items: flex-start; } .card-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>The Working Ground</h1>
-      <p class="tagline">Tools for work or wonder: built for usefulness, clarity &amp; delight.</p>
-    </header>
-    <div class="filters">
-      <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="regulatory">Regulatory intelligence</button>
-      <button class="filter-btn" data-filter="tool">Tools</button>
-      <button class="filter-btn" data-filter="design">Design</button>
-    </div>
-    <div class="cards" id="card-list">
-      <a href="/reg-tracker/" class="card" data-category="regulatory">
-        <div class="card-meta">
-          <div class="card-tags"><span class="tag regulatory">Regulatory intelligence</span></div>
-          <span class="card-arrow">&#x2197;</span>
-        </div>
-        <h2>Sustainable Real Estate Tracker</h2>
-        <p>Sustainability regulation across 16 markets in Asia-Pacific and key global comparators. 104 instruments tracked. April 2025 – April 2026.</p>
+  <header>
+    <div class="site-name">The Working Ground</div>
+    <p class="site-tagline">Tools for work or wonder — built for usefulness, clarity &amp; delight.</p>
+  </header>
+  <main>
+    <div class="card-grid">
+      <a class="card" href="/reg-tracker/">
+        <span class="card-tag">Regulatory Tracker</span>
+        <div class="card-title">Sustainable Real Estate Tracker</div>
+        <p class="card-desc">Sustainability regulation across 16 markets in Asia-Pacific and key global comparators. 104 instruments tracked. April 2025 – April 2026.</p>
+        <div class="card-arrow">Open tool →</div>
       </a>
-      <a href="/vos-calculator/" class="card" data-category="tool">
-        <div class="card-meta">
-          <div class="card-tags"><span class="tag tool">Tool</span></div>
-          <span class="card-arrow">&#x2197;</span>
-        </div>
-        <h2>Value of Sustainability Calculator</h2>
-        <p>Quantify the financial impact of sustainability interventions across office, logistics, and residential assets in key APAC markets. Outputs NPV, IRR, and payback by intervention type.</p>
+      <a class="card" href="/vos-calculator/">
+        <span class="card-tag">Financial Tool</span>
+        <div class="card-title">Value of Sustainability Calculator</div>
+        <p class="card-desc">Quantify the financial impact of sustainability interventions across office, logistics, and residential assets in key APAC markets. Outputs NPV, IRR, and payback by intervention type.</p>
+        <div class="card-arrow">Open tool →</div>
       </a>
-      <a href="/sustainability-value-framework/" class="card" data-category="tool">
-        <div class="card-meta">
-          <div class="card-tags"><span class="tag tool">Tool</span></div>
-          <span class="card-arrow">&#x2197;</span>
-        </div>
-        <h2>Sustainability Value Framework</h2>
-        <p>Interactive framework linking investment cycle opportunities to valuation mechanics. Click each stage to see how green interventions flow through to NOI, cap rates, and exit value.</p>
+      <a class="card" href="/sustainability-value-framework/">
+        <span class="card-tag">Framework</span>
+        <div class="card-title">Sustainability Value Framework</div>
+        <p class="card-desc">Interactive framework linking investment cycle opportunities to valuation mechanics. Click each stage to see how green interventions flow through to NOI, cap rates, and exit value.</p>
+        <div class="card-arrow">Open tool →</div>
       </a>
-      <a href="/sanzo-wada/" class="card" data-category="design">
-        <div class="card-meta">
-          <div class="card-tags"><span class="tag design">Design</span></div>
-          <span class="card-arrow">&#x2197;</span>
-        </div>
-        <h2>Palette Selector</h2>
-        <p>Colour combinations drawn from Wada's 1933 Dictionary of Colour Combinations. Temperature contrast, unexpected pairings, saturation balance — with colour theory explanations.</p>
+      <a class="card" href="/palette-selector/">
+        <span class="card-tag">Design Tool</span>
+        <div class="card-title">Palette Selector</div>
+        <p class="card-desc">Colour combinations drawn from Wada’s 1933 Dictionary of Colour Combinations. Temperature contrast, unexpected pairings, saturation balance — with colour theory explanations.</p>
+        <div class="card-arrow">Open tool →</div>
       </a>
     </div>
-    <footer>The Working Ground</footer>
-  </div>
-  <script>
-    const btns = document.querySelectorAll('.filter-btn');
-    const cards = document.querySelectorAll('.card');
-    btns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        btns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const f = btn.dataset.filter;
-        cards.forEach(c => {
-          c.classList.toggle('hidden', f !== 'all' && c.dataset.category !== f);
-        });
-      });
-    });
-  </script>
+  </main>
+  <footer>
+    <span class="footer-copy">© The Working Ground</span>
+    <ul class="footer-nav">
+      <li><a href="/about/">About</a></li>
+      <li><a href="/suggest/">What should we build next?</a></li>
+    </ul>
+  </footer>
 </body>
 </html>
