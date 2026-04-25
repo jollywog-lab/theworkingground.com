@@ -3,160 +3,1704 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sanzo Wada Colour Palette Selector — The Working Ground</title>
-    <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>Sanzo Wada · Colour Palettes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --charcoal: #3d3935; --warm-grey: #8b8680; --warm-white: #f7f4f0; --text-muted: #6b6560; }
+        :root {
+            --charcoal: #3d3935;
+            --warm-grey: #8b8680;
+            --warm-white: #f7f4f0;
+            --text-muted: #6b6560;
+            --border: #e5e1db;
+        }
         body { font-family: 'Inter', sans-serif; background: var(--warm-white); color: var(--charcoal); line-height: 1.6; }
-        .site-nav { padding: 1rem 2rem; border-bottom: 1px solid #e5e1db; background: white; }
-        .site-nav a { font-size: 0.82rem; color: var(--text-muted); text-decoration: none; }
-        .site-nav a:hover { color: var(--charcoal); }
         .container { max-width: 1400px; margin: 0 auto; padding: 3rem 2rem; }
+
+        /* Header */
         header { text-align: center; margin-bottom: 3rem; }
-        h1 { font-family: 'Newsreader', serif; font-size: 2.5rem; font-weight: 600; margin-bottom: 0.75rem; }
-        .subtitle { color: var(--text-muted); font-size: 1rem; line-height: 1.6; max-width: 720px; margin: 0 auto; }
+        h1 { font-family: 'Newsreader', serif; font-size: 2.6rem; font-weight: 600; margin-bottom: 0.75rem; letter-spacing: -0.01em; }
+        .subtitle { color: var(--text-muted); font-size: 0.95rem; max-width: 680px; margin: 0 auto 0.75rem; line-height: 1.7; }
+        .palette-count { font-size: 0.78rem; color: var(--warm-grey); font-weight: 500; letter-spacing: 0.04em; }
+
+        /* Style Trend Filters */
+        .filter-section { margin-bottom: 2.5rem; }
+        .filter-label { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.09em; color: var(--warm-grey); margin-bottom: 0.9rem; display: block; }
+        .style-filters { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+        .style-btn {
+            padding: 0.55rem 1.3rem;
+            border: 1.5px solid var(--border);
+            background: white;
+            border-radius: 24px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+            color: var(--charcoal);
+            font-weight: 400;
+        }
+        .style-btn:hover { border-color: var(--warm-grey); }
+        .style-btn.active { background: var(--charcoal); color: white; border-color: var(--charcoal); }
+        .style-btn[data-style="japandi"].active       { background: #3a4a38; border-color: #3a4a38; }
+        .style-btn[data-style="dopamine"].active      { background: #c4006a; border-color: #c4006a; }
+        .style-btn[data-style="quiet-luxury"].active  { background: #7a6e63; border-color: #7a6e63; }
+        .style-btn[data-style="opulent"].active       { background: #4a1a68; border-color: #4a1a68; }
+        .style-btn[data-style="wabi-sabi"].active     { background: #7a5c3a; border-color: #7a5c3a; }
+        .style-btn[data-style="dark-academia"].active { background: #2c2840; border-color: #2c2840; }
+        .style-btn[data-style="coastal"].active       { background: #2a7d9e; border-color: #2a7d9e; }
+        .style-btn[data-style="modern"].active        { background: #1e1e2e; border-color: #1e1e2e; }
+
+        /* Style context banner */
+        .style-context {
+            background: white; border-radius: 10px; padding: 0.85rem 1.25rem;
+            margin-bottom: 1.75rem; box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+            display: flex; align-items: center; gap: 0.75rem;
+            font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;
+            transition: all 0.3s ease;
+        }
+        .style-context-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+        /* Main Viewer */
+        .main-viewer { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.08); margin-bottom: 2.5rem; }
+
+        /* Proportional colour bar */
+        .proportion-bar { display: flex; height: 220px; cursor: pointer; }
+        .proportion-swatch {
+            position: relative;
+            transition: flex 0.35s ease;
+            display: flex; align-items: flex-end; justify-content: center;
+            padding-bottom: 14px;
+        }
+        .proportion-swatch:hover { filter: brightness(1.06); }
+        .proportion-swatch:hover .swatch-tooltip { opacity: 1; transform: translateY(0); }
+        .swatch-pct {
+            position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
+            font-size: 0.62rem; font-weight: 700; letter-spacing: 0.04em;
+            color: rgba(255,255,255,0.7); white-space: nowrap;
+        }
+        .swatch-tooltip {
+            background: rgba(0,0,0,0.72); color: white;
+            padding: 4px 10px; border-radius: 4px;
+            font-size: 0.7rem; font-family: 'Courier New', monospace;
+            opacity: 0; transition: all 0.2s ease; white-space: nowrap;
+            transform: translateY(4px);
+        }
+
+        /* Viewer body */
+        .viewer-body { padding: 2rem 2.5rem 2.25rem; }
+        .viewer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+        .palette-name { font-family: 'Newsreader', serif; font-size: 1.65rem; font-weight: 600; margin-bottom: 0.2rem; line-height: 1.25; }
+        .palette-source { font-size: 0.73rem; color: var(--warm-grey); font-style: italic; margin-bottom: 0.85rem; }
+        .palette-description { font-size: 0.92rem; color: var(--text-muted); margin-bottom: 1.1rem; line-height: 1.65; }
+
+        .style-tags { display: flex; gap: 0.45rem; flex-wrap: wrap; margin-bottom: 1.1rem; }
+        .style-tag {
+            padding: 0.18rem 0.65rem; border-radius: 12px;
+            font-size: 0.68rem; font-weight: 500;
+            border: 1px solid transparent;
+        }
+
+        .theory-box { background: #f5f3f0; padding: 0.9rem 1.1rem; border-radius: 8px; border-left: 3px solid var(--warm-grey); }
+        .theory-box-label { font-size: 0.63rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--warm-grey); margin-bottom: 0.3rem; }
+        .theory-box-text { font-size: 0.83rem; color: var(--text-muted); line-height: 1.6; }
+
+        /* Right column */
+        .rule-section { margin-bottom: 1.5rem; }
+        .rule-title { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--warm-grey); margin-bottom: 0.65rem; }
+        .rule-bar { display: flex; height: 38px; border-radius: 6px; overflow: hidden; margin-bottom: 0.7rem; }
+        .rule-swatch { display: flex; align-items: center; justify-content: center; font-size: 0.63rem; font-weight: 700; color: rgba(255,255,255,0.75); letter-spacing: 0.02em; }
+        .rule-legend { display: flex; flex-direction: column; gap: 0.35rem; }
+        .rule-legend-item { display: flex; align-items: center; gap: 0.55rem; font-size: 0.78rem; color: var(--text-muted); }
+        .rule-dot { width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0; border: 1px solid rgba(0,0,0,0.08); }
+        .rule-role { font-weight: 600; color: var(--charcoal); min-width: 80px; font-size: 0.78rem; }
+
+        /* Use cases */
+        .use-cases { }
+        .use-case-tabs { display: flex; gap: 0; border-bottom: 1.5px solid var(--border); margin-bottom: 1rem; }
+        .use-case-tab {
+            padding: 0.55rem 1.1rem; font-size: 0.82rem; font-weight: 500;
+            cursor: pointer; border-bottom: 2.5px solid transparent; margin-bottom: -1.5px;
+            color: var(--text-muted); transition: all 0.18s;
+            font-family: 'Inter', sans-serif; background: none;
+            border-top: none; border-left: none; border-right: none;
+        }
+        .use-case-tab:first-child { padding-left: 0; }
+        .use-case-tab.active { color: var(--charcoal); border-bottom-color: var(--charcoal); }
+        .use-case-content { font-size: 0.87rem; color: var(--text-muted); line-height: 1.75; min-height: 90px; }
+
+        /* Hex chips and copy */
+        .hex-row { display: flex; align-items: center; gap: 0.9rem; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--border); flex-wrap: wrap; }
+        .hex-chips { display: flex; gap: 0.45rem; flex-wrap: wrap; flex: 1; }
+        .hex-chip {
+            display: flex; align-items: center; gap: 0.45rem;
+            padding: 0.3rem 0.7rem; background: #f5f3f0; border-radius: 5px;
+            font-size: 0.73rem; font-family: 'Courier New', monospace;
+            cursor: pointer; transition: background 0.15s; border: none;
+            color: var(--charcoal);
+        }
+        .hex-chip:hover { background: #ece9e4; }
+        .hex-chip-dot { width: 13px; height: 13px; border-radius: 2px; flex-shrink: 0; border: 1px solid rgba(0,0,0,0.1); }
+        .btn-copy-all {
+            padding: 0.55rem 1.3rem; background: var(--charcoal); color: white;
+            border: none; border-radius: 6px; font-size: 0.8rem; font-weight: 500;
+            cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .btn-copy-all:hover { background: #2a2624; }
+        .btn-copy-all.copied { background: #16a34a; }
+
+        /* Section headings */
+        .section-title { font-family: 'Newsreader', serif; font-size: 1.35rem; font-weight: 600; margin-bottom: 1.1rem; color: var(--charcoal); }
+
+        /* Thumbnail grid */
+        .thumbnail-section { margin-bottom: 3rem; }
+        .thumbnail-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 0.6rem; }
+        .thumbnail-card {
+            cursor: pointer; border-radius: 8px; overflow: hidden;
+            border: 2.5px solid transparent; transition: all 0.2s; background: white;
+        }
+        .thumbnail-card:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,0.12); }
+        .thumbnail-card.selected { border-color: var(--charcoal); box-shadow: 0 0 0 1px var(--charcoal); }
+        .thumbnail-swatches { display: flex; height: 64px; }
+        .thumbnail-swatch { flex: 1; }
+        .thumbnail-label { padding: 0.3rem 0.45rem; font-size: 0.6rem; color: var(--text-muted); line-height: 1.3; background: white; }
+
+        /* Colour theory primer */
         .primer-section { background: white; border-radius: 12px; padding: 2rem 2.5rem; margin-bottom: 2.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-        .primer-title { font-family: 'Newsreader', serif; font-size: 1.3rem; font-weight: 600; margin-bottom: 1.25rem; color: var(--charcoal); }
-        .primer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 1.5rem; }
-        .primer-card { background: #f5f3f0; padding: 1.25rem; border-radius: 8px; }
-        .primer-card-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--charcoal); }
-        .primer-card-text { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
-        .filter-container { background: white; border-radius: 12px; padding: 1.5rem 2rem; margin-bottom: 2.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-        .filter-label { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.75rem; display: block; color: var(--charcoal); }
-        .filter-buttons { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-        .filter-btn { padding: 0.5rem 1.25rem; border: 1.5px solid #e5e1db; background: white; border-radius: 24px; font-size: 0.875rem; cursor: pointer; transition: all 0.2s ease; font-family: 'Inter', sans-serif; color: var(--charcoal); }
-        .filter-btn:hover { border-color: var(--warm-grey); background: #fafaf9; }
-        .filter-btn.active { background: var(--charcoal); color: white; border-color: var(--charcoal); }
-        .palettes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
-        .palette-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: all 0.3s ease; }
-        .palette-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); transform: translateY(-2px); }
-        .palette-colors { display: flex; height: 140px; }
-        .color-swatch { flex: 1; cursor: pointer; position: relative; transition: all 0.2s ease; }
-        .color-swatch:hover { flex: 1.3; }
-        .color-swatch:hover .hex-code { opacity: 1; }
-        .hex-code { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.75); color: white; padding: 4px 10px; border-radius: 4px; font-size: 0.7rem; font-family: 'Courier New', monospace; opacity: 0; transition: opacity 0.2s ease; font-weight: 500; white-space: nowrap; }
-        .palette-info { padding: 1.25rem 1.5rem; }
-        .palette-name { font-family: 'Newsreader', serif; font-size: 1.05rem; font-weight: 600; margin-bottom: 0.2rem; color: var(--charcoal); }
-        .palette-source { font-size: 0.72rem; color: var(--warm-grey); margin-bottom: 0.6rem; font-style: italic; }
-        .palette-description { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.5; }
-        .theory-callout { background: #f5f3f0; padding: 0.75rem 1rem; border-radius: 6px; margin-bottom: 1rem; border-left: 3px solid var(--warm-grey); }
-        .theory-callout-label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--warm-grey); margin-bottom: 0.25rem; }
-        .theory-callout-text { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
-        .palette-meta { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
-        .tag { padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.7rem; font-weight: 500; background: #f5f3f0; color: var(--text-muted); }
-        .copy-button { width: 100%; padding: 0.6rem; border: 1.5px solid #e5e1db; background: white; border-radius: 6px; font-size: 0.8rem; font-weight: 500; cursor: pointer; transition: all 0.2s ease; font-family: 'Inter', sans-serif; color: var(--charcoal); }
-        .copy-button:hover { background: var(--charcoal); color: white; border-color: var(--charcoal); }
-        .copy-button.copied { background: #16a34a; color: white; border-color: #16a34a; }
-        .about-section { background: white; border-radius: 12px; padding: 2rem 2.5rem; margin-top: 3rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-        .about-title { font-family: 'Newsreader', serif; font-size: 1.4rem; font-weight: 600; margin-bottom: 1rem; color: var(--charcoal); }
-        .about-text { font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1rem; }
-        .empty-state { text-align: center; padding: 4rem 2rem; color: var(--text-muted); font-size: 0.95rem; }
-        @media (max-width: 768px) { .palettes-grid { grid-template-columns: 1fr; } .primer-grid { grid-template-columns: 1fr; } }
+        .primer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; margin-top: 1.25rem; }
+        .primer-card { background: #f5f3f0; padding: 1.1rem 1.2rem; border-radius: 8px; }
+        .primer-card-rule { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--warm-grey); margin-bottom: 0.35rem; }
+        .primer-card-title { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.4rem; color: var(--charcoal); }
+        .primer-card-text { font-size: 0.8rem; color: var(--text-muted); line-height: 1.6; }
+
+        /* (tools section removed) */
+
+        /* About */
+        .about-section { background: white; border-radius: 12px; padding: 2rem 2.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .about-text { font-size: 0.88rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 0.85rem; }
+        .about-text:last-child { margin-bottom: 0; }
+
+        /* Toast */
+        .toast {
+            position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(10px);
+            background: var(--charcoal); color: white; padding: 0.6rem 1.25rem;
+            border-radius: 6px; font-size: 0.82rem; opacity: 0;
+            transition: all 0.25s ease; pointer-events: none; z-index: 100;
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* Methodology expansion */
+        .methodology-wrap {
+            margin-top: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .methodology-toggle {
+            width: 100%; display: flex; align-items: center; justify-content: space-between;
+            padding: 0.75rem 1rem; background: #f5f3f0; border: none; cursor: pointer;
+            font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.07em; color: var(--warm-grey); text-align: left;
+        }
+        .methodology-toggle:hover { background: #ece9e4; }
+        .methodology-chevron { font-size: 0.7rem; transition: transform 0.2s ease; display: inline-block; }
+        .methodology-body {
+            display: none; padding: 1rem; border-top: 1px solid var(--border); background: white;
+        }
+        .method-intro {
+            font-size: 0.72rem; color: var(--warm-grey); margin-bottom: 0.8rem;
+            padding-bottom: 0.8rem; border-bottom: 1px solid var(--border); line-height: 1.5;
+        }
+        .method-criterion { margin-bottom: 0.65rem; padding-bottom: 0.65rem; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .method-criterion:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .method-criterion-label {
+            font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.07em; color: var(--warm-grey); margin-bottom: 0.2rem;
+        }
+        .method-criterion-note { font-size: 0.8rem; color: var(--text-muted); line-height: 1.6; }
+
+        /* Empty state */
+        .empty-state { color: var(--text-muted); font-size: 0.88rem; padding: 1.5rem 0; grid-column: 1 / -1; }
+
+        /* Responsive */
+        @media (max-width: 960px) {
+            .viewer-grid { grid-template-columns: 1fr; gap: 1.75rem; }
+            .primer-grid, .tools-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 640px) {
+            h1 { font-size: 1.9rem; }
+            .viewer-body { padding: 1.5rem 1.25rem; }
+            .primer-grid, .tools-grid { grid-template-columns: 1fr; }
+            .thumbnail-grid { grid-template-columns: repeat(auto-fill, minmax(88px, 1fr)); }
+        }
     </style>
 </head>
 <body>
-    <nav class="site-nav"><a href="/">← The Working Ground</a></nav>
-    <div class="container">
-        <header>
-            <h1>Sanzo Wada Colour Palette Selector</h1>
-            <p class="subtitle">Colour combinations from Sanzo Wada's <em>Dictionary of Colour Combinations</em> (1933). Each palette references the actual combination number from Wada's 348-palette catalogue — colour values derived from his original CMYK specifications.</p>
-        </header>
-        <div class="primer-section">
-            <div class="primer-title">Colour Theory Principles</div>
-            <p class="about-text" style="font-size:0.9rem;color:var(--text-muted);margin-bottom:0">Wada's palettes work because they balance multiple colour relationships simultaneously.</p>
-            <div class="primer-grid">
-                <div class="primer-card"><div class="primer-card-title">Temperature Contrast</div><div class="primer-card-text">Warm colours paired with cool colours. The tension creates visual interest while shared value or saturation maintains harmony.</div></div>
-                <div class="primer-card"><div class="primer-card-title">Complementary Harmony</div><div class="primer-card-text">Colours opposite on the colour wheel. Pure complements clash; muted versions harmonise — Wada's preferred approach.</div></div>
-                <div class="primer-card"><div class="primer-card-title">Value Structure</div><div class="primer-card-text">Distribution of light, medium, and dark tones. Wada frequently anchors palettes with black or near-black.</div></div>
-                <div class="primer-card"><div class="primer-card-title">Saturation Contrast</div><div class="primer-card-text">Vibrant colours anchored by muted tones. The muted colours provide visual rest while the vibrant colour provides energy.</div></div>
-                <div class="primer-card"><div class="primer-card-title">Tonal Relationships</div><div class="primer-card-text">Colours sharing undertones despite different hues — all slightly warm, all slightly greyed. Creates cohesion even when hues differ.</div></div>
-                <div class="primer-card"><div class="primer-card-title">Cultural Juxtaposition</div><div class="primer-card-text">Wada drew from Japanese dye traditions and natural observation. These pairings carry cultural memory, making them feel inevitable.</div></div>
-            </div>
-        </div>
-        <div class="filter-container">
-            <label class="filter-label">Filter by approach:</label>
-            <div class="filter-buttons">
-                <button class="filter-btn active" data-filter="all">All Palettes</button>
-                <button class="filter-btn" data-filter="temperature">Temperature Contrast</button>
-                <button class="filter-btn" data-filter="complementary">Complementary</button>
-                <button class="filter-btn" data-filter="saturation">Saturation Contrast</button>
-                <button class="filter-btn" data-filter="unexpected">Unexpected Pairs</button>
-            </div>
-        </div>
-        <div class="palettes-grid" id="palettes-grid"></div>
-        <div class="about-section">
-            <div class="about-title">About Sanzo Wada</div>
-            <p class="about-text">Sanzo Wada (1883–1967) was a Japanese artist, costume designer, and professor who compiled the <em>Dictionary of Colour Combinations</em> from his six-volume <em>Haishoku Soukan</em>, originally published in the 1930s for kimono and fashion design.</p>
-            <p class="about-text">All colour values are derived from Wada's original CMYK specifications, converted to hex via the open-source dataset compiled by Dain M. Blodorn Kim. Combination numbers reference Wada's original catalogue. Click any swatch to copy its hex code.</p>
+<div class="container">
+
+    <header>
+        <h1>Sanzo Wada · Colour Palettes</h1>
+        <p class="subtitle">Colour combinations from Wada's <em>Dictionary of Colour Combinations</em> (1933), reorganised by contemporary design aesthetic — from Japandi restraint to Dopamine maximalism. Each palette includes proportioning rules and applied use cases.</p>
+        <div class="palette-count" id="palette-count">45 palettes · click any thumbnail to explore</div>
+    </header>
+
+    <!-- Aesthetic Filters -->
+    <div class="filter-section">
+        <span class="filter-label">Browse by aesthetic</span>
+        <div class="style-filters">
+            <button class="style-btn active" data-style="all">All Palettes</button>
+            <button class="style-btn" data-style="japandi">Japandi</button>
+            <button class="style-btn" data-style="dopamine">Dopamine</button>
+            <button class="style-btn" data-style="quiet-luxury">Quiet Luxury</button>
+            <button class="style-btn" data-style="opulent">Opulent</button>
+            <button class="style-btn" data-style="wabi-sabi">Wabi-Sabi</button>
+            <button class="style-btn" data-style="dark-academia">Dark Academia</button>
+            <button class="style-btn" data-style="coastal">Coastal</button>
+            <button class="style-btn" data-style="modern">Fine Modern</button>
         </div>
     </div>
-    <script>
-        var palettes = [
-            {name:"Eosine Pink, Yellow Green & Black",source:"Combination No. 276",colors:["#f37f94","#fdd4bd","#afd472","#111314"],description:"Vivid pink and fresh yellow-green against near-black",theory:"Value extremes create maximum tension. The black grounds both warm and cool mid-tones.",approaches:["saturation","unexpected"]},
-            {name:"Olive, Dusky Green & Deep Slate Green",source:"Combination No. 318",colors:["#806e4b","#42533e","#004f46","#112f2c"],description:"Four tones of forest and earth — deep tonal harmony",theory:"Tonal monochromatic descent. All share the green-brown family but span warm to cool.",approaches:["saturation","unexpected"]},
-            {name:"Hermosa Pink, Seashell & Calamine Blue",source:"Combination No. 176",colors:["#f9c1ce","#fdd4bd","#78cdd0"],description:"Soft blush and cream against cool aqua — delicate temperature play",theory:"Temperature contrast at high value. All are light; the distinction is entirely thermal.",approaches:["temperature","unexpected"]},
-            {name:"Sulphur Yellow, Green Blue & Antwerp Blue",source:"Combination No. 208",colors:["#f5ecc2","#099197","#007190"],description:"Pale yellow cream against two depths of teal",theory:"Value contrast anchors a near-monochromatic blue-green pair. The pale yellow reads as neutral.",approaches:["temperature","complementary"]},
-            {name:"Rosolanc Purple, Orange & Black",source:"Combination No. 144",colors:["#b73f74","#f37420","#111314"],description:"Hot pink-purple against vivid orange, anchored by black",theory:"Wada's rare high-saturation trio. Black prevents the two warm colours from clashing.",approaches:["saturation","unexpected"]},
-            {name:"Yellow Ochre, Yellow Orange & Orange Rufous",source:"Combination No. 222",colors:["#e2b540","#f99d1b","#c16b27"],description:"Three registers of amber — analogue warmth from golden to russet",theory:"Analogue harmony within the yellow-orange family. Value and temperature shifts create richness.",approaches:["temperature","saturation"]},
-            {name:"Vinaceous Cinnamon, Apricot Yellow & Pale King's Blue",source:"Combination No. 213",colors:["#eea78c","#ffdd00","#a7d4e4"],description:"Warm salmon and yellow against cool powder blue",theory:"Three-way temperature opposition. All are high-key enough to cohere despite temperature differences.",approaches:["temperature","unexpected"]},
-            {name:"Cinnamon Buff, Deep Lyons Blue, Aconite Violet & Black",source:"Combination No. 344",colors:["#fdc57e","#1c4286","#a36aa5","#111314"],description:"Warm buff against deep navy and purple, grounded in black",theory:"Value structure drives this. Black and deep blue anchor the warm buff; violet bridges warm and cool.",approaches:["temperature","complementary"]},
-            {name:"Hermosa Pink, Light Glaucous Blue & Cerulean Blue",source:"Combination No. 227",colors:["#f9c1ce","#a5c8d1","#0093a5"],description:"Blush pink against two depths of blue-green — cherry blossoms over water",theory:"Cultural juxtaposition. These colours describe spring in Japan — sakura against sky and still water.",approaches:["temperature","unexpected"]},
-            {name:"Khaki, Deep Grayish Olive & Diamine Green",source:"Combination No. 146",colors:["#bc892b","#635a3a","#1a7444"],description:"Warm golden-brown against two greens — earth and moss",theory:"Complementary tendency (yellow-brown / green). Khaki's warmth anchors the two cool greens.",approaches:["complementary","temperature"]},
-            {name:"Raw Sienna, Lemon Yellow, Peach Red & Black",source:"Combination No. 298",colors:["#bb7125","#f8ed43","#f15a30","#111314"],description:"Autumnal fire — orange, yellow and red against black",theory:"Analogous warm trio anchored by black. Black prevents mutual cancellation of the warm colours.",approaches:["saturation","temperature"]},
-            {name:"Eosine Pink, Light Mauve & Red Violet",source:"Combination No. 134",colors:["#f37f94","#9a72aa","#59256a"],description:"Pink graduating to deep purple — analogue descent through red-violet",theory:"Tonal analogue. All sit in the pink-purple arc. The depth range creates the structural interest.",approaches:["saturation","unexpected"]},
-            {name:"Carmine Red, Violet & Cotinga Purple",source:"Combination No. 181",colors:["#a62c37","#4f4086","#501345"],description:"Three deep jewel tones — crimson, indigo, and dark plum",theory:"Near-complementary triptych at low value. All are dark and saturated; differences are entirely in hue.",approaches:["complementary","saturation"]},
-            {name:"Helvetia Blue, Grayish Lavender & Aconite Violet",source:"Combination No. 187",colors:["#005b8d","#c0a9b3","#a36aa5"],description:"Deep cobalt against muted lavender-rose and purple",theory:"Value contrast in a cool family. Deep blue anchors the softer tones. All share blue-purple undertones.",approaches:["saturation","temperature"]},
-            {name:"Cinnamon Buff, Light Mauve & Neutral Grey",source:"Combination No. 180",colors:["#fdc57e","#9a72aa","#b6bfc1"],description:"Warm peach against soft purple and silver grey — faded silk kimono",theory:"Complementary (orange/purple) both muted. Grey mediates the temperature tension.",approaches:["complementary","unexpected"]},
-            {name:"Cinnamon Buff, Lemon Yellow & Lincoln Green",source:"Combination No. 210",colors:["#fdc57e","#f8ed43","#555832"],description:"Pale peach and bright yellow against deep olive — autumn harvest",theory:"Complementary (yellow/dark green). The warm lights intensify against the dark cool green.",approaches:["complementary","temperature"]},
-            {name:"Lemon Yellow, Deep Slate Olive & Venice Green",source:"Combination No. 189",colors:["#f8ed43","#253122","#62c6bf"],description:"Vivid yellow against near-black green and aqua",theory:"Three-way contrast: value, temperature, and hue. Each colour opposes the others on multiple axes.",approaches:["temperature","complementary"]},
-            {name:"Yellow Green, Sea Green, Cobalt Green & Calamine Blue",source:"Combination No. 291",colors:["#c7d14f","#00b49b","#96d1aa","#78cdd0"],description:"Four tones of green and blue-green — cool aquatic symphony",theory:"Analogue cool harmony. Four closely related hues at varying saturations; fresh and cohesive.",approaches:["saturation","unexpected"]},
-            {name:"Raw Sienna, Vandyke Brown & Deep Indigo",source:"Combination No. 182",colors:["#bb7125","#4b3317","#051230"],description:"Warm amber and brown against near-black indigo — lacquerware and midnight",theory:"Temperature reversal at low value. Warm earth tones deepen; indigo is equally dark but cold.",approaches:["temperature","unexpected"]},
-            {name:"Grenadine, Sulphur Yellow, Golden Yellow & Eupatorium Purple",source:"Combination No. 315",colors:["#f48067","#f5ecc2","#f3a257","#bf5892"],description:"Coral, two yellows and pink-purple — late-summer garden",theory:"Warm analogues disrupted by a complementary purple. The purple provides the unexpected counterpoint.",approaches:["complementary","temperature"]},
-            {name:"Cream Yellow, Vandyke Brown & Plumbeous",source:"Combination No. 192",colors:["#fdbf68","#4b3317","#70727c"],description:"Warm cream against dark brown and cool blue-grey",theory:"Temperature triangle: warm cream, warm-dark brown, cool grey. Three values, two temperatures.",approaches:["temperature","saturation"]},
-            {name:"Spectrum Red, Brick Red, Eupatorium Purple & Blue Violet",source:"Combination No. 322",colors:["#e31f26","#a84222","#bf5892","#4f4086"],description:"Vivid red spanning to purple — fiery and dramatic",theory:"Analogue sweep from red to violet. Each step shifts cooler; reads as one family with internal variety.",approaches:["saturation","unexpected"]},
-            {name:"Light Cadmium Orange, Cinnamon Buff & Hooker's Green",source:"Combination No. 263",colors:["#f3a257","#fdc57e","#3a6b4a"],description:"Two warm oranges against deep forest green — natural complementary",theory:"Complementary (orange/green) with warm side doubled. Two orange-yellows against one deep cool anchor.",approaches:["complementary","temperature"]},
-            {name:"Deep Slate Olive, Blackish Olive & Bottle Green",source:"Combination No. 245",colors:["#253122","#42533e","#1c4d35"],description:"Three dark greens — near-black through forest to bottle",theory:"Tonal monochromatic at low value. Subtle value shifts create spatial depth without hue contrast.",approaches:["saturation","unexpected"]}
-        ];
-        var currentFilter = "all";
-        var tagLabels = {temperature:"Temperature Contrast",complementary:"Complementary",saturation:"Saturation Contrast",unexpected:"Unexpected Pair"};
-        function renderPalettes() {
-            var grid = document.getElementById("palettes-grid");
-            var fp = currentFilter === "all" ? palettes : palettes.filter(function(p){ return p.approaches.indexOf(currentFilter) > -1; });
-            if (fp.length === 0) { grid.innerHTML = '<div class="empty-state">No palettes match this filter.</div>'; return; }
-            var html = "";
-            for (var i = 0; i < fp.length; i++) {
-                var p = fp[i];
-                var pi = palettes.indexOf(p);
-                var swatches = "";
-                for (var j = 0; j < p.colors.length; j++) {
-                    swatches += '<div class="color-swatch" style="background-color:' + p.colors[j] + '" onclick="copyColor(\''  + p.colors[j] + '\')"><div class="hex-code">' + p.colors[j] + '</div></div>';
-                }
-                var tags = "";
-                for (var k = 0; k < p.approaches.length; k++) {
-                    tags += '<span class="tag">' + tagLabels[p.approaches[k]] + '</span>';
-                }
-                html += '<div class="palette-card"><div class="palette-colors">' + swatches + '</div><div class="palette-info"><div class="palette-name">' + p.name + '</div><div class="palette-source">' + p.source + '</div><div class="palette-description">' + p.description + '</div><div class="theory-callout"><div class="theory-callout-label">Why this works</div><div class="theory-callout-text">' + p.theory + '</div></div><div class="palette-meta">' + tags + '</div><button class="copy-button" onclick="copyAllCodes(' + pi + ',this)">Copy All Codes</button></div></div>';
-            }
-            grid.innerHTML = html;
+
+    <!-- Style context -->
+    <div class="style-context" id="style-context">
+        <div class="style-context-dot" id="style-context-dot" style="background:#3d3935"></div>
+        <span id="style-context-text">All 45 palettes — organised by Sanzo Wada's original CMYK specifications, recontextualised for contemporary design aesthetics.</span>
+    </div>
+
+    <!-- Main Viewer -->
+    <div class="main-viewer" id="main-viewer"></div>
+
+    <!-- Thumbnail Grid -->
+    <div class="thumbnail-section">
+        <div class="section-title">All Palettes</div>
+        <div class="thumbnail-grid" id="thumbnail-grid"></div>
+    </div>
+
+    <!-- Colour Theory Primer -->
+    <div class="primer-section">
+        <div class="section-title">Colour Proportion Rules</div>
+        <p style="font-size:0.86rem; color:var(--text-muted);">These rules govern how Wada's combinations are applied in practice — not just which colours, but how much of each. Knowing the proportion logic lets you extend any palette with confidence.</p>
+        <div class="primer-grid">
+            <div class="primer-card">
+                <div class="primer-card-rule">Proportion Rule</div>
+                <div class="primer-card-title">60 · 30 · 10</div>
+                <div class="primer-card-text">60% dominant (walls, background, base garment), 30% secondary (upholstery, layering piece, primary surface), 10% accent (objects, accessories, highlight). Prevents any single colour from overwhelming the composition while ensuring the accent reads clearly.</div>
+            </div>
+            <div class="primer-card">
+                <div class="primer-card-rule">Proportion Rule</div>
+                <div class="primer-card-title">50 · 25 · 15 · 10</div>
+                <div class="primer-card-text">For four-colour palettes. The 50% dominant still anchors; the remaining three are graduated. Avoid distributing four colours equally — even weighting creates visual competition. One must dominate.</div>
+            </div>
+            <div class="primer-card">
+                <div class="primer-card-rule">Contrast Rule</div>
+                <div class="primer-card-title">Value Before Hue</div>
+                <div class="primer-card-text">Establish light/dark contrast before considering colour. A palette that reads clearly in greyscale will work in colour. Wada's strongest combinations always have clear value hierarchy — light, mid, and dark — not just hue variety.</div>
+            </div>
+            <div class="primer-card">
+                <div class="primer-card-rule">Harmony Rule</div>
+                <div class="primer-card-title">Temperature Balance</div>
+                <div class="primer-card-text">Every warm colour benefits from a cool anchor, and vice versa. Pure temperature one-way compositions feel monotonous. A single opposing-temperature note — often the accent — provides depth. The tension is what makes it interesting.</div>
+            </div>
+            <div class="primer-card">
+                <div class="primer-card-rule">Saturation Rule</div>
+                <div class="primer-card-title">One Saturated, Many Muted</div>
+                <div class="primer-card-text">Reserve full saturation for one colour in a multi-colour palette. All others should be muted, neutralised, or darkened. The saturated colour becomes the focal point; muted companions give it room to read. This is why Wada's "wrong" combinations work.</div>
+            </div>
+            <div class="primer-card">
+                <div class="primer-card-rule">Coherence Rule</div>
+                <div class="primer-card-title">Shared Undertone</div>
+                <div class="primer-card-text">Colours that appear very different can cohere if they share an undertone — all slightly warm, all slightly grey, all slightly green. This is how Wada creates unity across unexpected hue pairings: the colours look different but feel related.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- How to Start Section -->
+    <div class="primer-section">
+        <div class="section-title">How to Start</div>
+        <p style="font-size:0.86rem; color:var(--text-muted); margin-bottom:1.5rem;">Pick your entry point. The same palette works differently across fashion, interior, and graphic contexts — because the dominant colour (60%) occupies a different type of surface in each.</p>
+        <div class="primer-grid">
+            <div class="primer-card">
+                <div class="primer-card-rule">Fashion</div>
+                <div class="primer-card-title">Start with the 60% piece</div>
+                <div class="primer-card-text">Pick the dominant colour as a key investment garment — a coat, suit, or dress. Don't add accessories until the dominant and secondary are resolved. Photograph the combination in natural light, not a retail mirror. The 10% accent often has the most visible impact per cost — start there if budget is the constraint. Treat the palette as a capsule: three pieces that work together before you add anything else.</div>
+            </div>
+            <div class="primer-card">
+                <div class="primer-card-rule">Interior</div>
+                <div class="primer-card-title">Order paint testers first — always</div>
+                <div class="primer-card-text">Colours shift dramatically between a swatch card, a screen, and an actual wall. Test the dominant at 60 × 60 cm on the real wall and observe it in morning, afternoon, and evening light before committing. Introduce the 30% through a large textile first — a sofa, rug, or curtain — not more paint. The 10% accent is the last decision, not the first. Most colour mistakes are made in the wrong order.</div>
+            </div>
+            <div class="primer-card">
+                <div class="primer-card-rule">Graphic Design</div>
+                <div class="primer-card-title">Assign function before applying colour</div>
+                <div class="primer-card-text">Map each colour to a role before touching the layout: background, primary type, secondary type, interactive element. Test the palette on a real layout — even rough — not just swatches. Colours behave differently at typographic scale. Check WCAG contrast ratios for any type/background pair (small text needs 4.5:1 minimum). Reserve the most saturated colour for the element that carries the most visual weight. Export as CSS variables or Figma styles before the team starts.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About -->
+    <div class="about-section">
+        <div class="section-title">About Sanzo Wada</div>
+        <p class="about-text">Sanzo Wada (1883–1967) was a Japanese artist, costume designer, and professor who compiled the <em>Dictionary of Colour Combinations</em> from his six-volume <em>Haishoku Soukan</em>, originally published in the 1930s for kimono and fashion design. Seigensha published the collected edition in 2010. The work contains 348 palettes grounded in natural observation and cultural memory.</p>
+        <p class="about-text">His approach prioritises surprising harmony over safe gradation. Where algorithmic generators produce colours sharing obvious relationships, Wada juxtaposes temperatures, saturations, and cultural contexts to create combinations that shouldn't work but do. The 45 palettes here are a curated selection across his catalogue, remapped to contemporary aesthetics.</p>
+        <p class="about-text">Colour values are derived from Wada's original CMYK specifications, converted to hex via the open-source dataset by Dain M. Blodorn Kim. Combination numbers reference Wada's original catalogue. Click any swatch to copy its hex code to clipboard.</p>
+    </div>
+</div>
+
+<div class="toast" id="toast">Copied to clipboard</div>
+
+<script>
+const styleInfo = {
+    all:            { label: 'All Palettes',    color: '#3d3935', desc: 'All 45 palettes — organised by Sanzo Wada\'s original CMYK specifications, recontextualised for contemporary design aesthetics.' },
+    japandi:        { label: 'Japandi',          color: '#3a4a38', desc: 'Japanese minimalism meets Scandinavian restraint. Muted, earthy, organic — naturalistic tones at low saturation with clear value hierarchy.' },
+    dopamine:       { label: 'Dopamine',         color: '#c4006a', desc: 'Maximally saturated, joyful, unapologetic. Bold hue contrasts and pure colour — dressing or decoration as a form of energetic expression.' },
+    'quiet-luxury': { label: 'Quiet Luxury',     color: '#7a6e63', desc: 'Restrained, tonal, understated. Speaks in whispers — muted complements, shared undertones, nothing competing for attention.' },
+    opulent:        { label: 'Opulent',          color: '#4a1a68', desc: 'Deep jewel tones, richness, drama. Maximalist but refined — dark anchors, saturated hues, strong value contrast.' },
+    'wabi-sabi':    { label: 'Wabi-Sabi',        color: '#7a5c3a', desc: 'Beauty in imperfection. Organic, aged, earthy — clay, rust, ash, moss. Colours that appear to have always existed in nature.' },
+    'dark-academia':{ label: 'Dark Academia',    color: '#2c2840', desc: 'Scholarly, moody, literary. Deep tonals inspired by old libraries, candlelight, and aged materials — serious and atmospheric.' },
+    coastal:        { label: 'Coastal',          color: '#2a7d9e', desc: 'Airy, light-washed, watery. Blues, sandy neutrals, aquas — relaxed and luminous without being saccharine.' },
+    modern:         { label: 'Fine Modern',      color: '#1e1e2e', desc: 'Graphic, architectural, precise. High contrast with controlled colour — confident compositions for editorial, branding, and interiors.' }
+};
+
+const palettes = [
+    {
+        name: "Eosine Pink, Yellow Green & Black",
+        source: "Combination No. 276",
+        colors: ["#f37f94", "#afd472", "#111314"],
+        description: "Vivid pink and fresh yellow-green against near-black — a high-contrast trio that reads as confidently wrong before feeling right.",
+        theory: "Value extremes create maximum tension. The black grounds both warm and cool mid-tones; neither pink nor green could anchor the other without it.",
+        styles: ["dopamine", "modern"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Black field: background, base garment, cabinetry", "Yellow-green: upholstery, hero garment, illustration", "Eosine pink: objects, accessories, CTA highlight"],
+        useCases: {
+            fashion: "Black as the dominant base garment — overcoat, wide trouser, or tailored suit (60%). Yellow-green enters as the hero piece: a structured knit, bag, or statement shoe (30%). Eosine pink as the final accent: earrings, lipstick, or a silk scarf lining (10%). The black prevents this reading as costume.",
+            interior: "Black lacquered cabinetry or a deep feature wall (60%); upholstery or curtains in yellow-green linen (30%); pink vessels, ceramics, or a single artwork (10%). Works in a kitchen, studio, or bar. Add natural timber to soften.",
+            graphic: "Black background field (60%); yellow-green as the primary headline or hero illustration (30%); eosine pink for CTAs, interactive elements, or data highlights (10%). Strong for editorial, tech, event branding, or music."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Both saturated mid-tones against near-black meet dopamine's maximum-expressiveness rule and modern's single-accent-against-dark-field structure — neither criterion requires adjustment." },
+                { label: "Distinctiveness", note: "Yellow-green is rare as the foil to eosine pink — most dopamine palettes pair pink against red, orange, or blue. The cool-warm complement here is unexpected within the set." },
+                { label: "Tension + Resolution", note: "Warm pink vs. cool yellow-green creates temperature opposition; near-black resolves by anchoring both mid-tones against value extremes, without desaturating either." },
+                { label: "Cross-Domain Legibility", note: "Colour-blocked fashion, a high-contrast graphic system, and a statement interior — the three-tone logic reads identically at body scale, wall scale, and screen." }
+            ]
         }
-        function copyColor(c) { navigator.clipboard.writeText(c); }
-        function copyAllCodes(i, btn) {
-            navigator.clipboard.writeText(palettes[i].colors.join(", ")).then(function(){
-                btn.textContent = "Copied!";
-                btn.classList.add("copied");
-                setTimeout(function(){ btn.textContent = "Copy All Codes"; btn.classList.remove("copied"); }, 2000);
-            });
+    },
+    {
+        name: "Olive, Dusky Green & Deep Slate Green",
+        source: "Combination No. 318",
+        colors: ["#806e4b", "#42533e", "#004f46", "#112f2c"],
+        description: "Four tones of forest and earth — warm olive descending through cool slate-green. A study in tonal restraint and depth.",
+        theory: "Tonal monochromatic descent. All share the green-brown family but span warm to cool and light to dark, creating depth through value rather than hue contrast.",
+        styles: ["japandi", "wabi-sabi", "dark-academia"],
+        rule: "50 · 25 · 15 · 10",
+        proportions: [50, 25, 15, 10],
+        roles: ["Dominant", "Secondary", "Layer 3", "Anchor"],
+        roleDesc: ["Olive: walls, key flooring, base garment", "Dusky green: upholstery, textiles, mid-layer", "Slate green: outer coat, joinery, accent surface", "Near-black: wood detail, leather, small objects"],
+        useCases: {
+            fashion: "Layered naturals: olive linen shirt as the interior layer (50%), dusky green wide trouser or mid-layer knit (25%), slate-green structured outer coat (15%), near-black leather accessories — boots, bag, belt (10%). Entirely tonal; add an ivory or raw linen piece for relief.",
+            interior: "Deep slate green on walls or joinery (50%); dusky green upholstery and heavy curtains (25%); olive in cushions, ceramics, and secondary surfaces (15%); near-black in timber frames, shelving hardware, or leather furniture legs (10%). Quintessential Japandi living room.",
+            graphic: "Dark slate as the primary background field; olive for secondary headlines and structural rules; dusky green for body text or illustration; near-black for strong type anchors. Excellent for sustainability, architecture, or botanical editorial."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Muted saturation throughout; warm olive descending to cool slate-green with strong value hierarchy — satisfies japandi's organic reference, wabi-sabi's aged naturalism, and dark-academia's forest-green tonal requirement simultaneously." },
+                { label: "Distinctiveness", note: "The only tonal mono-green palette in the full set; every other multi-hue entry introduces a contrasting temperature or complementary hue rather than staying within a single colour family." },
+                { label: "Tension + Resolution", note: "Warm olive (yellow-green) creates temperature tension against cool deep slate-green; the four-value descent from light to near-black resolves through clear hierarchy rather than hue contrast." },
+                { label: "Cross-Domain Legibility", note: "All-tonal layered fashion, a quintessential Japandi living room (joinery + upholstery), and botanical or sustainability editorial — the same tonal logic scales from garment to architecture to page." }
+            ]
         }
-        document.querySelectorAll(".filter-btn").forEach(function(btn){
-            btn.addEventListener("click", function(){
-                document.querySelectorAll(".filter-btn").forEach(function(b){ b.classList.remove("active"); });
-                btn.classList.add("active");
-                currentFilter = btn.dataset.filter;
-                renderPalettes();
-            });
-        });
-        renderPalettes();
-    </script>
+    },
+    {
+        name: "Hermosa Pink, Seashell & Calamine Blue",
+        source: "Combination No. 176",
+        colors: ["#f9c1ce", "#fdd4bd", "#78cdd0"],
+        description: "Soft blush and cream against cool aqua — delicate temperature play in high key.",
+        theory: "Temperature contrast at high value. All three are light; the distinction is entirely thermal — warm pinks against cool blue-green.",
+        styles: ["quiet-luxury", "coastal"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Seashell cream: walls, flooring, base garment", "Hermosa pink: upholstery, key layering piece", "Calamine blue: accessories, glassware, highlight"],
+        useCases: {
+            fashion: "Seashell as the neutral foundation — cream trousers, a linen shirt, or an overcoat (60%); Hermosa pink as the layering or hero garment: a dress, silk slip, or structured blazer (30%); calamine blue as the temperature-shift accessory — shoes, bag, or belt (10%). Light and considered.",
+            interior: "Cream-seashell walls and flooring (60%); blush pink upholstery or curtains (30%); calamine blue in glazed ceramic vessels, glassware, or small artworks (10%). A serene coastal bedroom or dressing room. Avoid adding warm wood tones — they shift the balance.",
+            graphic: "Seashell background (60%); blush for warmth in photography direction, illustration, and image selection (30%); calamine blue for interactive elements, price callouts, or data points (10%). Lifestyle, wellness, or luxury editorial."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "All three hues are high-key and muted — no fully saturated colour. Soft blush and cream reference quiet luxury's warm-blush and cream vocabulary; calamine blue introduces a coastal sky note at low saturation." },
+                { label: "Distinctiveness", note: "The only quiet-luxury palette that introduces a genuine cool counterpoint; all others in the aesthetic stay warm or tonal-neutral, making this the sole entry with active temperature play." },
+                { label: "Tension + Resolution", note: "Warm blush-cream vs. cool aqua creates temperature tension; shared high value across all three resolves it — the contrast is gentle because none of the tones is dark or saturated." },
+                { label: "Cross-Domain Legibility", note: "A serene coastal bedroom, a quiet-luxury dressing room, and a wellness or beauty brand are all served by the same colours — the palette requires no re-proportioning between contexts." }
+            ]
+        }
+    },
+    {
+        name: "Sulphur Yellow, Green Blue & Antwerp Blue",
+        source: "Combination No. 208",
+        colors: ["#f5ecc2", "#099197", "#007190"],
+        description: "Pale yellow cream against two depths of teal — unexpected but grounded in complementary logic.",
+        theory: "Value contrast anchors a near-monochromatic blue-green pair. The pale yellow reads as neutral against the saturated teals, allowing them to read as a single unit.",
+        styles: ["modern", "coastal"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Sulphur cream: walls, background, base layer", "Green-blue teal: joinery, upholstery, hero garment", "Antwerp blue: accessories, structural type, anchor"],
+        useCases: {
+            fashion: "Cream or off-white as the dominant base — wide linen trouser, an overcoat (60%); teal as the statement garment or outer layer: a structured dress, knit, or coat (30%); Antwerp blue as the deep anchor in leather accessories — bag, lace-up shoes, belt (10%).",
+            interior: "Cream walls and natural stone or light timber flooring (60%); teal in joinery, painted cabinetry, or upholstery (30%); Antwerp blue in glazed tile work, framed artwork, or ceramic vessels (10%). Striking in a kitchen, bathroom, or studio.",
+            graphic: "High contrast without aggression. Cream as the primary page field or background (60%); Antwerp blue for headlines and structural elements (30%); teal for illustration, secondary action colour, and data visualisation (10%). Fintech, sustainability, or wellness."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Cream acts as a neutral field; the two saturated teals provide the deliberate architectural contrast required for fine modern. For coastal, the palette reads airy and high-key with a clear water-colour reference in both blues." },
+                { label: "Distinctiveness", note: "The only palette where off-white cream functions as the dominant neutral field — most modern palettes anchor to black or dark slate. The reversal (light dominant, dark accents) makes the palette structurally distinct." },
+                { label: "Tension + Resolution", note: "Warm sulphur-cream vs. the cool blue-green duo creates temperature tension; the two teal tones read as a single unit against the cream, resolving the opposition without introducing a neutral bridge." },
+                { label: "Cross-Domain Legibility", note: "Coastal resort fashion, a kitchen or studio interior, and a clean fintech or wellness graphic system — each context uses the cream-plus-teal logic with equal confidence." }
+            ]
+        }
+    },
+    {
+        name: "Rosolanc Purple, Orange & Black",
+        source: "Combination No. 144",
+        colors: ["#b73f74", "#f37420", "#111314"],
+        description: "Hot pink-purple against vivid orange, anchored by black — bold and unapologetic.",
+        theory: "Wada's rare high-saturation duo. The black prevents the two warm colours from clashing; without it this combination would be unworkable.",
+        styles: ["dopamine", "opulent"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Black: base garment, background field, cabinetry", "Orange: hero garment, primary surface, illustration", "Rosolanc pink-purple: accessory, highlight, accent"],
+        useCases: {
+            fashion: "Black as the structural anchor — a leather jacket, tailored trouser, or overcoat (60%); orange as the hero: a knit, dress, or structured coat (30%); rosolanc as the accent: boots, bag, or a silk scarf (10%). Maximum impact, fully wearable.",
+            interior: "Black joinery, floors, or lacquered walls in a statement room (60%); orange upholstery, a wallpaper panel, or a large artwork (30%); pink-purple in cushions, neon signage, or glassware (10%). A bar, entry hall, or creative studio.",
+            graphic: "Black as background (60%); orange as headline or hero visual (30%); pink-purple as CTA, link colour, or decorative rule (10%). Electric and unambiguous. Suited to events, fashion week, or music brand identity."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "High-saturation pink-purple and orange against near-black satisfies dopamine's maximum-expressiveness rule. The jewel-register pink-purple with deep black anchor also meets opulent's richness and drama criterion." },
+                { label: "Distinctiveness", note: "The only palette using two warm saturated hues simultaneously — all other dopamine entries pair one saturated colour against a neutral or cool. The dual-warm-saturated structure is unique within both aesthetics." },
+                { label: "Tension + Resolution", note: "Pink-purple (red-cool) vs. orange (yellow-warm) creates hue tension at the saturated extreme; near-black resolves by preventing mutual cancellation — without it the two warm saturates would compete without anchor." },
+                { label: "Cross-Domain Legibility", note: "Bold evening fashion, a dramatic bar or studio interior, and a high-impact music or event brand — the three-tone structure carries the same logic at all scales without re-interpretation." }
+            ]
+        }
+    },
+    {
+        name: "Yellow Ochre, Yellow Orange & Orange Rufous",
+        source: "Combination No. 222",
+        colors: ["#e2b540", "#f99d1b", "#c16b27"],
+        description: "Three registers of amber and ochre — analogue warmth from golden to russet.",
+        theory: "Analogue harmony within the yellow-orange family. Closely related hues create richness through value and temperature shifts within the same family.",
+        styles: ["wabi-sabi", "quiet-luxury"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Yellow ochre: walls, flooring, dominant surface", "Yellow orange: upholstery, hero garment, textiles", "Orange rufous: leather, accessories, warm anchor"],
+        useCases: {
+            fashion: "Tonal amber dressing: yellow ochre as the dominant full-length coat or wide trouser (60%); yellow-orange as a knit, silk shirt, or tailored inner layer (30%); orange rufous in leather — boots, belt, structured bag (10%). Autumnal and considered; add cream or ivory as a collar note.",
+            interior: "Ochre limewash or plaster walls (60%); orange rufous in leather seating, woven rugs, or timber joinery (30%); yellow-orange in ceramics, dried florals, and candleholders (10%). Quintessential Wabi-Sabi living room — layer unfinished textures for depth.",
+            graphic: "Warm editorial. Ochre as the full-bleed background or primary brand field (60%); orange rufous for headlines and structural rules (30%); yellow-orange for inline callouts, illustration, and warmth in data (10%). Food, travel, artisan craft, or cultural editorial."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "All three tones are muted warm analogues — ochre, amber, and russet reference natural dyes, aged textiles, and autumn harvest. Satisfies wabi-sabi's organic and weathered criterion and quiet luxury's tonal-restraint rule (no fully saturated hue in the group)." },
+                { label: "Distinctiveness", note: "The only all-amber tonal palette in the set — every other warm palette introduces at least one contrasting temperature or hue. Staying entirely within the yellow-orange-russet family is a deliberate constraint." },
+                { label: "Tension + Resolution", note: "Temperature shifts within the analogue family create the tension — golden ochre reads slightly cooler than deep orange rufous. Shared warm undertone provides resolution: the palette feels unified despite the internal gradation." },
+                { label: "Cross-Domain Legibility", note: "Tonal autumnal fashion (layered ochre and amber), a wabi-sabi interior (limewash walls, leather seating, ceramics), and food or craft editorial — the warm logic is identically persuasive in all three contexts." }
+            ]
+        }
+    },
+    {
+        name: "Vinaceous Cinnamon, Apricot Yellow & Pale King's Blue",
+        source: "Combination No. 213",
+        colors: ["#eea78c", "#ffdd00", "#a7d4e4"],
+        description: "Warm salmon and saturated yellow against cool powder blue — a Japanese sunrise palette.",
+        theory: "Three-way temperature opposition. Warm terracotta, hot yellow, and cool blue occupy different temperature zones; all are high-key enough to cohere.",
+        styles: ["dopamine", "coastal"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Powder blue: dominant neutral, calms the palette", "Cinnamon salmon: layering piece, key surface", "Saturated yellow: high-visibility accent"],
+        useCases: {
+            fashion: "Powder blue as the dominant base — a wide shirt, coat, or full dress (60%); cinnamon salmon as the layering knit, inner garment, or scarf (30%); saturated yellow as the standout accent: bag, shoes, or belt (10%). High-summer energy that reads as intentional rather than chaotic.",
+            interior: "Powder blue walls (60%); cinnamon salmon upholstery, curtains, or a statement sofa (30%); saturated yellow in a lamp base, cushions, or single artwork (10%). Coastal or Japandi bedroom with energy. Keep surfaces natural — raw linen, rattan.",
+            graphic: "Yellow as the hero headline or primary visual (30%); cinnamon salmon for warmth in photography direction and supporting illustration (60%); powder blue for background panels and UI chrome (10%). Children's publishing, lifestyle apps, or summer campaigns."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Saturated yellow and warm salmon meet dopamine's expressiveness criterion; the high-key powder-blue reference and airy overall value satisfy coastal's water-and-sky rule." },
+                { label: "Distinctiveness", note: "Three-way temperature opposition (warm salmon, hot yellow, cool blue) is unusual — most dopamine palettes use binary contrast. Using three opposing temperature zones simultaneously is not found elsewhere in the set." },
+                { label: "Tension + Resolution", note: "Each hue sits at a different temperature pole — warm-red, hot yellow, cool blue. They cohere because all are high-key and none dominates tonally; the tension is expressed through hue contrast rather than value contrast." },
+                { label: "Cross-Domain Legibility", note: "Summer fashion (pattern-mixing or colour-blocking), a coastal bedroom with energy, and a lifestyle or children's brand identity — the three-temperature logic transfers across body, room, and screen without adjustment." }
+            ]
+        }
+    },
+    {
+        name: "Cinnamon Buff, Deep Lyons Blue, Aconite Violet & Black",
+        source: "Combination No. 344",
+        colors: ["#fdc57e", "#1c4286", "#a36aa5", "#111314"],
+        description: "Warm sandy buff against deep navy and purple, grounded in black — dramatic four-colour study.",
+        theory: "Value structure drives this combination. Black and deep blue anchor the warm buff; violet bridges warm and cool. The buff glows against the dark field.",
+        styles: ["opulent", "dark-academia"],
+        rule: "50 · 25 · 15 · 10",
+        proportions: [50, 25, 15, 10],
+        roles: ["Dominant", "Secondary", "Layer 3", "Accent"],
+        roleDesc: ["Near-black: base garment, wall, structural anchor", "Aconite violet: velvet layer, key upholstery", "Buff cinnamon: interior warmth, lamplight, scarf", "Deep blue: accessory, ceramic, decorative rule"],
+        useCases: {
+            fashion: "Near-black or deep navy as the tailored foundation — a suit or overcoat (50%); aconite violet in a layered velvet coat or structured dress (25%); cinnamon buff as the interior warmth — a silk blouse, fine knit, or satin lining (15%); deep cobalt-blue accessories: shoes, clutch, or jewellery (10%). Opulent evening or autumn capsule.",
+            interior: "Deep navy or near-black walls in a formal room (50%); violet in upholstery — a Chesterfield sofa, curtains, or ceiling panel (25%); cinnamon buff in woodwork, lampshades, or cushions (15%); cobalt-blue objects and artwork (10%). A dining room, private library, or home bar.",
+            graphic: "Deep navy background with near-black structure (50%); violet for headers or illustration (25%); buff for pull quotes and warmth (15%); cobalt blue for interaction and data (10%). Premium fashion, cultural institution, or hospitality brand."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Deep navy and near-black provide the dark anchor; aconite violet delivers jewel-tone depth; cinnamon buff brings antique warmth — satisfies opulent's jewel-plus-dark-anchor structure and dark-academia's scholarly moody tonal palette in a single composition." },
+                { label: "Distinctiveness", note: "The only four-colour opulent palette using both a warm buff accent and a cold deep navy simultaneously; most opulent entries lean either warm-jewel or cool-jewel, not both in the same composition." },
+                { label: "Tension + Resolution", note: "Warm buff (light, orange) vs. deep navy and near-black (cool, dark) creates maximum value and temperature contrast simultaneously; aconite violet bridges warm and cool as a mid-value intermediary, resolving the opposition." },
+                { label: "Cross-Domain Legibility", note: "Evening fashion (velvet and silk layering), a private library or dining room interior, and a premium cultural or hospitality brand identity — the four-colour hierarchy operates with equal clarity in all three contexts." }
+            ]
+        }
+    },
+    {
+        name: "Hermosa Pink, Light Glaucous Blue & Cerulean Blue",
+        source: "Combination No. 227",
+        colors: ["#f9c1ce", "#a5c8d1", "#0093a5"],
+        description: "Blush pink against two depths of blue-green — cherry blossoms over water.",
+        theory: "Cultural juxtaposition. These three colours describe spring in Japan — sakura against sky and still water. Temperature contrast is gentle; all are cool-leaning.",
+        styles: ["coastal", "quiet-luxury", "japandi"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Glaucous blue-grey: walls, dominant surface, base garment", "Hermosa pink: upholstery, layering piece, textiles", "Cerulean blue: saturated accent, ceramics, interactive"],
+        useCases: {
+            fashion: "Light glaucous blue as the dominant coat or wide dress (60%); blush pink as the silk slip, layering shirt, or scarf (30%); cerulean as the saturated accessory: a structured bag, belt, or shoes (10%). A Japanese-minimalist take on tonal dressing.",
+            interior: "Pale glaucous blue-grey on walls (60%); blush pink in upholstery, curtains, or linen textiles (30%); cerulean in glazed ceramic vessels, a single artwork, or tile detail (10%). A serene Japandi bedroom, reading room, or bathroom.",
+            graphic: "Glaucous blue as the editorial background or brand field (60%); blush for warmth and softness in photography and illustration (30%); cerulean as the saturated element in charts, CTAs, and links (10%). Wellness, beauty, or lifestyle brand."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "All three hues are cool-leaning and muted; blush and glaucous blue reference sakura and still water. Satisfies coastal's sky-and-water reference, quiet luxury's tonal restraint, and japandi's organic cultural resonance — the only palette in the set that meets three criteria simultaneously." },
+                { label: "Distinctiveness", note: "The rare cool-dominant blush separates it from warmer pink palettes (which pull toward warm-red) and from higher-saturation coastal palettes — it occupies a precise narrow register none of the other entries reach." },
+                { label: "Tension + Resolution", note: "Blush pink (warm-red leaning) vs. glaucous blue and cerulean (cool) creates gentle temperature tension; cerulean's higher saturation provides the singular accent point that resolves the composition without introducing a warm anchor." },
+                { label: "Cross-Domain Legibility", note: "Japandi-minimalist tonal fashion, a coastal bedroom or bathroom interior, and a wellness or beauty brand graphic system — the same cool-blush logic scales from textile weave to wall surface to screen." }
+            ]
+        }
+    },
+    {
+        name: "Khaki, Deep Grayish Olive & Diamine Green",
+        source: "Combination No. 146",
+        colors: ["#bc892b", "#635a3a", "#1a7444"],
+        description: "Warm golden-brown against two greens — earth and moss, a naturalist palette.",
+        theory: "Complementary tendency (yellow-brown / green) expressed through three naturalistic tones. Khaki's warmth anchors the two cool greens.",
+        styles: ["japandi", "wabi-sabi"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Grayish olive: dominant surface, base garment, wall", "Khaki golden-brown: upholstery, secondary layer, rattan", "Diamine green: saturated accent, plants, leather detail"],
+        useCases: {
+            fashion: "Grayish olive as the dominant — an army coat, wide trouser, or safari jacket (60%); khaki in a layering shirt, boot leather, or belt (30%); diamine green as the statement accessory: a structured leather bag or boot (10%). Natural, intentional, and resolute.",
+            interior: "Grayish olive on walls or painted joinery (60%); khaki in upholstery, natural rattan, or woven flat-weave rugs (30%); diamine green in living plants, glazed vessels, or a framed botanical print (10%). Japandi living room or dining room — add raw timber and undyed linen.",
+            graphic: "Environmental, botanical, or field-study brand. Deep olive as the background field (60%); grayish olive for secondary type and structural rules (30%); diamine green for data, callouts, and interaction elements (10%). Sustainability or conservation editorial."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "All three tones reference natural organic materials — clay-gold, moss-olive, and forest green. Muted saturation throughout with a clear value hierarchy satisfies japandi's organic-material criterion and wabi-sabi's naturalistic, aged-material requirement." },
+                { label: "Distinctiveness", note: "Diamine green is the only fully saturated hue in the palette — all other green-based palettes in the set maintain even saturation throughout. The single saturated accent within an otherwise muted trio is what marks this as japandi rather than purely wabi-sabi." },
+                { label: "Tension + Resolution", note: "Warm khaki (yellow-orange) vs. the cool forest greens creates temperature tension; the grayish olive bridges the two as a warm-green intermediary, resolving through graduation rather than contrast." },
+                { label: "Cross-Domain Legibility", note: "Naturalist fashion (safari, army, botanical), a Japandi dining room or living room interior, and a sustainability or conservation editorial — each context uses the same tonal logic without re-proportioning." }
+            ]
+        }
+    },
+    {
+        name: "Raw Sienna, Lemon Yellow, Peach Red & Black",
+        source: "Combination No. 298",
+        colors: ["#bb7125", "#f8ed43", "#f15a30", "#111314"],
+        description: "Autumnal fire — orange, yellow and red against black.",
+        theory: "Analogous warm trio anchored by black. These three colours share the fire spectrum; black prevents mutual cancellation.",
+        styles: ["dopamine", "opulent"],
+        rule: "50 · 25 · 15 · 10",
+        proportions: [50, 25, 15, 10],
+        roles: ["Dominant", "Secondary", "Layer 3", "Accent"],
+        roleDesc: ["Black: structural base garment, background anchor", "Raw sienna: leather, joinery, secondary warmth", "Peach red: hero garment, upholstery, primary surface", "Lemon yellow: the surprise — bag, lamp, ceramic"],
+        useCases: {
+            fashion: "Black as the structural base — overcoat or wide trouser (50%); raw sienna in leather accessories and boots (25%); peach-red as the hero: a dress, knit, or structured blazer (15%); lemon yellow as the surprise accent — a bag, earrings, or silk liner (10%). Dramatic and resolute.",
+            interior: "Black as a statement lacquer wall or ceiling in a key room (50%); raw sienna in leather seating and dark timber joinery (25%); peach-red in upholstered panels or a large artwork (15%); lemon yellow in a single ceramic, lamp, or floral arrangement (10%). Maximalist dining room or entry hall.",
+            graphic: "Black background (50%); lemon yellow as the attention-grabbing headline (15%); peach-red for secondary type and illustration (25%); sienna as the midground tonal anchor (10%). Festival poster, fashion editorial, or music brand identity."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Three fully or near-saturated warm hues against near-black provides maximum expressiveness for dopamine. The richness of the fire-spectrum trio with a structural black anchor also meets opulent's drama and saturation depth criterion." },
+                { label: "Distinctiveness", note: "The only palette carrying three warm saturated hues simultaneously (orange, yellow, red-orange) — all other dopamine entries use one or two saturated colours. The warm analogue sweep from sienna through yellow to peach-red is unique within both aesthetics." },
+                { label: "Tension + Resolution", note: "Temperature shifts within the warm trio (cool-yellow through orange to red) create the internal tension; near-black provides value extremes that resolve the competition between the three warm tones without introducing a cool hue." },
+                { label: "Cross-Domain Legibility", note: "Dramatic evening fashion (statement layering), a maximalist interior (bar, dining room), and festival or music event branding — the fire palette carries identical energy at body scale, interior scale, and outdoor-poster scale." }
+            ]
+        }
+    },
+    {
+        name: "Eosine Pink, Light Mauve & Red Violet",
+        source: "Combination No. 134",
+        colors: ["#f37f94", "#9a72aa", "#59256a"],
+        description: "Pink graduating to deep purple — analogue descent through the red-violet family.",
+        theory: "Tonal analogue. All three sit in the pink-purple arc of the colour wheel. The depth range creates the structural interest.",
+        styles: ["opulent", "quiet-luxury"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Light mauve: dominant neutral, walls, base garment", "Eosine pink: layering piece, upholstery, inner layer", "Red violet: deep anchor, statement shoe, artwork"],
+        useCases: {
+            fashion: "Light mauve as the dominant — a wide trouser, overcoat, or long dress (60%); eosine pink as the layered or interior garment: a silk blouse, knit, or second layer (30%); deep red-violet as the statement: shoe, structured bag, or accessory (10%). A tonal pink-purple column look.",
+            interior: "Light mauve on walls or in linen curtains (60%); eosine pink in cushions or a velvet accent chair (30%); red-violet as a deep statement: a lamp, painting, or jewel-toned rug (10%). A bedroom or dressing room in quiet luxury register.",
+            graphic: "Cosmetics, fashion, or beauty editorial. Mauve as the editorial background (60%); pink for illustration and photography warmth (30%); deep violet for type, borders, and product callout (10%). Restrained but distinctive."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Tonal analogue descent from pink through mauve to deep violet satisfies quiet luxury's muted-complements-only criterion — all three are desaturated within their family. Red-violet at depth meets opulent's jewel-register requirement without requiring a dark neutral anchor." },
+                { label: "Distinctiveness", note: "The only wholly pink-to-purple analogue palette in the set — all other opulent entries introduce a contrasting temperature or hue outside the red-violet family, making this the most tonally focused opulent entry." },
+                { label: "Tension + Resolution", note: "Pink (lighter, warmer-red) vs. red-violet (darker, cooler-red) creates both value and subtle temperature tension; light mauve bridges the two as a continuous gradation, providing resolution without a hard contrast point." },
+                { label: "Cross-Domain Legibility", note: "Tonal pink-to-purple fashion (cosmetics, luxury evening), a quiet-luxury bedroom or dressing room interior, and a cosmetics or beauty editorial brand — the monochromatic logic is equally persuasive across all three applications." }
+            ]
+        }
+    },
+    {
+        name: "Carmine Red, Violet & Cotinga Purple",
+        source: "Combination No. 181",
+        colors: ["#a62c37", "#4f4086", "#501345"],
+        description: "Three deep jewel tones — crimson, indigo, and dark plum in close value range.",
+        theory: "Near-complementary triptych at low value. All are dark and saturated; their differences are entirely in hue. Velvet-like and rich.",
+        styles: ["opulent", "dark-academia"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Violet: dominant deep base, structure, wall", "Cotinga purple: second layer, curtains, upholstery", "Carmine red: the jewel accent, artwork, lip, shoe"],
+        useCases: {
+            fashion: "Violet as the dominant garment — a velvet blazer or wide silk trouser (60%); cotinga purple as the layering coat or structured dress (30%); carmine red as the accent: shoes, a clutch, or a single saturated earring (10%). Deep jewel dressing for evening or dark-academia capsule.",
+            interior: "Deep violet in upholstered walls or joinery (60%); cotinga purple in curtains or a statement sofa (30%); carmine red in artwork, ceramics, or a feature rug (10%). A dramatic dining room, bar, or home office.",
+            graphic: "Luxury brand identity or premium event design. Violet as the dominant background or structural field (60%); cotinga purple for secondary type and illustration (30%); carmine for CTA and contrast elements (10%). Deeply distinctive."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Three deep jewel tones at low value — crimson, indigo-violet, and dark plum — satisfy opulent's jewel-tone depth requirement and dark-academia's moody dark tonal palette. No light-key relief or neutral; richness is non-negotiable here." },
+                { label: "Distinctiveness", note: "The only palette in the set where all three colours are simultaneously dark, saturated, and hue-distinct with no neutral or light-key anchor — the most uncompromising opulent entry, uniquely velvet-like in character." },
+                { label: "Tension + Resolution", note: "Carmine red (warm, red-orange) vs. indigo-violet (cool, blue-purple) creates hue-temperature opposition at high saturation; dark plum sits between them tonally, providing resolution without neutralising the tension between the two poles." },
+                { label: "Cross-Domain Legibility", note: "Evening fashion (velvet suiting), a dramatic dining room or bar interior, and a luxury brand or art institution identity — the depth register works identically across garment body, interior wall, and graphic field." }
+            ]
+        }
+    },
+    {
+        name: "Helvetia Blue, Grayish Lavender & Aconite Violet",
+        source: "Combination No. 187",
+        colors: ["#005b8d", "#c0a9b3", "#a36aa5"],
+        description: "Deep cobalt against muted lavender-rose and purple — cool harmony spanning light to dark.",
+        theory: "Value contrast in a cool-temperature family. The deep blue anchors the two softer, lighter tones. All share a blue-purple undertone creating tonal unity.",
+        styles: ["quiet-luxury", "coastal"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Grayish lavender: dominant surface, walls, base garment", "Aconite violet: upholstery, second layer, curtains", "Helvetia blue: deep anchor, ceramic, structured leather"],
+        useCases: {
+            fashion: "Grayish lavender as the dominant — a wide trouser suit, linen overcoat, or full dress (60%); aconite violet as a layering knit, second suit piece, or silk scarf (30%); Helvetia blue as the structured leather accent: bag, belt, or shoe (10%). Cool, considered, and resolved.",
+            interior: "Grayish lavender on walls and in linen soft furnishings (60%); aconite violet in upholstery or heavy curtains (30%); Helvetia blue in glazed tile, ceramics, or a framed artwork (10%). A coastal bedroom, reading room, or bathroom.",
+            graphic: "Wellness, premium SaaS, or skincare. Lavender as the background field (60%); violet for secondary headers (30%); deep blue for main type and interactive elements (10%). Calm, trustworthy, contemporary."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "All three hues share a blue-purple undertone and are muted or mid-value — satisfies quiet luxury's tonal-restraint criterion and coastal's cool water-blue reference. No warm hue is introduced at any proportion." },
+                { label: "Distinctiveness", note: "Helvetia blue is used as the small accent (10%) rather than the dominant — an unusual proportion reversal. Most coastal palettes place the saturated blue as dominant; here it is the anchor accent, distinguishing the palette's hierarchy from all others in both aesthetics." },
+                { label: "Tension + Resolution", note: "Deep saturated cobalt (dark, fully saturated) vs. muted lavender-rose (light, desaturated) creates both value and saturation contrast simultaneously; aconite violet bridges at mid-value and mid-saturation, resolving through continuous gradation." },
+                { label: "Cross-Domain Legibility", note: "A cool-toned fashion wardrobe (lavender + violet layering, cobalt accent), a coastal bedroom or bathroom interior, and a wellness or premium SaaS brand identity — the cool restraint translates without adjustment across all three." }
+            ]
+        }
+    },
+    {
+        name: "Cinnamon Buff, Light Mauve & Neutral Grey",
+        source: "Combination No. 180",
+        colors: ["#fdc57e", "#9a72aa", "#b6bfc1"],
+        description: "Warm peach against soft purple and silver grey — the palette of a faded silk kimono.",
+        theory: "Complementary (orange/purple) both muted and high-key. Grey acts as mediator, neutralising the temperature tension between warm buff and cool mauve.",
+        styles: ["quiet-luxury", "japandi"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Neutral grey: dominant neutral, walls, base garment", "Cinnamon buff: warmth, upholstery, suede accessories", "Light mauve: the colour moment, bag, scarf, cushion"],
+        useCases: {
+            fashion: "Neutral grey as the dominant base — a tailored suit, wide trouser, or overcoat (60%); cinnamon buff as warmth: a silk blouse, suede shoe, or camel knit (30%); light mauve as the colour moment: a structured bag or cashmere scarf (10%). Understated and considered.",
+            interior: "Grey walls and stone or terrazzo flooring (60%); cinnamon buff in upholstery, curtains, or natural wood (30%); mauve in cushions, ceramics, or a single botanical print (10%). Quiet luxury in a living room. Avoid strong pattern — the palette is the statement.",
+            graphic: "Fashion, interiors, or luxury editorial. Grey as the primary layout field (60%); buff for warmth in image selection and pull quotes (30%); mauve for type hierarchy, borders, and decorative elements (10%). Refined and unshowy."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Muted orange (buff), muted purple (mauve), and cool grey — three desaturated tones with shared grey undertone, referencing a faded silk kimono. Satisfies quiet luxury's greige and warm-blush vocabulary and japandi's muted saturation with warm-cool balance." },
+                { label: "Distinctiveness", note: "The only palette using muted complementary contrast (orange/purple, both fully desaturated) with a grey mediator — all other quiet-luxury entries use analogues or near-neutrals only. The desaturated complement is the distinguishing structural move." },
+                { label: "Tension + Resolution", note: "Warm buff (muted orange) vs. cool mauve (muted purple) creates temperature tension at complementary poles; grey resolves by providing a temperature-neutral anchor that belongs to neither the warm nor cool side." },
+                { label: "Cross-Domain Legibility", note: "A considered grey-led fashion wardrobe with buff and mauve accents, a quiet-luxury living room (stone flooring + natural wood + mauve accent), and a fashion or interior editorial — the palette is domestically convincing at all three scales." }
+            ]
+        }
+    },
+    {
+        name: "Cinnamon Buff, Lemon Yellow & Lincoln Green",
+        source: "Combination No. 210",
+        colors: ["#fdc57e", "#f8ed43", "#555832"],
+        description: "Pale peach and bright yellow against deep olive — autumn harvest palette.",
+        theory: "Complementary (yellow / dark green). The two warm lights intensify against the dark cool green, which anchors the composition with strong value contrast.",
+        styles: ["wabi-sabi", "modern"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Lincoln green: dominant dark anchor, cabinetry, coat", "Cinnamon buff: secondary warmth, walls, inner garment", "Lemon yellow: high-visibility accent, CTA, ceramic"],
+        useCases: {
+            fashion: "Lincoln green as the structural outer layer — a tailored coat or suit (60%); cinnamon buff as the interior or layered garment: a silk blouse or fine linen shirt (30%); lemon yellow as the saturated accent: a bag, shoe, or earring (10%). The dark green grounds the two warm lights.",
+            interior: "Deep olive cabinetry or a statement feature wall (60%); cinnamon buff for surrounding walls, natural timber, and upholstery (30%); lemon yellow in a single artwork, cushion cluster, or pendant lamp (10%). Kitchen, dining room, or garden room.",
+            graphic: "Environmental or food brand identity. Olive as the background field (60%); buff for secondary type and neutral areas (30%); lemon yellow as the high-visibility element: CTAs, data highlights, or a logo mark (10%)."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Deep dark olive anchor against two warm high-key lights — the value contrast and complementary logic (yellow/green) satisfies fine modern's graphic clarity and architectural precision. Wabi-sabi is served by the organic earthy buff and the forest green's naturalistic reference." },
+                { label: "Distinctiveness", note: "The only palette in which lemon yellow appears as a secondary proportion (30%) against a dark green anchor — an unusual proportion for a warm-cool complement, where yellow is typically the accent rather than the secondary field." },
+                { label: "Tension + Resolution", note: "Two warm lights (buff and yellow) vs. a single cool dark anchor (Lincoln green) creates both value and temperature tension simultaneously; the two warm tones cohere as a unit against the dark complement, resolving through mass rather than hue shift." },
+                { label: "Cross-Domain Legibility", note: "Graphic fashion (olive coat + buff + yellow accessory), a kitchen or garden room interior (dark green joinery + cream walls + yellow accent), and an environmental or food brand identity — the complementary logic transfers clearly to all three contexts." }
+            ]
+        }
+    },
+    {
+        name: "Lemon Yellow, Deep Slate Olive & Venice Green",
+        source: "Combination No. 189",
+        colors: ["#f8ed43", "#253122", "#62c6bf"],
+        description: "Vivid yellow against near-black green and aqua — maximum value contrast with an unexpected cool note.",
+        theory: "Three-way contrast: value (yellow vs. dark), temperature (warm vs. cool), hue (yellow / green / teal). Each colour opposes the others on multiple axes simultaneously.",
+        styles: ["modern", "dopamine"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Deep slate olive: dominant dark field, cabinetry, base", "Lemon yellow: high-visibility secondary, hero visual", "Venice green: unexpected cool accent, decorative detail"],
+        useCases: {
+            fashion: "Deep slate olive as the structural base — an overcoat or suit (60%); lemon yellow as a high-visibility knit, bag, or shoe (30%); Venice green-teal as the unexpected accessory: sunglasses, jewellery, or a scarf (10%). Graphic and decisive.",
+            interior: "Near-black olive on walls or cabinetry (60%); lemon yellow in artwork, upholstery panels, or a statement chair (30%); Venice green-teal in tile, glazed glass, or botanical elements (10%). A bar, kitchen, or home office.",
+            graphic: "Tech, music, or bold consumer brand. Dark olive as the primary background field (60%); lemon yellow as headline and primary visual (30%); teal-green as secondary action colour and data element (10%). Immediately distinctive."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Near-black olive provides the dark architectural field and controlled saturation required by fine modern; lemon yellow is the single saturated accent against a neutral-dark field. For dopamine, the high-contrast saturated yellow against near-black provides maximum expressiveness." },
+                { label: "Distinctiveness", note: "Venice green (aqua-teal) appears as an unexpected third note — not a traditional complement to yellow, and not simply a variant of the olive. The three-axis opposition (warm yellow, near-black, cool aqua) is not replicated elsewhere in the set." },
+                { label: "Tension + Resolution", note: "Three simultaneous oppositions — warm yellow vs. cool aqua (temperature), yellow vs. near-black (value), and aqua vs. olive (hue) — each pair opposes on a different axis. Near-black olive resolves by providing the value anchor that prevents yellow and aqua from competing as equals." },
+                { label: "Cross-Domain Legibility", note: "Graphic fashion (dark olive base + yellow accent + aqua detail), a bold interior (bar, kitchen, home office), and a tech or music brand identity — the high-contrast three-tone logic translates without ambiguity at any scale." }
+            ]
+        }
+    },
+    {
+        name: "Yellow Green, Sea Green, Cobalt Green & Calamine Blue",
+        source: "Combination No. 291",
+        colors: ["#c7d14f", "#00b49b", "#96d1aa", "#78cdd0"],
+        description: "Four tones of green and blue-green — a cool aquatic symphony.",
+        theory: "Analogue cool harmony spanning yellow-green to blue-green. Four closely related hues at varying saturations; the result feels fresh and cohesive.",
+        styles: ["coastal", "modern"],
+        rule: "50 · 25 · 15 · 10",
+        proportions: [50, 25, 15, 10],
+        roles: ["Dominant", "Secondary", "Layer 3", "Accent"],
+        roleDesc: ["Sea green: dominant surface, walls, coat", "Calamine blue: secondary, curtains, layering piece", "Cobalt green: upholstery, tile, secondary accent", "Yellow-green: botanical pop, earring, small object"],
+        useCases: {
+            fashion: "Calamine blue as the dominant coat or wide dress (50%); cobalt green as a layered trouser or second garment (25%); sea green as a structured accessory: bag or boot (15%); yellow-green as the unexpected pop — an earring, belt, or inner lining (10%). Entirely aquatic and tonal.",
+            interior: "Sea green on walls (50%); calamine blue in textiles and curtains (25%); cobalt green in upholstery and tile work (15%); yellow-green in botanical accents, artwork, or ceramics (10%). Coastal or Japandi bathroom or bedroom.",
+            graphic: "Sustainability, health, or wellness brand. Sea green as the brand base (50%); calamine blue for secondary elements and background (25%); cobalt green for interactive elements and data (15%); yellow-green for energy and highlight (10%). Fresh without being generic."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Four cool analogue hues from yellow-green to blue-green, all at mid-to-high value — fully satisfies coastal's airy water-reference requirement. For fine modern, the analogue approach (controlled, sequential hue steps rather than complementary contrast) meets the graphic-clarity and architectural-precision criterion." },
+                { label: "Distinctiveness", note: "The only all-cool analogue palette spanning four hues in the set — every other multi-hue palette introduces at least one warm hue or a contrasting temperature. Staying entirely within the green-to-blue-green cool arc is a structural constraint found nowhere else." },
+                { label: "Tension + Resolution", note: "Yellow-green (the warm edge of the green family) vs. calamine blue (cool, trending towards blue) creates subtle temperature tension within the cool spectrum; sea green and cobalt green bridge continuously between the two, resolving through graduation." },
+                { label: "Cross-Domain Legibility", note: "Aquatic tonal fashion (four-hue cool layering), a coastal bathroom or spa interior, and a sustainability or health brand identity — the four-tone coherence reads with equal clarity in fabric weave, tile work, and digital colour system." }
+            ]
+        }
+    },
+    {
+        name: "Raw Sienna, Vandyke Brown & Deep Indigo",
+        source: "Combination No. 182",
+        colors: ["#bb7125", "#4b3317", "#051230"],
+        description: "Warm amber and dark brown against near-black indigo — old lacquerware and midnight.",
+        theory: "Temperature reversal at low value. The two warm earth tones deepen to near-black; the indigo is equally dark but cold. Tension exists within the shadow register.",
+        styles: ["dark-academia", "wabi-sabi"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Deep indigo: dominant dark field, wall, base garment", "Vandyke brown: leather, timber, secondary warmth", "Raw sienna: interior warmth, brass, lamplight"],
+        useCases: {
+            fashion: "Deep indigo (midnight blue-black) as the dominant outer garment — a tailored coat or suit (60%); Vandyke brown in leather accessories: belt, bag, boots (30%); raw sienna as the warm interior note — a silk blouse, fine knitwear, or satin lining (10%). Serious and nocturnal.",
+            interior: "Deep indigo on walls or in key upholstery (60%); Vandyke brown in dark timber joinery, shelving, or leather furniture (30%); raw sienna in lamplight, brass fittings, and warm ceramic objects (10%). A private library, whisky room, or home office.",
+            graphic: "Premium spirits, dark publishing, or cultural institution. Deep indigo as the primary field (60%); Vandyke brown for textured illustration and borders (30%); raw sienna as the warm accent in iconography and highlights (10%). Deeply atmospheric."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Temperature reversal within the shadow register — warm earth tones against near-black cold indigo. Satisfies dark-academia's moody dark tonals (indigo as the scholarly midnight anchor) and wabi-sabi's aged-material reference (raw sienna and Vandyke brown as old lacquerware, leather, and dried earth)." },
+                { label: "Distinctiveness", note: "The only palette where two warm dark earth tones sit against a cold dark indigo — most dark-academia entries contrast dark-warm against a neutral or light relief. The cold-dark vs. warm-dark opposition within the shadow register is unique in the set." },
+                { label: "Tension + Resolution", note: "Temperature reversal occurs entirely within the low-value range — warm sienna-brown vs. cold indigo, all at near-black depth. Tension is subtle because all tones are dark; raw sienna as the accent provides the only light value point that resolves the composition." },
+                { label: "Cross-Domain Legibility", note: "Nocturnal fashion (midnight suiting + leather accessories), a private library or whisky room interior, and a premium spirits or dark publishing brand — the shadow-register warmth reads with equal depth at all three scales." }
+            ]
+        }
+    },
+    {
+        name: "Grenadine, Sulphur Yellow, Golden Yellow & Eupatorium Purple",
+        source: "Combination No. 315",
+        colors: ["#f48067", "#f5ecc2", "#f3a257", "#bf5892"],
+        description: "Coral, two yellows and pink-purple — the palette of a late-summer garden.",
+        theory: "Warm analogues (coral, gold, cream) disrupted by a complementary purple. The three warm tones create the base; the purple provides the unexpected counterpoint.",
+        styles: ["dopamine", "wabi-sabi"],
+        rule: "50 · 25 · 15 · 10",
+        proportions: [50, 25, 15, 10],
+        roles: ["Dominant", "Secondary", "Layer 3", "Accent"],
+        roleDesc: ["Sulphur cream: dominant neutral, background, base", "Grenadine coral: hero garment, primary surface", "Golden yellow: accessories, woodwork, ceramics", "Eupatorium purple: the shock accent, bag, shoe"],
+        useCases: {
+            fashion: "Sulphur cream as the dominant neutral — wide linen trouser or an overcoat (50%); grenadine as the vibrant hero piece: a knit, coat, or dress (25%); golden yellow in leather accessories and belting (15%); eupatorium purple as the saturated shock: a shoe, bag, or statement earring (10%).",
+            interior: "Cream-yellow walls (50%); grenadine in upholstery or a key artwork (25%); golden yellow in woodwork, lampshades, and rugs (15%); eupatorium purple in cushions, glassware, or a single dried floral arrangement (10%). A summer dining room or garden room.",
+            graphic: "Festival, beauty, or fashion editorial. Cream as the background field (50%); grenadine as the warm hero visual (25%); golden yellow for secondary illustration (15%); purple for headlines and maximum contrast (10%). Unexpected but resolved."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Saturated coral and eupatorium purple meet dopamine's expressiveness requirement; sulphur cream and golden yellow carry the warm organic tones for wabi-sabi's late-summer, natural-dye reference. Both aesthetics are served without compromise." },
+                { label: "Distinctiveness", note: "The only palette pairing three warm analogues (coral, gold, cream) with a single complementary purple shock — an unusual structure where the smallest proportion is the hue-opposition note rather than a neutral or dark anchor." },
+                { label: "Tension + Resolution", note: "Three warm analogues (coral, cream, gold) vs. one complementary purple creates hue tension at the opposite end of the wheel; the sulphur cream within the warm group provides partial resolution, and eupatorium purple reads as the single purposeful dissonance." },
+                { label: "Cross-Domain Legibility", note: "Summer dopamine fashion (cream base + grenadine hero + purple shock), a garden room or summer dining interior, and a festival or beauty editorial — the warm-analogue-plus-complement structure translates legibly across all three contexts." }
+            ]
+        }
+    },
+    {
+        name: "Cream Yellow, Vandyke Brown & Plumbeous",
+        source: "Combination No. 192",
+        colors: ["#fdbf68", "#4b3317", "#70727c"],
+        description: "Warm cream against dark brown and cool blue-grey — restrained three-tone contrast.",
+        theory: "Temperature triangle: warm cream, warm-dark brown, cool grey. Three values (light, dark, mid) and two temperatures (warm pair vs. cool neutral) create balance without complexity.",
+        styles: ["japandi", "quiet-luxury"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Cream yellow: dominant surface, walls, base garment", "Vandyke brown: dark anchor, leather, timber", "Plumbeous grey: the cool note, metalwork, shoe"],
+        useCases: {
+            fashion: "Cream-yellow as the dominant — a long coat, wide trouser, or full dress (60%); dark brown as leather accessories and a tonal anchor: boots, bag, belt (30%); plumbeous grey as the quiet unexpected note: gloves, a structured hat, or shoe (10%). Natural and resolved.",
+            interior: "Cream walls and natural stone or light timber flooring (60%); Vandyke brown in dark timber joinery, leather seating, or woven rugs (30%); plumbeous in painted metalwork, a single upholstered chair, or ceramic vessels (10%). Japandi or quiet luxury living room.",
+            graphic: "Architecture, interiors, or premium craft brand. Cream as the primary page field (60%); dark brown for structural type, borders, and illustration (30%); cool grey for metadata, captions, and secondary navigation (10%). Considered and clean."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Warm cream, dark brown, and cool blue-grey provide three clear values (light, dark, mid) and two temperatures (warm pair vs. cool neutral) — satisfies japandi's value hierarchy and warm-cool balance, and quiet luxury's tonal restraint with no saturated hue." },
+                { label: "Distinctiveness", note: "The only japandi palette using all three value levels simultaneously without any hue contrast — the structure relies entirely on value and temperature with zero saturation play. This purely structural logic distinguishes it from japandi entries that use muted-but-present hue." },
+                { label: "Tension + Resolution", note: "Warm cream and warm Vandyke brown vs. cool plumbeous grey creates temperature tension; plumbeous resolves by providing a temperature-neutral mid-tone that mediates without introducing any competing hue." },
+                { label: "Cross-Domain Legibility", note: "A natural cream-led fashion wardrobe with dark leather and grey metalwork, a japandi living room (stone + dark timber + pewter detail), and an architecture or premium craft editorial — the three-value logic reads consistently across all contexts." }
+            ]
+        }
+    },
+    {
+        name: "Spectrum Red, Brick Red, Eupatorium Purple & Blue Violet",
+        source: "Combination No. 322",
+        colors: ["#e31f26", "#a84222", "#bf5892", "#4f4086"],
+        description: "Vivid red spanning to purple through brick and pink-violet — fiery and dramatic.",
+        theory: "Analogue sweep from red to violet through four hues. Each step shifts slightly cooler; the composition reads as a single colour family with enormous internal variety.",
+        styles: ["opulent", "dark-academia"],
+        rule: "50 · 25 · 15 · 10",
+        proportions: [50, 25, 15, 10],
+        roles: ["Dominant", "Secondary", "Layer 3", "Accent"],
+        roleDesc: ["Blue violet: dominant deep base, wall, foundation garment", "Brick red: statement upholstery, second garment", "Eupatorium purple: cushions, lampshades, accessories", "Spectrum red: pure accent — artwork, shoe, lip"],
+        useCases: {
+            fashion: "Blue-violet as the dominant deep base — a structured coat or suit (50%); brick red as a layering knit, dress, or second suiting piece (25%); eupatorium purple in accessories (15%); spectrum red as the pure accent: a shoe, clutch, or statement earring (10%). Intense and cohesive.",
+            interior: "Blue-violet in upholstered walls or deep joinery (50%); brick red in a statement sofa, curtain panel, or rug (25%); eupatorium purple in cushions and lampshades (15%); spectrum red in artwork and singular ceramic objects (10%). A maximalist sitting room or dining room.",
+            graphic: "Art institution, fashion week, or premium event identity. Blue-violet as the primary brand field (50%); brick red for structural illustration (25%); purple for secondary elements (15%); spectrum red for pure attention: ticker, CTA, highlight (10%)."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Four hues sweeping from vivid red through brick-red and pink-violet to deep blue-violet — all at mid-to-low value, saturated or near-saturated. Satisfies opulent's jewel-tone depth requirement and dark-academia's rich moody tonal atmospheric palette." },
+                { label: "Distinctiveness", note: "The only palette structured as a sequential analogue sweep entirely within the red-to-violet arc — four hue steps with no neutral, no contrasting temperature, no relief. The sweep itself is the structural logic, found nowhere else in the set." },
+                { label: "Tension + Resolution", note: "Spectrum red (warm, red-orange) vs. blue violet (cool, blue-purple) at opposite ends of the sweep creates temperature opposition; brick red and eupatorium purple bridge continuously, resolving through sequential hue graduation rather than a single contrast point." },
+                { label: "Cross-Domain Legibility", note: "Evening fashion (four-hue warm-to-violet tonal sweep), a maximalist interior (upholstered walls, curtains, statement textiles), and an art institution or fashion-week brand identity — the sweep reads with the same dramatic intensity at all three scales." }
+            ]
+        }
+    },
+    {
+        name: "Light Cadmium Orange, Cinnamon Buff & Hooker's Green",
+        source: "Combination No. 263",
+        colors: ["#f3a257", "#fdc57e", "#3a6b4a"],
+        description: "Two warm oranges against deep forest green — complementary pairing in natural register.",
+        theory: "Complementary (orange / green) with the warm side doubled. Two orange-yellows create warmth mass against a single deep cool anchor — stable and resolved.",
+        styles: ["wabi-sabi", "quiet-luxury"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Hooker's green: dominant anchor, cabinetry, coat", "Cinnamon buff: secondary warmth, walls, inner layer", "Cadmium orange: warmth accent, ceramic, leather detail"],
+        useCases: {
+            fashion: "Hooker's green as the dominant — a linen suit, trench coat, or wide dress (60%); cinnamon buff as the softer second layer: a silk blouse or fine knit (30%); cadmium orange as the accent: a leather bag, shoe, or earring (10%). Natural and resolved.",
+            interior: "Forest green on walls and cabinetry (60%); cinnamon buff in upholstery, natural timber, and curtains (30%); cadmium orange in ceramics, dried botanicals, and artwork (10%). A kitchen-dining room, conservatory, or hallway.",
+            graphic: "Sustainability, food, or outdoor brand. Hooker's green as the brand base and background (60%); cinnamon buff for warmth in photography and secondary content areas (30%); cadmium orange for CTAs, icon highlights, and data (10%)."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Deep forest green anchor against two muted warm orange tones — the complementary structure with the warm side doubled satisfies quiet luxury's tonal restraint (both oranges are muted, not fully saturated) and wabi-sabi's organic naturalistic reference (orange-clay, cinnamon-buff, and forest green)." },
+                { label: "Distinctiveness", note: "The only palette doubling the warm side of a complement — two orange-register tones against one deep green anchor. All other complementary palettes use a single hue on each side, making the doubled-warm structure a unique structural move." },
+                { label: "Tension + Resolution", note: "Two warm orange tones vs. a single cool deep green creates temperature and value tension simultaneously; the doubled warm side creates a warmth mass that Hooker's green anchors firmly without being overwhelmed by the combined warm volume." },
+                { label: "Cross-Domain Legibility", note: "Nature-referencing fashion (forest green coat + cinnamon buff second layer + orange accent), a kitchen, conservatory, or garden room interior, and a sustainability or artisan food brand identity — the double-warm complement reads cleanly at all scales." }
+            ]
+        }
+    },
+    {
+        name: "Deep Slate Olive, Blackish Olive & Bottle Green",
+        source: "Combination No. 245",
+        colors: ["#253122", "#42533e", "#1c4d35"],
+        description: "Three dark greens — near-black through forest to bottle, a study in depth and restraint.",
+        theory: "Tonal monochromatic at low value. Three very similar dark greens create spatial depth through subtle value shifts rather than hue contrast.",
+        styles: ["dark-academia", "japandi"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Near-black slate olive: dominant field, walls, overcoat", "Bottle green: suiting, upholstery, panelling", "Blackish olive: leather, frames, shelving"],
+        useCases: {
+            fashion: "Full tonal dark-green dressing: near-black slate olive as the overcoat (60%); bottle green in the suiting or dress (30%); blackish olive in leather accessories and footwear (10%). The depth variation reads as three-dimensional. Add a cream or ivory collar note for a breath of light.",
+            interior: "Near-black slate olive on walls (60%); bottle green in panelling, joinery, or heavy curtains (30%); blackish olive in leather furniture, picture frames, or shelving (10%). A dark, atmospheric study, library, or masculine bedroom. Add warm brass hardware.",
+            graphic: "Use the full dark tonal range for background fields and structural elements; introduce cream, ivory, or gold type for readability. Luxury editorial, heritage spirits, or Dark Academia publishing brand. Deeply distinctive."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Three dark greens at near-black value — near-black slate, blackish olive, and bottle green. Satisfies dark-academia's atmospheric moody tonal palette (deep forest and scholar-green references) and japandi's organic value hierarchy (three tones within a single family, occupying the extreme dark register)." },
+                { label: "Distinctiveness", note: "The only palette operating entirely within a single very dark value range with no light tone, no hue contrast, and no temperature opposition. The palette's visual force comes solely from subtle value shifts within an extreme constraint — an approach not attempted by any other entry." },
+                { label: "Tension + Resolution", note: "Temperature shifts within the dark-green family (warm blackish olive vs. cooler bottle green vs. near-neutral slate) create the tension; resolution comes from perceptual unity — at distance, all three greens cohere into a single deep atmospheric field." },
+                { label: "Cross-Domain Legibility", note: "All-tonal dark-green fashion (atmospheric layering with ivory as an optional relief note), a study or private library interior (dark joinery + panelling + leather), and a luxury heritage or dark-academia publishing brand — the extreme tonal approach reads as decisive at all scales." }
+            ]
+        }
+    },
+    {
+        name: "Emerald, Old Gold & Ivory",
+        source: "Combination No. 47",
+        colors: ["#006848", "#c89820", "#f5eed8"],
+        description: "Deep forest-green against burnished gold and warm ivory — the palette of old money and velvet curtains.",
+        theory: "Complementary (green/red-orange spectrum) with gold substituting for pure orange. Ivory lifts the two dominant tones without competing with either.",
+        styles: ["opulent", "dark-academia"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Emerald: walls, upholstery, dominant garment", "Old gold: hardware, frames, accessories", "Ivory: trim, interior layer, body text"],
+        useCases: {
+            fashion: "Deep emerald as the structural base — a silk velvet coat or tailored suit (60%); old gold in metallic accessories and structured leather: shoes, belt, jewellery (30%); ivory as the interior note — a silk blouse, cuff, or scarf (10%). Opulent without effort.",
+            interior: "Emerald on walls or in heavy upholstery — curtains, a Chesterfield sofa (60%); gold in hardware, picture frames, lamp bases, and decorative objects (30%); ivory in lampshades, cushion trim, or a marble surface (10%). A formal dining room or home library.",
+            graphic: "Emerald as the brand field or background (60%); old gold for headlines, logo mark, and decorative rules (30%); ivory as the primary readable content and negative space (10%). Premium hospitality, jewellery, or luxury brand identity."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Deep emerald, burnished old gold, and warm ivory — the definitive opulent triad (jewel tone + gold accent + ivory relief). Satisfies opulent's jewel-plus-gold-plus-dark-anchor requirement and dark-academia's scholarly palette (emerald as the library and nature reference, gold as the aged-luxury note)." },
+                { label: "Distinctiveness", note: "The most structurally canonical opulent palette in the set — emerald, gold, and ivory is the founding triad of the opulent aesthetic. Its role is to establish the standard against which the other opulent entries are measured; the other entries are more unusual precisely because this one exists." },
+                { label: "Tension + Resolution", note: "Cool deep emerald vs. warm old gold creates temperature tension; ivory resolves by providing a neutral-warm light field that lifts both dominant tones without competing with either, allowing green and gold to remain the defining relationship." },
+                { label: "Cross-Domain Legibility", note: "Velvet fashion (emerald coat + gold accessories + ivory interior), a formal dining room or home library, and a premium hospitality or jewellery brand identity — the canonical triad is equally authoritative in all three contexts." }
+            ]
+        }
+    },
+    {
+        name: "Tyrian Purple, Old Gold & Ivory",
+        source: "Combination No. 61",
+        colors: ["#6a0848", "#c89820", "#f5eed8"],
+        description: "Imperial purple against burnished gold and warm ivory — silk, ceremony, and the ancient world.",
+        theory: "Near-complementary at low value. Purple and gold carry shared luxury cultural memory; the tension is their temperature opposition — cool-warm — resolved by the ivory neutral.",
+        styles: ["opulent", "dark-academia"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Tyrian purple: velvet, drapery, dominant garment", "Old gold: ornament, headline, logo mark", "Ivory: plaster, linen trim, body text"],
+        useCases: {
+            fashion: "Imperial purple as the dominant garment — a floor-length dress, wide coat, or statement suit (60%); old gold in metallic accessories and structured leather pieces (30%); ivory as the interior warmth — a silk cami, scarf, or glove (10%). Evening and occasion dressing.",
+            interior: "Tyrian purple in velvet upholstery or heavy curtain panels (60%); gold in ornamental objects, picture frames, and hardware (30%); ivory in painted plaster, lampshades, or linen trimmings (10%). A bedroom, dressing room, or entertaining space.",
+            graphic: "Purple as the primary brand field (60%); gold for logo, headlines, and visual hierarchy (30%); ivory for body text and negative space (10%). Luxury, heritage, or ceremonial brand identity."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Imperial Tyrian purple, burnished gold, and warm ivory — purple and gold carry shared luxury and ceremonial cultural memory across civilisations. Satisfies opulent's jewel-tone-plus-gold criterion and dark-academia's scholarly ceremonial palette (imperial purple as the authority reference)." },
+                { label: "Distinctiveness", note: "Tyrian purple replaces emerald as the jewel anchor — the same gold-ivory proportion logic as the emerald triad but with a fundamentally different psychological register (purple = ceremony and authority, green = nature). The cultural weight of Tyrian purple gives this palette a distinct register no other entry in the opulent set reaches." },
+                { label: "Tension + Resolution", note: "Cool Tyrian purple vs. warm old gold creates temperature opposition; ivory resolves by providing a neutral-warm anchor that allows purple and gold to define the relationship without competing directly — the same resolution logic as the emerald triad, applied to a different set of cultural anchors." },
+                { label: "Cross-Domain Legibility", note: "Ceremonial or evening fashion (purple velvet + gold accessories + ivory silk), a bedroom or entertaining-space interior (purple drapery + gold ornament + ivory plaster), and a luxury or heritage brand identity — the imperial register translates without re-interpretation across all three contexts." }
+            ]
+        }
+    },
+    {
+        name: "Sapphire Blue, Crimson Lake & Ivory",
+        source: "Combination No. 88",
+        colors: ["#1838a0", "#8a0028", "#f5eed8"],
+        description: "Deep blue and deep crimson against warm ivory — heraldic, arresting, and unambiguous.",
+        theory: "Near-complementary (blue/red) at low value with a shared quality of richness and depth. Ivory prevents mutual claustrophobia when two fully saturated hues sit together.",
+        styles: ["opulent", "modern"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Ivory: base garment, walls, primary page field", "Sapphire blue: hero garment, sofa panel, primary element", "Crimson: the single accent — shoe, cushion, CTA"],
+        useCases: {
+            fashion: "Ivory as the dominant foundation — a wide trouser, silk overcoat, or long dress (60%); sapphire as the hero garment or structured outer piece (30%); crimson as the precise accent — a single shoe, a bag, or an earring (10%). Heraldic and intentional.",
+            interior: "Ivory walls and natural flooring (60%); sapphire in a statement sofa, curtain panel, or large artwork (30%); crimson in cushions, a lacquered object, or a single floral (10%). A sitting room or library.",
+            graphic: "Ivory as the primary page field (60%); sapphire for structural type and primary visual elements (30%); crimson for the single element that demands attention — CTA, data highlight, or key icon (10%). Editorial, cultural institution, or flag-referencing identity."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Deep sapphire and deep crimson against warm ivory — two fully saturated jewel tones at maximum hue contrast. Satisfies opulent's jewel-tone depth (two simultaneously, not just one) and modern's graphic clarity (maximum contrast, controlled entirely by proportion)." },
+                { label: "Distinctiveness", note: "The only palette pairing two fully saturated jewel tones (blue and red) as co-anchors, with ivory as the dominant field rather than either jewel tone — an unusual proportion reversal where the neutral dominates and the saturated jewels are secondary and accent." },
+                { label: "Tension + Resolution", note: "Deep sapphire (cool) vs. deep crimson (warm) creates maximum hue-temperature opposition; ivory resolves by functioning as a dominant neutral field that separates the two saturated anchors, preventing direct clash while allowing both to read at full strength." },
+                { label: "Cross-Domain Legibility", note: "Heraldic fashion (ivory base + sapphire hero + crimson accent), a sitting room or library interior (ivory walls + sapphire sofa + crimson accent object), and an editorial or cultural institution brand identity — the heraldic logic reads with equal authority at all three scales." }
+            ]
+        }
+    },
+    {
+        name: "Prussian Blue, Burnt Sienna & Ivory",
+        source: "Combination No. 36",
+        colors: ["#1a3060", "#a04820", "#f5eed8"],
+        description: "Deep navy and warm amber-brown against ivory — the palette of a working studio or a naturalist's field kit.",
+        theory: "Complementary (blue/orange) with the orange side burnished to warm brown. Ivory provides the breathing space between two saturated anchors that might otherwise compete.",
+        styles: ["dark-academia", "wabi-sabi"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Prussian blue: overcoat, feature wall, brand base", "Ivory: interior layer, surrounding walls, body text", "Burnt sienna: leather, timber, warm anchor"],
+        useCases: {
+            fashion: "Prussian blue as the dominant outer layer — a wool coat or suit (60%); ivory as the interior warmth: a cream shirt, fine knitwear, or trouser (30%); burnt sienna as the warm leather anchor: boots, bag, belt (10%). A classical working wardrobe.",
+            interior: "Prussian blue on a feature wall or in deep upholstery (60%); ivory for surrounding walls, stone surfaces, and curtains (30%); burnt sienna in leather furniture, timber detail, or a terracotta object (10%). Study, home office, or masculine bedroom.",
+            graphic: "Prussian blue as the primary brand colour and background field (60%); ivory for body text and structural content (30%); burnt sienna for warmth in illustration, data points, or accent elements (10%). Publishing, craft, or heritage brand."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Deep Prussian blue, warm burnt sienna, and calm ivory — complementary (blue/orange) with the orange side burnished to an aged natural brown. Satisfies dark-academia's deep blue scholarly reference and aged warmth; wabi-sabi's naturalistic material quality (burnt sienna as fired earth, ivory as weathered cloth)." },
+                { label: "Distinctiveness", note: "The sienna is burnished rather than orange — the palette occupies a naturalist, documentary register (field kit, botanical illustration) rather than the more saturated complementary palettes in the set. This aged, working-studio quality distinguishes it from all other dark-academia and wabi-sabi entries." },
+                { label: "Tension + Resolution", note: "Cool Prussian blue vs. warm burnt sienna creates complementary temperature tension; ivory resolves by providing a neutral-warm breathing space that separates the two anchors — its warmth aligns slightly towards sienna, preventing the composition from reading as clinical." },
+                { label: "Cross-Domain Legibility", note: "A scholarly working wardrobe (Prussian blue coat + ivory interior + sienna leather), a home office or naturalist study interior, and a publishing, craft, or heritage brand identity — the documentary register translates without loss of character across all three contexts." }
+            ]
+        }
+    },
+    {
+        name: "Forest Green, Madder Red & Dark Walnut",
+        source: "Combination No. 75",
+        colors: ["#1a4830", "#9a0028", "#2a1808"],
+        description: "Deep green, crimson, and near-black walnut — botanical illustration, leather bindings, candlelight.",
+        theory: "Near-complementary across the board at low value. No light tone in the palette — the richness comes entirely from hue contrast within the shadow register.",
+        styles: ["dark-academia", "opulent"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Forest green: dominant garment, panelling, brand base", "Dark walnut: leather, shelving, structural illustration", "Madder red: jewel accent, artwork, CTA"],
+        useCases: {
+            fashion: "Forest green as the dominant garment — an overcoat, structured suit, or wide dress (60%); dark walnut in leather accessories and dark-toned shoes (30%); madder red as the jewel accent — a single shoe, bag, or earring (10%). Rich and scholarly.",
+            interior: "Forest green in panelling, cabinetry, or heavy upholstery (60%); dark walnut in timber shelving, dark leather seating, and picture frames (30%); madder red in a single artwork, cushion cluster, or ceramic object (10%). A private library or home office.",
+            graphic: "Forest green as the brand base (60%); dark walnut for structural illustration and borders (30%); madder red as the singular attention element — CTA, highlight, or key icon (10%). Premium heritage brand, spirits, or academic publishing."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Forest green, deep crimson madder, and near-black walnut — all dark, rich, and within the shadow register. No light tone anywhere; richness comes from hue contrast alone at low value. Satisfies opulent's jewel-depth requirement and dark-academia's atmospheric moody dark palette at its most uncompromising." },
+                { label: "Distinctiveness", note: "The only palette with no light tone at all and no neutral anchor — three dark saturated hues with colour contrast as the sole structural device. The energy comes entirely from hue contrast within the shadow register, an approach not attempted elsewhere in the set." },
+                { label: "Tension + Resolution", note: "Cool forest green vs. warm madder red creates complementary tension at low value; dark walnut resolves by providing a near-neutral very dark anchor that contains both saturated hues without introducing any lightness that would weaken the composition's depth." },
+                { label: "Cross-Domain Legibility", note: "Rich jewel-toned fashion (forest green coat + walnut leather + madder red accent), a private library or home office interior, and a premium heritage spirits or academic publishing brand — the all-shadow-register structure maintains its depth equally at all three scales." }
+            ]
+        }
+    },
+    {
+        name: "Pale Aqua, Sandy Buff & Warm White",
+        source: "Combination No. 12",
+        colors: ["#a8d8e0", "#e0c898", "#f5eed8"],
+        description: "Three high-key tones — cool aqua, sandy warm, ivory — a palette of light on water and dry sand.",
+        theory: "Temperature contrast at very high value. All three are light; the distinction is entirely thermal. Cool aqua and warm buff create gentle tension that requires no dark anchor.",
+        styles: ["coastal", "quiet-luxury"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Warm white ivory: base garment, walls, primary field", "Pale aqua: hero piece, curtains, brand colour", "Sandy buff: natural accessories, rattan, warmth"],
+        useCases: {
+            fashion: "Warm white as the dominant base — a linen shirt, wide trouser, or overcoat (60%); pale aqua as the hero garment or second layer (30%); sandy buff in natural accessories — a leather bag, woven shoe, or belt (10%). Effortlessly light.",
+            interior: "Warm white walls and flooring (60%); pale aqua in curtains, upholstery, or a key piece of painted furniture (30%); sandy buff in natural rattan, seagrass rugs, or unglazed ceramic vessels (10%). A coastal bedroom or bathroom.",
+            graphic: "Warm white as the primary page field (60%); pale aqua for brand colour, navigation, and illustration (30%); sandy buff for warmth in photography direction and secondary graphic elements (10%). Coastal lifestyle, wellness, or travel brand."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Three high-key muted tones — cool aqua, sandy warm buff, and near-white ivory. Satisfies coastal's airy light-washed requirement and water-sky reference; quiet luxury's tonal restraint with no saturated hue and cream-and-warm-buff vocabulary simultaneously." },
+                { label: "Distinctiveness", note: "The highest-key, most light-value palette in the entire set — all three tones are very light and muted. No other palette operates at this consistently light value register, making this the most airy and understated coastal entry." },
+                { label: "Tension + Resolution", note: "Cool aqua vs. warm sandy buff creates temperature tension at very high value; warm white resolves by providing an almost-neutral light field that blends both temperatures without favouring either — the tension is whispered rather than stated." },
+                { label: "Cross-Domain Legibility", note: "Effortlessly light coastal fashion (linen + pale aqua + natural accessories), a coastal bedroom or bathroom interior, and a coastal lifestyle or travel brand identity — the extreme-light register is equally convincing in fabric, painted wall, and screen." }
+            ]
+        }
+    },
+    {
+        name: "Steel Blue, Coral & Cream",
+        source: "Combination No. 158",
+        colors: ["#4878a0", "#e87860", "#f5eed8"],
+        description: "Muted steel blue against warm coral and cream — the palette of a faded resort, unhurried and confident.",
+        theory: "Complementary (blue/orange) with both sides softened to a similar saturation level. The coral reads warm against the blue; cream mediates the tension without competing.",
+        styles: ["coastal", "dopamine"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Cream: base garment, walls, background field", "Steel blue: structured layer, painted joinery, primary brand", "Coral: energising accent, cushion cluster, CTA"],
+        useCases: {
+            fashion: "Cream as the dominant — a linen dress, wide trouser, or long coat (60%); steel blue as the structured second layer or outer piece (30%); coral as the energising accent: a shoe, bag, or belt (10%). Resort-adjacent but not naïve.",
+            interior: "Cream walls and natural flooring (60%); steel blue in upholstery, curtains, or painted joinery (30%); coral in cushions, ceramics, or a single artwork (10%). A coastal dining room or bedroom with energy.",
+            graphic: "Cream as the background field (60%); steel blue as the primary brand colour and structural element (30%); coral for CTAs, interactive states, and warmth in photography direction (10%). Travel, lifestyle, or health brand."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Muted steel blue, warm coral, and cream — complementary (blue/orange) with both sides softened to matching saturation. Satisfies coastal's restrained cool-water reference and cream neutral; dopamine's expressiveness requirement (coral provides the warm saturated contrast energy against a cooler field)." },
+                { label: "Distinctiveness", note: "The muted-complementary version of a blue/orange pairing — both steel blue and coral are deliberately softened to the same saturation level. Most coastal palettes keep the blue dominant and saturated; equalising saturation across the complement is a structural move not found elsewhere in either aesthetic." },
+                { label: "Tension + Resolution", note: "Cool steel blue vs. warm coral creates complementary temperature tension at matched saturation; cream resolves by providing a neutral-warm field that belongs slightly to the coral side, preventing the composition from reading as evenly split between two colours." },
+                { label: "Cross-Domain Legibility", note: "Resort fashion (cream base + steel blue structure + coral accent), a coastal dining room or bedroom interior, and a travel, lifestyle, or health brand — the softened complementary logic translates as warmth and confidence without aggression in all three contexts." }
+            ]
+        }
+    },
+    {
+        name: "Scarlet Red, Black & Ivory White",
+        source: "Combination No. 101",
+        colors: ["#cc2020", "#111314", "#f5f0e8"],
+        description: "Spectrum red against near-black and warm white — Japanese lacquerware logic applied to a graphic field.",
+        theory: "Maximum value contrast with a single saturated hue. The scarlet requires no company — the black and ivory frame it entirely, allowing the red to carry its full weight alone.",
+        styles: ["modern", "dark-academia"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Near-black: structural base, walls, brand field", "Ivory white: interior layer, plaster, type", "Scarlet: the single moment — shoe, object, highlight"],
+        useCases: {
+            fashion: "Near-black as the structural base garment (60%); ivory as the interior and secondary piece — a crisp shirt, silk trouser, or overcoat (30%); scarlet as the single saturated moment: a shoe, bag, lip, or earring (10%). Lacquerware logic applied to dress.",
+            interior: "Near-black on walls or in key upholstery (60%); ivory in painted surfaces, stone, or light textiles (30%); scarlet in a single artwork, cushion cluster, or ceramic object (10%). A statement dining room or entry hall. Restraint is the point.",
+            graphic: "Black as the primary brand field (60%); ivory for type and structural content (30%); scarlet as the single attention element — logo mark, CTA, or hero highlight (10%). Japanese-influenced graphic identity, premium restaurant, or editorial brand."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Scarlet, near-black, and ivory — maximum value contrast with a single fully saturated hue. Satisfies modern's controlled-saturation-against-neutral-field rule (single accent against a black/white field) and dark-academia's atmospheric anchoring in near-black with a light relief and scholarly precision." },
+                { label: "Distinctiveness", note: "The most economical palette in the set — three tones doing the maximum structural work through extreme value contrast and singular saturation. The black/ivory/red logic references Japanese lacquerware applied to graphic design; no other palette in the set uses this specific three-point lacquerware structure." },
+                { label: "Tension + Resolution", note: "Near-black vs. ivory creates maximum value tension as the dominant relationship; scarlet resolves by providing the single saturated hue that both colours frame — without it, the black-ivory pair would be purely tonal and structurally incomplete." },
+                { label: "Cross-Domain Legibility", note: "Precision fashion (black base + ivory interior + scarlet singular accent), a statement interior (black walls + ivory plaster surfaces + scarlet artwork), and a graphic brand identity (lacquerware logic) — the three-point structure is unambiguous at all scales." }
+            ]
+        }
+    },
+    {
+        name: "Cobalt Blue, Lemon Yellow & Black",
+        source: "Combination No. 232",
+        colors: ["#0050c8", "#f8ed43", "#111314"],
+        description: "Pure cobalt and lemon yellow against black — a primary-adjacent triad with maximum graphic energy.",
+        theory: "Near-complementary (blue/yellow) at maximum saturation, anchored by black. Bauhaus-adjacent logic: three colours at near-full value, controlled by proportion alone.",
+        styles: ["modern", "dopamine"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Black: structural base, background, dominant field", "Cobalt blue: hero garment, primary illustration, brand mark", "Lemon yellow: electric accent, data highlight, CTA"],
+        useCases: {
+            fashion: "Black as the structural base — overcoat or wide trouser (60%); cobalt blue as the hero garment: a structured coat, knit, or dress (30%); lemon yellow as the electric accent: a bag, shoe, or earring (10%). High graphic energy — the yellow must be precise.",
+            interior: "Black or very deep navy on walls or as a statement ceiling (60%); cobalt blue in upholstery, artwork, or painted furniture (30%); lemon yellow in a single lamp base, ceramic, or cushion (10%). A graphic, modernist living room or studio.",
+            graphic: "Black as the primary background field (60%); cobalt blue for headlines, primary illustration, and brand mark (30%); lemon yellow for the single high-visibility element: CTA, data highlight, or icon (10%). Tech, music, or bold consumer brand."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Pure cobalt and lemon yellow at near-full saturation against black — Bauhaus primary-logic geometry applied to three colours. Satisfies modern's Swiss/Bauhaus graphic clarity and controlled proportion logic; dopamine's maximum expressiveness with two simultaneously fully saturated hues." },
+                { label: "Distinctiveness", note: "The only palette using two primary-adjacent hues (blue and yellow) simultaneously at near-full saturation against a black field — a Bauhaus structural logic not found elsewhere. The palette operates at the precise intersection of graphic precision and maximum colour energy." },
+                { label: "Tension + Resolution", note: "Pure cobalt (cool) vs. lemon yellow (warm) creates hue-temperature opposition at full saturation; near-black resolves by providing the structural field that prevents the two primaries from directly competing — each reads clearly only because the black frames and separates them." },
+                { label: "Cross-Domain Legibility", note: "High-impact fashion (black structure + cobalt hero + yellow accent), a modernist living room or studio interior (black + cobalt + yellow), and a tech, music, or bold consumer brand identity — the Bauhaus logic translates without loss of energy or clarity across all three contexts." }
+            ]
+        }
+    },
+    {
+        name: "Sage Green, Warm Stone & Ivory",
+        source: "Combination No. 161",
+        colors: ["#8a9e80", "#c0b5a8", "#f5eed8"],
+        description: "Three muted naturals — sage, warm stone, ivory — in high-key tonal harmony. The quietest palette in this collection.",
+        theory: "Shared warm-grey undertone unifies three hues that appear distinct close up. In a room or on a page, they cohere into a single calm register. There is no contrast — only gradation.",
+        styles: ["japandi", "quiet-luxury", "wabi-sabi"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Sage green: dominant surface, walls, key garment", "Ivory: interior layer, flooring, body text", "Warm stone: accessories, ceramics, quiet warmth"],
+        useCases: {
+            fashion: "Sage green as the dominant — a linen coat, wide dress, or suit (60%); ivory as the interior and secondary layer: a silk shirt, trouser lining, or scarf (30%); warm stone as the grounding accessory: a suede bag, natural leather belt, or woven shoe (10%). Nothing competes.",
+            interior: "Sage green on walls (60%); ivory in flooring, upholstery, and curtains (30%); warm stone in unglazed ceramics, natural rattan, or a stone vessel (10%). A minimalist Japandi bedroom or bathroom — the tonal similarity means nothing fights for attention.",
+            graphic: "Sage as the brand field or editorial background (60%); ivory for body text and structure (30%); warm stone for secondary illustration, image framing, and quiet warmth (10%). Wellness, botanical, or Japandi interior brand."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Sage, warm stone, and ivory — all share a warm-grey undertone, all muted, all at mid-to-high value. Satisfies japandi's organic reference (sage, stone, linen) and value hierarchy; quiet luxury's greige and muted-palette vocabulary; wabi-sabi's naturally aged earthy tonal restraint." },
+                { label: "Distinctiveness", note: "The quietest palette in the set — the only entry where the three hues share a common undertone so closely that they cohere into a single calm register. The structural move here is the absence of any structural contrast move, which is itself distinct." },
+                { label: "Tension + Resolution", note: "Sage green (cool-grey) vs. warm stone (warm-orange) creates the most whispered temperature tension in the set — both tones are so heavily muted towards grey that the opposition is barely stated. Ivory resolves by providing the near-neutral that sits between both temperatures without announcing itself." },
+                { label: "Cross-Domain Legibility", note: "A considered minimal fashion wardrobe (sage + ivory + stone), a minimalist japandi bedroom or bathroom, and a wellness or Japandi interior brand — the shared-undertone logic reads identically in textile weave, wall plaster, and digital colour system." }
+            ]
+        }
+    },
+    {
+        name: "Terracotta, Sage & Warm Linen",
+        source: "Combination No. 199",
+        colors: ["#c06840", "#6a8870", "#f5e8d0"],
+        description: "Warm terracotta against cool sage and undyed linen — the palette of unglazed ceramics and unpainted walls.",
+        theory: "Temperature contrast (warm orange-red vs. cool grey-green) with both sides muted to the same saturation level. Linen provides visual rest. These colours look organic because they are — clay, plant, fibre.",
+        styles: ["wabi-sabi", "coastal"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Warm linen: base garment, walls, background field", "Sage green: outer layer, joinery, brand colour", "Terracotta: warm accent, ceramics, CTA"],
+        useCases: {
+            fashion: "Warm linen as the dominant base — an unlined coat, wide trouser, or dress (60%); sage green as the second layer or outer piece (30%); terracotta as the warm accent: a leather bag, slip-on, or earring (10%). Feels handmade rather than curated.",
+            interior: "Warm linen walls and undyed textiles (60%); sage green in painted joinery, upholstery, or curtains (30%); terracotta in unglazed pots, a brick hearth, or dried botanical arrangements (10%). Wabi-Sabi living room or conservatory.",
+            graphic: "Linen-white as the warm background field (60%); sage for brand colour, illustration, and primary structure (30%); terracotta for warmth in CTAs, data, and image direction (10%). Ceramics, organic food, or artisan craft brand."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Warm terracotta, cool sage, and undyed linen — complementary (orange-red vs. grey-green) with both sides muted to matching saturation, referencing clay, plant, and natural fibre. Satisfies wabi-sabi's natural process and organic material criterion; coastal's light airy high-key structure (all three tones are at mid-to-high value)." },
+                { label: "Distinctiveness", note: "Both sides of the complement are muted to the same saturation — neither terracotta nor sage dominates by intensity, only by hue. Most complementary palettes weight one side. Muted equity across the complement is a structural choice found nowhere else in the set." },
+                { label: "Tension + Resolution", note: "Warm terracotta (muted orange-red) vs. cool sage (muted grey-green) creates complementary temperature tension at matched saturation; warm linen resolves by providing a warm-neutral dominant field that tilts subtly towards the terracotta without excluding the sage." },
+                { label: "Cross-Domain Legibility", note: "Handmade-feeling fashion (linen base + sage layer + terracotta accent), a wabi-sabi living room or conservatory (undyed textiles + painted joinery + clay vessels), and a ceramics or artisan food brand — the natural-material logic reads with equal authenticity at all three scales." }
+            ]
+        }
+    },
+    {
+        name: "Indigo, Warm Ochre & Chalk White",
+        source: "Combination No. 251",
+        colors: ["#1a2860", "#d4a030", "#f5f0e8"],
+        description: "Deep indigo against warm ochre and chalk white — dyed cloth and natural pigment.",
+        theory: "Complementary (blue/yellow-orange) with the yellow shifted to a warm gold-ochre. White provides maximum value contrast against the indigo, making the ochre read as warmth rather than brightness.",
+        styles: ["japandi", "modern", "dark-academia"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Deep indigo: dominant — walls, suit, brand field", "Chalk white: interior layer, plaster, type", "Warm ochre: accent — bag, ceramics, highlight"],
+        useCases: {
+            fashion: "Deep indigo as the dominant — a tailored coat, wide suit, or structured dress (60%); chalk white as the interior and second layer: a crisp shirt, linen trouser, or scarf (30%); warm ochre as the unexpected accent: a leather bag, belt, or earring (10%). Dyed-cloth logic.",
+            interior: "Deep indigo on walls or in statement upholstery (60%); chalk white in surrounding plaster, ceiling, and linen textiles (30%); warm ochre in ceramic vessels, lampshades, or a single framed artwork (10%). A Japandi bedroom or studio — the indigo needs good natural light.",
+            graphic: "Deep indigo as the primary brand field (60%); chalk white for type and structural elements (30%); warm ochre for the brand accent, interactive elements, and warmth (10%). Considered and distinctive. Craft, architecture, or a premium brand that wants depth."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Deep indigo, warm gold-ochre, and chalk white — complementary (blue/yellow-orange) with the orange side burnished to a natural pigment. Satisfies japandi's deep-dye cultural reference and value hierarchy; modern's architectural contrast logic (dark field + white type + single warm accent); dark-academia's deep-blue scholarly anchor." },
+                { label: "Distinctiveness", note: "The only palette where three aesthetics are served simultaneously by a single complementary structure — the indigo/ochre/white logic functions equally as Japanese resist-dye, Swiss graphic design, and dark-academic atmosphere. The breadth of cultural register for three colours is unmatched in the set." },
+                { label: "Tension + Resolution", note: "Cool deep indigo vs. warm gold-ochre creates complementary temperature tension; chalk white resolves by providing maximum value contrast against the indigo while remaining warm enough not to read as clinical — the warmth of chalk white is essential to the resolution." },
+                { label: "Cross-Domain Legibility", note: "Dyed-cloth fashion (indigo coat + chalk interior + ochre accent), a japandi or studio interior (indigo walls + plaster + ceramic ochre), and a premium craft or architecture brand identity — the complementary logic transfers with equal precision and depth to all three contexts." }
+            ]
+        }
+    }
+    ,
+    // ── New palettes: gap-fill to reach ~10 per aesthetic ──
+    {
+        name: "Ash & Warm Stone",
+        source: "Combination No. 304",
+        colors: ["#a0968a", "#c4b5a5", "#2a2420"],
+        description: "Three tones of earth and ash — warm taupe, pale stone, and near-black — a stone lantern at dusk.",
+        theory: "Tonal descent within the warm-neutral family. Value hierarchy from pale stone through warm taupe to near-black; hue variation is minimal, creating depth through value and subtle temperature shift alone.",
+        styles: ["japandi"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Anchor"],
+        roleDesc: ["Warm stone: walls, base garment, dominant neutral", "Ash taupe: upholstery, second layer, woven textile", "Near-black: leather, timber, structural dark anchor"],
+        useCases: {
+            fashion: "Pale warm stone as the dominant — an overcoat, wide trouser, or long dress (60%); ash taupe as the second layer or mid-tone: a structured knit, linen shirt, or scarf (30%); near-black as the leather anchor: boots, bag, belt (10%). Entirely tonal — texture becomes the only differentiator.",
+            interior: "Warm stone on walls and in light flooring (60%); ash taupe in upholstery, woven rugs, and heavy curtains (30%); near-black in timber frames, dark joinery, and leather detail (10%). The quietest possible Japandi room — every element belongs to the same tonal conversation.",
+            graphic: "Stone as the primary background field (60%); ash taupe for secondary structure, illustration, and layered elements (30%); near-black for type, borders, and contrast anchors (10%). Premium interiors, wellness, or craft brand identity — stillness is the message."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "All three tones are muted naturals within the warm-grey family — taupe, pale stone, and near-black reference ash, weathered stone, and charred wood. Satisfies japandi's muted saturation, organic material reference, and clear light/mid/dark value hierarchy without introducing any hue." },
+                { label: "Distinctiveness", note: "The most restrained palette in the japandi set — no hue contrast, no temperature opposition. Distinguishes itself from other tonal palettes by operating exclusively within the warm-neutral grey family with maximal value spread from near-white to near-black." },
+                { label: "Tension + Resolution", note: "Warm pale stone (light) vs. near-black (dark) creates strong value tension; ash taupe bridges as the mid-tone, resolving through pure value gradation without introducing hue or temperature contrast of any kind." },
+                { label: "Cross-Domain Legibility", note: "Entirely tonal fashion layering (stone + taupe + dark leather), a minimalist japandi interior (plaster + textile + dark timber), and a wellness or premium interior brand identity — the tonal logic reads without ambiguity at any scale." }
+            ]
+        }
+    },
+    {
+        name: "Celadon Mist",
+        source: "Combination No. 142",
+        colors: ["#90b8a8", "#e8dcc8", "#383530"],
+        description: "Celadon glaze, raw linen, and dark charcoal — Japanese ceramics and architectural restraint.",
+        theory: "Temperature contrast across value extremes. Cool celadon reads against warm linen cream; both are muted, but the thermal opposition between cool grey-green and warm cream provides the structure. Near-black charcoal anchors the composition at the dark end.",
+        styles: ["japandi"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Anchor"],
+        roleDesc: ["Warm linen cream: walls, base garment, dominant neutral", "Celadon grey-green: hero garment, upholstery, key accent", "Charcoal near-black: dark anchor, leather, timber detail"],
+        useCases: {
+            fashion: "Warm linen as the dominant — wide trouser, an overcoat, or long dress (60%); celadon as the hero piece: a structured coat, silk blouse, or glazed leather bag (30%); near-black charcoal as the structural anchor: boots, belt, or dark accessories (10%). Cool and completely resolved.",
+            interior: "Warm linen walls and undyed flooring (60%); celadon in upholstery, glazed tile, or a painted panel (30%); near-black charcoal in dark timber joinery, picture frames, and leather seating (10%). A Japandi bedroom or bathroom — celadon reads as the glaze of a single well-chosen ceramic object.",
+            graphic: "Linen cream as the warm background field (60%); celadon for brand colour, structural illustration, and secondary elements (30%); near-black for type, borders, and high-contrast anchors (10%). Japandi interior brand, ceramics studio, or premium lifestyle."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Celadon grey-green references the glaze of traditional Japanese ceramics; warm linen references undyed cloth and natural fibre; near-black charcoal anchors with a dark-timber and charcoal reference. All three are muted, satisfying japandi's saturation, organic-material, and value-hierarchy criteria." },
+                { label: "Distinctiveness", note: "The celadon glaze reference is not found in any other japandi palette — most green entries reference moss, olive, or forest. The ceramic-glaze quality of the cool grey-green creates a distinct cultural register within the aesthetic that is not replicated elsewhere." },
+                { label: "Tension + Resolution", note: "Cool celadon (grey-green) vs. warm linen-cream creates temperature tension; near-black charcoal resolves by providing a value anchor that structures both warm and cool tones without belonging to either temperature — the standard Japandi resolution logic applied to an unusual hue." },
+                { label: "Cross-Domain Legibility", note: "Restrained fashion layering (linen dominant + celadon hero + dark leather anchor), a Japandi ceramics-influenced interior, and a ceramics studio or premium lifestyle brand — the glaze register translates convincingly at all three scales." }
+            ]
+        }
+    },
+    {
+        name: "Electric Violet & Lime",
+        source: "Combination No. 267",
+        colors: ["#d800c8", "#a8e000", "#f8f0e0"],
+        description: "Pure magenta and electric lime against warm off-white — the dopamine palette as a scientific demonstration of hue opposition.",
+        theory: "Near-complementary (violet/yellow-green) at maximum saturation. Off-white acts as a neutral field that lets both fully saturated hues read at full intensity without mutual cancellation — the white creates the conditions for maximum expressiveness.",
+        styles: ["dopamine"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Off-white: neutral ground, base garment, background field", "Electric lime: secondary burst, outer layer, hero illustration", "Electric violet: saturated accent, CTA, statement piece"],
+        useCases: {
+            fashion: "Off-white as the dominant neutral — a wide linen trouser, overcoat, or minimal dress (60%); electric lime as the high-energy second piece: a structured coat, knit, or statement bag (30%); electric violet as the saturated accent: a shoe, earring, or belt (10%). Maximum energy, kept liveable by the white field.",
+            interior: "Off-white walls and flooring (60%); electric lime in a statement chair, artwork panel, or accent wall (30%); electric violet in cushions, a ceramic object, or a neon-adjacent lighting element (10%). A studio, creative agency, or energetic workspace.",
+            graphic: "Off-white as the primary background field (60%); electric lime for hero visuals, illustration, and secondary headlines (30%); electric violet for CTAs, key data points, and interactive states (10%). Tech, creative agency, or fashion editorial."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Both violet-magenta and lime are at full saturation — meets dopamine's minimum-one-fully-saturated-hue rule with two simultaneously. The off-white field provides the neutral ground required to prevent mutual cancellation and allow maximum expressiveness from both hues." },
+                { label: "Distinctiveness", note: "Electric violet (magenta-adjacent) vs. lime green is an unusual near-complement — most dopamine palettes use the more conventional pink/green or orange/blue pairings. The magenta-to-lime axis creates a hue opposition not found elsewhere in the set." },
+                { label: "Tension + Resolution", note: "Cool electric violet-magenta vs. warm yellow-green lime creates hue-temperature opposition at full saturation simultaneously; off-white resolves by providing a dominant neutral field that prevents the two saturated hues from competing directly and allows both to read at full strength." },
+                { label: "Cross-Domain Legibility", note: "Dopamine fashion (white base + lime + violet), a creative studio interior, and a tech or creative agency brand identity — the neutral-field structure (white ground + two saturates) maintains legibility at all three scales without reducing the palette's energy." }
+            ]
+        }
+    },
+    {
+        name: "Acid Summer",
+        source: "Combination No. 338",
+        colors: ["#ff5500", "#00c8c8", "#111314"],
+        description: "Pure orange and pure cyan against near-black — complementary saturates at maximum graphic intensity.",
+        theory: "Complementary (orange/cyan) at full saturation, anchored by near-black. Orange and cyan are the most direct hue opposites at this value level; black prevents mutual cancellation and provides the structural grounding that neither saturated hue can supply alone.",
+        styles: ["dopamine"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Near-black: structural base, background field, dominant anchor", "Saturated orange: primary burst, hero visual, statement garment", "Saturated cyan: the cool foil, data colour, unexpected accent"],
+        useCases: {
+            fashion: "Near-black as the structural base — a coat, suit, or wide trouser (60%); saturated orange as the hero: a knit, structured outer piece, or bag (30%); cyan as the cool unexpected counterpoint: earrings, sunglasses, or a precise detail accessory (10%). Maximum graphic energy, fully resolved.",
+            interior: "Near-black on walls or ceiling (60%); orange in upholstery, a statement artwork, or neon-adjacent signage (30%); cyan in a glazed ceramic, a single lamp, or an accent tile run (10%). A bar, music venue, or energetic creative studio.",
+            graphic: "Black as the primary field (60%); orange for headlines and hero illustration (30%); cyan for interactive elements, data highlights, and the cool counterpoint (10%). Music, gaming, or bold consumer brand identity."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Orange and cyan are direct complementary saturates — maximum expressiveness and maximum contrast. Both fully saturated with a black anchor satisfies dopamine's requirement unambiguously. This is the purest expression of dopamine logic in the set." },
+                { label: "Distinctiveness", note: "Orange-cyan is the strictest complementary pairing available on the colour wheel. This directness distinguishes it from other dopamine palettes, which use near-complementary or analogue pairings rather than the most exact hue opposition." },
+                { label: "Tension + Resolution", note: "Pure warm orange vs. pure cool cyan creates the most direct temperature-and-hue opposition possible; near-black resolves by anchoring both saturates simultaneously — without it, neither saturated hue can provide the structural grounding the other needs." },
+                { label: "Cross-Domain Legibility", note: "Maximum-impact fashion (black base + orange hero + cyan foil), a bar or music venue interior, and a music, gaming, or bold consumer brand identity — the pure complementary logic is equally legible and energetic at all three scales without re-proportioning." }
+            ]
+        }
+    },
+    {
+        name: "Dove Suite",
+        source: "Combination No. 156",
+        colors: ["#cac3bb", "#f0ece0", "#5a4e48"],
+        description: "Dove grey, near-white cream, and dark warm grey-brown — a palette of cashmere and aged linen with no colour, only tone.",
+        theory: "Tonal descent within the warm-neutral family with zero hue. The palette has no colour — only value and a shared warm-grey undertone. Structure comes entirely from the three-level value hierarchy: light, mid, dark.",
+        styles: ["quiet-luxury"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Anchor"],
+        roleDesc: ["Near-white cream: base garment, walls, dominant light field", "Dove mid-grey: second layer, upholstery, key textile", "Dark warm grey-brown: leather anchor, timber, structural dark"],
+        useCases: {
+            fashion: "Near-white cream as the dominant — a fine wool coat, wide linen trouser, or long dress (60%); dove grey as the second piece: a cashmere knit, tailored suit, or structured jacket (30%); dark warm grey-brown as the leather anchor: boots, bag, belt (10%). Zero colour — texture is the only variable.",
+            interior: "Cream-linen walls and ivory flooring (60%); dove grey in upholstery, curtains, and heavy textiles (30%); dark warm grey-brown in leather furniture, dark timber detail, and decorative objects (10%). The quintessential quiet-luxury living room — the palette says nothing loudly.",
+            graphic: "Cream as the primary field (60%); dove for secondary structure and illustration (30%); dark warm grey-brown for type, borders, and tonal anchors (10%). Premium fashion, interiors, or beauty brand identity — speaks entirely through restraint and material quality."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "All three tones are within the warm-neutral grey family — desaturated, muted, and tonal. Satisfies quiet luxury's tonal restraint at its most extreme: no hue at all, only warm-neutral gradation across three values. The greige/cream vocabulary is present in its purest form." },
+                { label: "Distinctiveness", note: "The only palette in the quiet-luxury set that uses zero hue — no colour at all, only warm-neutral value gradation. All other quiet-luxury entries introduce at least a trace of hue (sage, blush, mauve). Dove Suite is the aesthetic's terminus." },
+                { label: "Tension + Resolution", note: "No hue contrast; tension comes entirely from value — near-white (light) vs. dark warm grey-brown (dark), with dove grey bridging as the mid-tone. Resolution is structural: the three-value hierarchy provides all visual organisation the palette needs." },
+                { label: "Cross-Domain Legibility", note: "A zero-colour fashion wardrobe (cashmere + wool + leather), a quiet-luxury interior (cream plaster + dove upholstery + dark timber), and a premium fashion or beauty brand identity — the tonal logic reads without ambiguity at all three scales." }
+            ]
+        }
+    },
+    {
+        name: "Cashmere Tonal",
+        source: "Combination No. 220",
+        colors: ["#c8a878", "#f0e8d8", "#7a6050"],
+        description: "Warm camel, cream sand, and dark rosewood — the palette of unpressed cashmere and unvarnished suede.",
+        theory: "Tonal descent within the camel-cream-rosewood family. All three hues are warm, muted, and close in hue — the structure is value-based with temperature slowly deepening from cream through camel to warm-brown rosewood.",
+        styles: ["quiet-luxury"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Anchor"],
+        roleDesc: ["Cream sand: base garment, walls, dominant light field", "Warm camel: layering piece, upholstery, key textile", "Rosewood dark: leather anchor, timber, structural dark detail"],
+        useCases: {
+            fashion: "Cream sand as the dominant — a fine cashmere coat, wide trouser, or long dress (60%); warm camel as the layering knit, blazer, or scarf (30%); rosewood-dark as the leather anchor: boots, structured bag, belt (10%). Investment dressing — no colour competition, only material quality.",
+            interior: "Cream sand on walls and in light flooring (60%); warm camel in upholstery, heavy curtains, and natural rugs (30%); rosewood-brown in leather seating, dark timber joinery, and decorative objects (10%). A quiet-luxury bedroom or drawing room — the palette rewards texture over colour.",
+            graphic: "Cream as the primary background field (60%); camel for secondary illustration and warmth in photography direction (30%); rosewood-dark for structural type, borders, and tonal anchors (10%). Premium fashion, interiors, or leather-goods brand identity."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "All three tones are warm, muted, and within the camel-cream-brown family — no saturated hue, no cool note anywhere. Satisfies quiet luxury's camel, cream, and greige vocabulary with all three tones referencing natural undyed or vegetable-dyed fibres and suede." },
+                { label: "Distinctiveness", note: "Unlike Dove Suite (warm-neutral grey), Cashmere Tonal is fully warm — all three tones lean orange-warm with no cool undertone. The all-warm tonal palette distinguishes it from all other quiet-luxury entries, which introduce at least one cool or neutral note." },
+                { label: "Tension + Resolution", note: "No cool vs. warm tension; structure comes entirely from value — light cream vs. dark rosewood with camel as the mid-tone. Resolution is through value hierarchy; the shared warmth of all three tones provides perceptual unity without requiring any contrast." },
+                { label: "Cross-Domain Legibility", note: "A warm all-camel fashion wardrobe (cream + camel + rosewood leather), a quiet-luxury interior (cream plaster + camel upholstery + dark timber), and a premium leather goods or fashion brand — the warm tonal logic reads with equal conviction at all three scales." }
+            ]
+        }
+    },
+    {
+        name: "Fired Earth",
+        source: "Combination No. 126",
+        colors: ["#b84830", "#9a9088", "#f0e4d0"],
+        description: "Fired clay, weathered stone, and pale linen — the palette of a Japanese kiln and an unplastered wall.",
+        theory: "Temperature contrast (warm rust vs. cool grey) with a light warm neutral bridge. Rust references fired ceramics; grey references aged stone; linen provides the natural-fibre anchor. All three tones are muted — the contrast is thermal, not saturation-based.",
+        styles: ["wabi-sabi"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Pale linen: base garment, walls, dominant neutral", "Cool stone grey: upholstery, woven textile, second layer", "Fired rust-red: warmth accent, ceramics, leather detail"],
+        useCases: {
+            fashion: "Pale linen as the dominant base — a natural coat, wide trouser, or dress (60%); cool stone grey as the structured second layer: a linen suit, knit, or woven scarf (30%); fired rust-red as the warm accent: a leather bag, earring, or boot (10%). Organic, material, and completely resolved.",
+            interior: "Pale linen walls and natural flooring (60%); cool stone grey in upholstery, woven rugs, and heavy curtains (30%); fired rust-red in unglazed ceramic vessels, a brick hearth, or dried botanical arrangements (10%). Wabi-sabi at its most elemental — clay, stone, cloth.",
+            graphic: "Pale linen as the warm background field (60%); cool grey for structural illustration and secondary elements (30%); fired rust-red for warmth in CTAs, data, and highlights (10%). Ceramics, artisan, or natural food brand identity."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Rust-red references fired clay and kiln temperatures; cool grey references weathered stone and ash; pale linen references natural undyed fibre. All three reference natural process, organic material, and the wabi-sabi aesthetic of things that appear aged, worn, or made by hand." },
+                { label: "Distinctiveness", note: "The only wabi-sabi palette introducing a cool grey mid-tone as the secondary field — all other wabi-sabi entries in the set stay entirely warm. The cool stone-grey reference distinguishes Fired Earth from the amber, ochre, and earth-tone entries." },
+                { label: "Tension + Resolution", note: "Warm fired rust (orange-red) vs. cool stone grey creates temperature tension at matched saturation; pale linen resolves by providing a warm-neutral dominant field that tilts subtly towards the rust without excluding the grey — the cloth that bridges the kiln and the stone." },
+                { label: "Cross-Domain Legibility", note: "Organic fashion (linen base + grey layer + rust accent), a kiln-and-plaster wabi-sabi interior, and a ceramics or natural food brand identity — the material reference (clay, stone, cloth) reads with equal authenticity across all three contexts." }
+            ]
+        }
+    },
+    {
+        name: "Harbour Light",
+        source: "Combination No. 173",
+        colors: ["#a8d0d8", "#e0cc98", "#9a8878"],
+        description: "Morning harbour light — pale aqua, warm sandy gold, and driftwood grey.",
+        theory: "Temperature contrast at high value across three muted tones. Cool aqua references still water; sandy gold references wet sand in morning light; driftwood taupe bridges the two as the warm-grey material between water and land.",
+        styles: ["coastal"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Accent"],
+        roleDesc: ["Pale aqua: dominant sky-water surface, base garment, walls", "Sandy gold: secondary warmth, linen upholstery, natural textile", "Driftwood taupe: warm-grey anchor, natural accessories, ceramic"],
+        useCases: {
+            fashion: "Pale aqua as the dominant — a wide linen shirt, overcoat, or dress (60%); sandy gold as the warm second layer: a linen knit, scarf, or structured tote (30%); driftwood taupe as the grounding anchor: a bag, sandal, or woven belt (10%). Coastal light in wearable form.",
+            interior: "Pale aqua on walls or in major upholstery (60%); sandy gold in linen curtains, cushions, and natural textiles (30%); driftwood taupe in rattan furniture, natural unglazed ceramics, and driftwood-adjacent objects (10%). A harbour-facing bedroom or living room at morning light.",
+            graphic: "Pale aqua as the brand base or background field (60%); sandy gold for warmth and secondary illustration (30%); driftwood taupe for structural type, image framing, and tonal anchors (10%). Coastal lifestyle, travel, or marine brand identity."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Pale aqua references water and sky at high value; sandy gold references wet sand and morning light; driftwood taupe references the weathered beach material that coastal neutrals require. All three are light and airy, fully satisfying coastal's light-washed and water-sky criteria." },
+                { label: "Distinctiveness", note: "Unlike Pale Aqua / Sandy Buff / Warm White (which operates at extreme lightness with near-white), Harbour Light introduces a driftwood taupe mid-tone as its darkest anchor — providing more structural depth without compromising the coastal register. This mid-tone distinction sets it clearly apart." },
+                { label: "Tension + Resolution", note: "Cool aqua vs. warm sandy gold creates temperature tension at high value; driftwood taupe resolves by providing a warm-neutral mid-tone that belongs to the sandy-warm side without competing with the aqua — the natural material that sits between water and land." },
+                { label: "Cross-Domain Legibility", note: "Coastal fashion (aqua dominant + sandy gold + driftwood anchor), a harbour-facing interior (aqua walls + linen textiles + rattan), and a coastal lifestyle or travel brand — the morning-light register translates across all three contexts without adjustment." }
+            ]
+        }
+    },
+    {
+        name: "Reduced Form",
+        source: "Combination No. 5",
+        colors: ["#f0ece4", "#909090", "#1a1a20"],
+        description: "Off-white, pure grey, and near-black — graphic form reduced to value alone. No hue, no temperature, no argument.",
+        theory: "Zero-saturation tonal scale from light to dark. The palette has no hue — it operates entirely through value contrast. Swiss graphic design toolkit: form and function expressed without the distraction of colour.",
+        styles: ["modern"],
+        rule: "60 · 30 · 10",
+        proportions: [60, 30, 10],
+        roles: ["Dominant", "Secondary", "Anchor"],
+        roleDesc: ["Off-white: dominant field, background, base garment", "Mid-grey: secondary structure, upholstery, type support", "Near-black: structural anchor, primary type, precise dark detail"],
+        useCases: {
+            fashion: "Off-white as the dominant — a wide wool coat, structured dress, or linen trouser (60%); mid-grey as the second piece: a tailored suit, fine knit, or outerwear (30%); near-black as the precision anchor: leather shoes, structured bag, belt (10%). Form-only dressing — texture becomes the sole differentiator.",
+            interior: "Off-white walls and light flooring (60%); mid-grey in upholstery, architectural elements, and large textiles (30%); near-black in structural furniture, framing, and hardware (10%). Bauhaus or MUJI interior logic — the palette recedes to let form and material speak.",
+            graphic: "Off-white as the primary page field (60%); mid-grey for structural body text and secondary elements (30%); near-black for headlines, logo marks, and high-contrast anchors (10%). Swiss-influenced graphic identity — the absence of colour is the statement."
+        },
+        methodology: {
+            criteria: [
+                { label: "Aesthetic Authenticity", note: "Zero saturation; zero hue. Fine modern at its most absolute — graphic clarity and architectural precision achieved through value contrast alone, with no colour distraction whatsoever. Satisfies modern's controlled-saturation criterion at its extreme terminus." },
+                { label: "Distinctiveness", note: "The only fully desaturated palette in the entire set — no other palette removes hue entirely. Reduced Form distinguishes itself by demonstrating that fine modern's logic holds completely without colour, which is a structural argument no other entry makes." },
+                { label: "Tension + Resolution", note: "Light off-white vs. dark near-black creates maximum value tension; mid-grey bridges as the structural intermediary. Resolution is through pure tonal hierarchy — the three values provide all necessary structure. No hue tension exists because no hue is present." },
+                { label: "Cross-Domain Legibility", note: "Form-only fashion (off-white cashmere + grey suiting + near-black leather), a Bauhaus or MUJI-inspired interior, and a Swiss graphic design or MUJI-adjacent brand identity — the zero-hue logic reads with identical clarity and precision across all three contexts." }
+            ]
+        }
+    }
+
+];
+
+// ——— State ———
+let currentStyle = 'all';
+let selectedIndex = 0;
+
+// ——— Utilities ———
+function getFilteredPalettes() {
+    if (currentStyle === 'all') return palettes.map((p, i) => ({ ...p, originalIndex: i }));
+    return palettes.map((p, i) => ({ ...p, originalIndex: i })).filter(p => p.styles.includes(currentStyle));
+}
+
+function getLuminance(hex) {
+    const r = parseInt(hex.slice(1,3),16)/255;
+    const g = parseInt(hex.slice(3,5),16)/255;
+    const b = parseInt(hex.slice(5,7),16)/255;
+    return 0.2126*r + 0.7152*g + 0.0722*b;
+}
+
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+function copyColor(color) {
+    navigator.clipboard.writeText(color).then(() => showToast(color + ' copied'));
+}
+
+function copyAll(idx, btn) {
+    const p = palettes[idx];
+    navigator.clipboard.writeText(p.colors.join(', ')).then(() => {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copy all codes'; btn.classList.remove('copied'); }, 2000);
+    });
+}
+
+// ——— Main Viewer ———
+function renderMainViewer(idx) {
+    const p = palettes[idx];
+    const total = p.proportions.reduce((a,b) => a+b, 0);
+
+    const bar = p.colors.map((c, i) => {
+        const pct = p.proportions[i];
+        const fb = (pct / total * 100).toFixed(1);
+        return `<div class="proportion-swatch" style="background:${c};flex-basis:${fb}%" onclick="copyColor('${c}')">
+            <div class="swatch-pct">${pct}%</div>
+            <div class="swatch-tooltip">${c}</div>
+        </div>`;
+    }).join('');
+
+    const ruleBar = p.colors.map((c, i) => {
+        const pct = p.proportions[i];
+        const fb = (pct / total * 100).toFixed(1);
+        const lum = getLuminance(c);
+        const textColor = lum > 0.35 ? 'rgba(0,0,0,0.55)' : 'rgba(255,255,255,0.75)';
+        return `<div class="rule-swatch" style="background:${c};flex-basis:${fb}%;color:${textColor}">${pct}%</div>`;
+    }).join('');
+
+    const legend = p.colors.map((c, i) => {
+        return `<div class="rule-legend-item">
+            <div class="rule-dot" style="background:${c}"></div>
+            <span class="rule-role">${p.roles[i]}</span>
+            <span>${p.roleDesc[i]}</span>
+        </div>`;
+    }).join('');
+
+    const tagColors = { japandi:'#3a4a38', dopamine:'#c4006a', 'quiet-luxury':'#7a6e63', opulent:'#4a1a68', 'wabi-sabi':'#7a5c3a', 'dark-academia':'#2c2840', coastal:'#2a7d9e', modern:'#1e1e2e' };
+    const styleLabels = { japandi:'Japandi', dopamine:'Dopamine', 'quiet-luxury':'Quiet Luxury', opulent:'Opulent', 'wabi-sabi':'Wabi-Sabi', 'dark-academia':'Dark Academia', coastal:'Coastal', modern:'Fine Modern' };
+    const tags = p.styles.map(s => {
+        const c = tagColors[s] || '#888';
+        return `<span class="style-tag" style="color:${c};background:${c}14;border-color:${c}28">${styleLabels[s]}</span>`;
+    }).join('');
+
+    const hexChips = p.colors.map(c =>
+        `<button class="hex-chip" onclick="copyColor('${c}')">
+            <div class="hex-chip-dot" style="background:${c}"></div>${c}
+        </button>`
+    ).join('');
+
+    document.getElementById('main-viewer').innerHTML = `
+        <div class="proportion-bar">${bar}</div>
+        <div class="viewer-body">
+            <div class="viewer-grid">
+                <div>
+                    <div class="palette-name">${p.name}</div>
+                    <div class="palette-source">${p.source}</div>
+                    <div class="palette-description">${p.description}</div>
+                    <div class="style-tags">${tags}</div>
+                    <div class="theory-box">
+                        <div class="theory-box-label">Why this works</div>
+                        <div class="theory-box-text">${p.theory}</div>
+                    </div>
+                    ${p.methodology ? (() => {
+                        const methodCriteria = p.methodology.criteria.map(c =>
+                            `<div class="method-criterion">
+                                <div class="method-criterion-label">${c.label}</div>
+                                <div class="method-criterion-note">${c.note}</div>
+                            </div>`
+                        ).join('');
+                        return `<div class="methodology-wrap">
+                            <button class="methodology-toggle" onclick="toggleMethodology(this)">
+                                <span>Why selected · 4-criterion assessment</span>
+                                <span class="methodology-chevron">▸</span>
+                            </button>
+                            <div class="methodology-body">
+                                <div class="method-intro">Selected from Wada's 348 combinations against: Aesthetic Authenticity · Distinctiveness · Tension + Resolution · Cross-Domain Legibility</div>
+                                ${methodCriteria}
+                            </div>
+                        </div>`;
+                    })() : ''}
+                </div>
+                <div>
+                    <div class="rule-section">
+                        <div class="rule-title">Proportion Rule &nbsp;·&nbsp; ${p.rule}</div>
+                        <div class="rule-bar">${ruleBar}</div>
+                        <div class="rule-legend">${legend}</div>
+                    </div>
+                    <div class="use-cases" style="margin-top:1.5rem">
+                        <div class="use-case-tabs">
+                            <button class="use-case-tab active" onclick="switchTab('fashion',this)">Fashion</button>
+                            <button class="use-case-tab" onclick="switchTab('interior',this)">Interior</button>
+                            <button class="use-case-tab" onclick="switchTab('graphic',this)">Graphic Design</button>
+                        </div>
+                        <div class="use-case-content" id="use-case-content">${p.useCases.fashion}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hex-row">
+                <div class="hex-chips">${hexChips}</div>
+                <button class="btn-copy-all" onclick="copyAll(${idx},this)">Copy all codes</button>
+            </div>
+        </div>`;
+
+    document.getElementById('main-viewer').dataset.idx = idx;
+    document.getElementById('main-viewer').dataset.tab = 'fashion';
+}
+
+function toggleMethodology(btn) {
+    const body = btn.nextElementSibling;
+    const chevron = btn.querySelector('.methodology-chevron');
+    const isOpen = body.style.display === 'block';
+    body.style.display = isOpen ? 'none' : 'block';
+    chevron.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(90deg)';
+}
+
+function switchTab(type, btn) {
+    const viewer = document.getElementById('main-viewer');
+    const idx = parseInt(viewer.dataset.idx);
+    viewer.querySelectorAll('.use-case-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('use-case-content').textContent = palettes[idx].useCases[type];
+    viewer.dataset.tab = type;
+}
+
+// ——— Thumbnail Grid ———
+function renderThumbnails() {
+    const filtered = getFilteredPalettes();
+    const grid = document.getElementById('thumbnail-grid');
+    const count = document.getElementById('palette-count');
+
+    if (filtered.length === 0) {
+        grid.innerHTML = '<div class="empty-state">No palettes match this aesthetic.</div>';
+        count.textContent = '0 palettes';
+        return;
+    }
+
+    count.textContent = filtered.length + ' palette' + (filtered.length !== 1 ? 's' : '') + (currentStyle !== 'all' ? ' · ' + styleInfo[currentStyle].label : ' · click any thumbnail to explore');
+
+    grid.innerHTML = filtered.map(p => {
+        const isSelected = p.originalIndex === selectedIndex;
+        const swatches = p.colors.map(c => `<div class="thumbnail-swatch" style="background:${c}"></div>`).join('');
+        const shortName = p.name.split(',')[0].trim();
+        return `<div class="thumbnail-card ${isSelected ? 'selected' : ''}" onclick="selectPalette(${p.originalIndex})" title="${p.name}">
+            <div class="thumbnail-swatches">${swatches}</div>
+            <div class="thumbnail-label">${shortName}</div>
+        </div>`;
+    }).join('');
+}
+
+function selectPalette(idx) {
+    selectedIndex = idx;
+    renderMainViewer(idx);
+    renderThumbnails();
+    document.getElementById('main-viewer').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// ——— Style Filter ———
+document.querySelectorAll('.style-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.style-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentStyle = btn.dataset.style;
+
+        const info = styleInfo[currentStyle];
+        document.getElementById('style-context-dot').style.background = info.color;
+        document.getElementById('style-context-text').textContent = info.desc;
+
+        const filtered = getFilteredPalettes();
+        if (filtered.length > 0) {
+            selectedIndex = filtered[0].originalIndex;
+            renderMainViewer(selectedIndex);
+        }
+        renderThumbnails();
+    });
+});
+
+// ——— Init ———
+renderMainViewer(0);
+renderThumbnails();
+</script>
 </body>
 </html>
