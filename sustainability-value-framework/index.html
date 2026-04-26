@@ -40,7 +40,7 @@
 
         header {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1.25rem;
         }
 
         h1 {
@@ -54,6 +54,32 @@
         .subtitle {
             color: var(--text-muted);
             font-size: 0.95rem;
+        }
+
+        .preamble {
+            max-width: 900px;
+            margin: 0 auto 2rem;
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem 2rem;
+            border-left: 4px solid var(--teal);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+
+        .preamble p {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.75;
+            margin-bottom: 0.65rem;
+        }
+
+        .preamble p:last-child {
+            margin-bottom: 0;
+        }
+
+        .preamble strong {
+            color: var(--charcoal);
+            font-weight: 600;
         }
 
         .framework-container {
@@ -211,10 +237,12 @@
             filter: brightness(1.08);
         }
 
+        /* Highlighted active state — thicker, amber outline */
         .stage-node.active rect,
         .stage-node.active circle {
-            filter: brightness(0.9);
-            stroke-width: 2.5;
+            stroke: #b07020;
+            stroke-width: 3.5;
+            filter: brightness(0.95);
         }
 
         .metric-node:hover rect,
@@ -224,9 +252,9 @@
 
         .metric-node.highlight rect,
         .metric-node.highlight circle {
-            stroke: var(--bronze);
-            stroke-width: 2.5;
-            filter: brightness(1.1);
+            stroke: #b07020;
+            stroke-width: 3.5;
+            filter: brightness(1.12);
         }
 
         .arrow {
@@ -263,14 +291,14 @@
             margin-bottom: 0.5rem;
         }
 
-        .tag.driver { 
-            background: rgba(138, 155, 132, 0.15); 
+        .tag.driver {
+            background: rgba(138, 155, 132, 0.15);
             color: #5d6e59;
             border: 1px solid rgba(138, 155, 132, 0.3);
         }
-        
-        .tag.protector { 
-            background: rgba(184, 120, 96, 0.15); 
+
+        .tag.protector {
+            background: rgba(184, 120, 96, 0.15);
             color: #8b5e4a;
             border: 1px solid rgba(184, 120, 96, 0.3);
         }
@@ -295,6 +323,71 @@
             line-height: 1.6;
         }
 
+        /* Calculator styles */
+        .calc-box {
+            background: #f5f3f0;
+            border: 1px solid #e0dbd4;
+            border-radius: 8px;
+            padding: 1.1rem 1.25rem;
+            margin-top: 1.25rem;
+        }
+
+        .calc-box-title {
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--stone);
+            margin-bottom: 0.85rem;
+        }
+
+        .calc-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.55rem;
+        }
+
+        .calc-row label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            min-width: 155px;
+        }
+
+        .calc-row input {
+            flex: 1;
+            padding: 0.32rem 0.6rem;
+            border: 1px solid #cec9c2;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-family: 'Inter', sans-serif;
+            color: var(--charcoal);
+            background: white;
+            outline: none;
+        }
+
+        .calc-row input:focus {
+            border-color: var(--teal);
+        }
+
+        .calc-result {
+            margin-top: 0.85rem;
+            padding: 0.55rem 0.85rem;
+            background: white;
+            border: 1px solid #c4bfb9;
+            border-radius: 5px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--bronze);
+        }
+
+        .calc-note {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-top: 0.4rem;
+            font-style: italic;
+        }
+
         @media (max-width: 1400px) {
             .framework-grid {
                 grid-template-columns: 1fr;
@@ -309,8 +402,13 @@
     <div class="container">
         <header>
             <h1>Sustainability Value Framework</h1>
-            <p class="subtitle">Investment cycle opportunities linked to valuation mechanics — click stages to see connections</p>
+            <p class="subtitle">Click stages or metrics to see connections</p>
         </header>
+
+        <div class="preamble">
+            <p>This diagram shows where sustainability attributes — green certification, energy performance, and climate resilience — create or protect financial value across the real estate investment cycle. The left panel traces the four stages of the cycle (sourcing, acquisition, operations, exit); the right panel shows the valuation mechanics those stages connect to.</p>
+            <p><strong>Core mechanism:</strong> sustainable buildings tend to produce higher NOI (via rent premium and lower operating costs) while trading at lower cap rates (reflecting reduced obsolescence risk and stronger occupier demand), creating a multiplicative uplift on property value. Sustainability also affects the cost and availability of debt capital, and the depth of the buyer pool at exit. Figures are indicative and reflect APAC core market conditions. Click any stage or metric to explore the specific financial pathways.</p>
+        </div>
 
         <div class="framework-container">
             <div class="framework-grid">
@@ -382,22 +480,29 @@
                             </marker>
                         </defs>
 
-                        <!-- Income Cap bottom → NOI top -->
+                        <!-- Income Cap bottom → NOI top (straight vertical) -->
                         <line x1="340" y1="82" x2="340" y2="113" stroke="#9d7860" stroke-width="1.5" opacity="0.5" marker-end="url(#arr-bronze)"/>
-                        <!-- Rental Income top → NOI bottom-left -->
-                        <line x1="270" y1="189" x2="290" y2="158" stroke="#8a9b84" stroke-width="1.5" opacity="0.5" marker-end="url(#arr-sage)"/>
-                        <!-- Opex left edge → NOI bottom-right (starts at left edge of Opex box) -->
-                        <line x1="390" y1="189" x2="390" y2="158" stroke="#8a9b84" stroke-width="1.5" opacity="0.5" marker-end="url(#arr-sage)"/>
-                        <!-- NOI bottom → Cap Rate top -->
-                        <line x1="340" y1="158" x2="340" y2="257" stroke="#8a9b84" stroke-width="1.5" opacity="0.5" marker-end="url(#arr-sage)"/>
+
+                        <!-- Rental Income top → NOI bottom (bronze — Income Cap lineage) -->
+                        <line x1="270" y1="189" x2="270" y2="157" stroke="#9d7860" stroke-width="1.5" opacity="0.5" marker-end="url(#arr-bronze)"/>
+
+                        <!-- Opex top → NOI bottom (bronze — Income Cap lineage) -->
+                        <line x1="400" y1="189" x2="400" y2="157" stroke="#9d7860" stroke-width="1.5" opacity="0.5" marker-end="url(#arr-bronze)"/>
+
+                        <!-- NOI bottom → Cap Rate top (bronze — Income Cap lineage) -->
+                        <line x1="335" y1="157" x2="335" y2="257" stroke="#9d7860" stroke-width="1.5" opacity="0.5" marker-end="url(#arr-bronze)"/>
+
                         <!-- Cap Rate bottom → Value top -->
                         <line x1="340" y1="295" x2="340" y2="319" stroke="#9d7860" stroke-width="1.5" opacity="0.5" marker-end="url(#arr-bronze)"/>
-                        <!-- DCF bottom → Exit Yield (single curved line, no dotted duplicate) -->
-                        <path d="M 115 82 Q 80 180, 110 257" stroke="#6b8e8f" stroke-width="1.5" opacity="0.5" fill="none" marker-end="url(#arr-teal)"/>
+
+                        <!-- DCF bottom → Exit Yield top (straight line) -->
+                        <line x1="115" y1="81" x2="110" y2="258" stroke="#6b8e8f" stroke-width="1.5" opacity="0.5" marker-end="url(#arr-teal)"/>
+
                         <!-- Hidden connection paths, activated on stage select -->
                         <path id="conn-rent" d="M 215 208 Q 160 175, 115 82" stroke="#8a9b84" stroke-width="1.5" opacity="0" fill="none"/>
                         <path id="conn-exit" d="M 50 276 Q 30 180, 115 82" stroke="#b87860" stroke-width="1.5" opacity="0" fill="none"/>
 
+                        <!-- Valuation method boxes (top row) -->
                         <g class="metric-node" data-metric="dcf" onclick="showMetricDetail('dcf')">
                             <rect x="40" y="35" width="150" height="46" rx="6" fill="#6b8e8f" stroke="#5a7577" stroke-width="1"/>
                             <text x="115" y="53" text-anchor="middle" fill="white" font-weight="600" font-size="12">DCF Method</text>
@@ -413,33 +518,47 @@
                             <text x="565" y="53" text-anchor="middle" fill="white" font-weight="600" font-size="12">Comparables</text>
                             <text x="565" y="70" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="10">Relative valuation</text>
                         </g>
+
+                        <!-- NOI -->
                         <g class="metric-node" data-metric="noi" onclick="showMetricDetail('noi')">
                             <rect x="265" y="115" width="150" height="42" rx="6" fill="#8a9b84" stroke="#7a8a75" stroke-width="1"/>
                             <text x="340" y="136" text-anchor="middle" fill="white" font-weight="600" font-size="13">NOI</text>
                             <text x="340" y="151" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="9">Net Operating Income</text>
                         </g>
+
+                        <!-- Rental Income (bronze family — feeds Income Cap) -->
                         <g class="metric-node" data-metric="rental-income" onclick="showMetricDetail('rental-income')">
-                            <rect x="215" y="190" width="110" height="36" rx="6" fill="rgba(138,155,132,0.25)" stroke="#8a9b84" stroke-width="1"/>
-                            <text x="270" y="209" text-anchor="middle" fill="#5d6e59" font-size="11" font-weight="500">Rental Income</text>
-                            <text x="270" y="221" text-anchor="middle" fill="#7a8a75" font-size="9">↑ Green premium</text>
+                            <rect x="215" y="190" width="110" height="36" rx="6" fill="rgba(157,120,96,0.18)" stroke="#9d7860" stroke-width="1"/>
+                            <text x="270" y="209" text-anchor="middle" fill="#8b6551" font-size="11" font-weight="500">Rental Income</text>
+                            <text x="270" y="221" text-anchor="middle" fill="#a07050" font-size="9">↑ Green premium</text>
                         </g>
+
+                        <!-- Opex (bronze family — feeds Income Cap; moved to x=345) -->
                         <g class="metric-node" data-metric="opex" onclick="showMetricDetail('opex')">
-                            <rect x="335" y="190" width="110" height="36" rx="6" fill="rgba(138,155,132,0.25)" stroke="#8a9b84" stroke-width="1"/>
-                            <text x="390" y="209" text-anchor="middle" fill="#5d6e59" font-size="11" font-weight="500">Opex</text>
-                            <text x="390" y="221" text-anchor="middle" fill="#7a8a75" font-size="9">↓ Energy costs</text>
+                            <rect x="345" y="190" width="110" height="36" rx="6" fill="rgba(157,120,96,0.18)" stroke="#9d7860" stroke-width="1"/>
+                            <text x="400" y="209" text-anchor="middle" fill="#8b6551" font-size="11" font-weight="500">Opex</text>
+                            <text x="400" y="221" text-anchor="middle" fill="#a07050" font-size="9">↓ Energy costs</text>
                         </g>
+
+                        <!-- Cap Rate -->
                         <g class="metric-node" data-metric="cap-rate" onclick="showMetricDetail('cap-rate')">
                             <rect x="275" y="258" width="130" height="36" rx="6" fill="rgba(157,120,96,0.25)" stroke="#9d7860" stroke-width="1"/>
                             <text x="340" y="281" text-anchor="middle" fill="#8b6551" font-weight="600" font-size="12">Cap Rate</text>
                         </g>
+
+                        <!-- Value formula -->
                         <g class="metric-node" data-metric="value" onclick="showMetricDetail('value')">
                             <rect x="255" y="320" width="170" height="40" rx="6" fill="rgba(139,134,128,0.25)" stroke="#8b8680" stroke-width="1"/>
                             <text x="340" y="344" text-anchor="middle" fill="#6b6560" font-weight="600" font-size="13">Value = NOI ÷ Cap Rate</text>
                         </g>
+
+                        <!-- Exit Yield (teal family — feeds DCF) -->
                         <g class="metric-node" data-metric="exit-yield" onclick="showMetricDetail('exit-yield')">
-                            <rect x="50" y="258" width="120" height="36" rx="6" fill="rgba(184,120,96,0.25)" stroke="#b87860" stroke-width="1"/>
-                            <text x="110" y="281" text-anchor="middle" fill="#8b5e4a" font-size="11" font-weight="500">Exit Yield</text>
+                            <rect x="50" y="258" width="120" height="36" rx="6" fill="rgba(107,142,143,0.2)" stroke="#6b8e8f" stroke-width="1"/>
+                            <text x="110" y="281" text-anchor="middle" fill="#4a6e6f" font-size="11" font-weight="500">Exit Yield</text>
                         </g>
+
+                        <!-- Value Drivers / Protectors legend -->
                         <text x="40" y="405" fill="#6b6560" font-size="11" font-weight="600">Value of Sustainability</text>
                         <rect x="40" y="415" width="155" height="75" rx="6" fill="rgba(138,155,132,0.15)" stroke="#8a9b84" stroke-width="1"/>
                         <text x="117" y="432" text-anchor="middle" fill="#5d6e59" font-weight="600" font-size="10">Value Drivers</text>
@@ -458,21 +577,264 @@
             </div>
         </div>
 
+        <!-- Detail panel -->
         <div class="detail-panel">
             <div class="empty-state" id="empty-state">Select a stage from the investment cycle or click valuation metrics to see definitions and connections</div>
-            <div class="detail-content" id="detail-1"><div class="detail-title">Opportunity Identification → Valuation Links</div><div class="connection-list"><h4>How sourcing decisions impact returns:</h4><div class="connection-item"><strong>Green financing advantage</strong> → Lower discount rate → Higher NPV in DCF</div><div class="connection-item"><strong>Deferred capex assets</strong> → Price discount opportunity → Improved IRR if retrofit cost &lt; value uplift</div><div class="connection-item"><strong>Certification gap screening</strong> → Targets buildings where cert cost &lt; rent premium value</div></div><div class="metric-highlight"><strong>Financial impact:</strong> Sourcing green-ready assets with deferred capex creates 150-250bps IRR uplift vs stabilized green buildings bought at full premium.<sup>1</sup></div><div class="footnotes"><div class="footnotes-title">Sources</div><div class="footnote"><span class="footnote-ref">[1]</span> CBRE Research (2024), "Value-Add Green Retrofit Returns Study"; ULI Preserve Tool methodology (2023)</div></div></div>
-            <div class="detail-content" id="detail-2"><div class="detail-title">Acquisition → Valuation Links</div><div class="connection-list"><h4>How underwriting sustainability impacts valuation:</h4><div class="connection-item"><strong>Exit yield compression (20-25bps)</strong> → Higher terminal value → Increases NPV in DCF<sup>1</sup></div><div class="connection-item"><strong>Green loan pricing (10-25bps discount)</strong> → Lower debt service → Improves levered IRR<sup>2</sup></div><div class="connection-item"><strong>Modeled NOI improvement</strong> → Green premium + opex savings → Justifies acquisition price</div></div><div class="metric-highlight"><strong>Financial impact:</strong> 20bps exit yield compression on $50M asset = $2M+ terminal value increase. Green loan on 60% LTV = $75-150k annual debt service savings.</div><div class="footnotes"><div class="footnotes-title">Sources</div><div class="footnote"><span class="footnote-ref">[1]</span> JLL Research (2023), "Global Green Building Premium Study"; GRESB Real Estate Assessment data (2020-2024)</div><div class="footnote"><span class="footnote-ref">[2]</span> Green Finance Institute (2024), "Green Loan Pricing Benchmark Report"</div></div></div>
-            <div class="detail-content" id="detail-3"><div class="detail-title">Asset Management → Valuation Links</div><div class="connection-list"><h4>Leasing &amp; Renewals → Rental Income → NOI:</h4><div class="connection-item"><strong>Rent premium (2-3%)</strong> → Directly increases rental income → Higher NOI → Higher value<sup>1</sup></div><div class="connection-item"><strong>Occupancy improvement (1.5-2pp)</strong> → Reduces vacancy → Higher effective rental income<sup>2</sup></div><div class="connection-item"><strong>Faster lease-up</strong> → Reduced void periods → Faster NOI stabilization</div></div><div class="connection-list"><h4>Property Management → Operating Expenses → NOI:</h4><div class="connection-item"><strong>Energy efficiency (15-25% reduction)</strong> → Lower utility costs → Reduced opex → Higher NOI<sup>3</sup></div><div class="connection-item"><strong>Lower maintenance costs</strong> → Modern efficient systems → Reduced opex → Higher NOI margin</div><div class="connection-item"><strong>Insurance premium control</strong> → Climate resilience → Slower cost escalation</div></div><div class="connection-list"><h4>Capex → Value Protection:</h4><div class="connection-item"><strong>Proactive MEPS compliance</strong> → Avoids stranding → Protects future NOI and exit value</div><div class="connection-item"><strong>Obsolescence mitigation</strong> → Maintains tenant appeal → Protects rental income over hold period</div></div><div class="metric-highlight"><strong>Financial impact:</strong> On 100,000 sqft office: 2.5% rent premium = $125k/year additional NOI. 20% energy savings on $4/sqft = $80k/year opex reduction. Combined NOI increase = $205k/year. At 6% cap rate = $3.4M value creation.</div><div class="footnotes"><div class="footnotes-title">Sources</div><div class="footnote"><span class="footnote-ref">[1]</span> Fuerst &amp; McAllister (2011), Real Estate Economics 39(1); CoStar Analytics (2023)</div><div class="footnote"><span class="footnote-ref">[2]</span> GRESB Performance Analysis (2024); Eichholtz, Kok &amp; Quigley (2010), American Economic Review 100(5)</div><div class="footnote"><span class="footnote-ref">[3]</span> CBRE Benchmarking Study (2024); Better Buildings Alliance dataset (2023)</div></div></div>
-            <div class="detail-content" id="detail-4"><div class="detail-title">Disposition → Valuation Links</div><div class="connection-list"><h4>How green credentials impact exit value:</h4><div class="connection-item"><strong>Exit yield compression (20-25bps)</strong> → Lower cap rate applied to exit NOI → Higher sale price<sup>1</sup></div><div class="connection-item"><strong>ESG-mandate buyer pool</strong> → Competitive tension → Premium pricing above valuation<sup>2</sup></div><div class="connection-item"><strong>Embedded compliance advantage</strong> → Buyer avoids deferred capex → Justifies price premium</div></div><div class="metric-highlight"><strong>Financial impact:</strong> $2M stabilized NOI sold at 5.75% yield (vs 6% non-green) = $34.8M vs $33.3M = $1.5M premium. Plus faster sale process (15-20% shorter marketing time).</div><div class="footnotes"><div class="footnotes-title">Sources</div><div class="footnote"><span class="footnote-ref">[1]</span> MSCI/IPD Green Property Index (2024); Kok &amp; Jennen (2012), Energy Policy 46</div><div class="footnote"><span class="footnote-ref">[2]</span> INREV/ANREV (2024); Preqin Investor Survey on ESG mandates (2023)</div></div></div>
-            <div class="detail-content" id="metric-dcf"><div class="detail-title">DCF Method (Discounted Cash Flow)</div><div class="metric-definition"><div class="metric-definition-title">What it is:</div><div class="metric-definition-text">Intrinsic valuation method that calculates present value of all future cash flows plus terminal value, discounted at a required rate of return.</div></div><div class="metric-definition"><div class="metric-definition-title">Formula:</div><div class="metric-definition-text">NPV = Σ[CF<sub>t</sub> / (1+r)<sup>t</sup>] + [Terminal Value / (1+r)<sup>n</sup>] - Initial Investment</div></div><div class="metric-definition"><div class="metric-definition-title">Sustainability impact:</div><div class="metric-definition-text">Green interventions increase annual NOI (higher cash flows) and reduce exit cap rate (higher terminal value), while green financing may lower the discount rate.</div></div></div>
-            <div class="detail-content" id="metric-noi"><div class="detail-title">NOI (Net Operating Income)</div><div class="metric-definition"><div class="metric-definition-title">What it is:</div><div class="metric-definition-text">Total rental income minus operating expenses. Foundation metric for both cap rate valuation and DCF cash flows.</div></div><div class="metric-definition"><div class="metric-definition-title">Formula:</div><div class="metric-definition-text">NOI = Gross Rental Income - Vacancy Loss - Operating Expenses</div></div><div class="metric-definition"><div class="metric-definition-title">Sustainability impact:</div><div class="metric-definition-text">Green buildings increase NOI through: (1) higher rental income (2-3% premium), (2) lower vacancy, (3) reduced operating expenses (15-25% energy savings).</div></div></div>
-            <div class="detail-content" id="metric-cap-rate"><div class="detail-title">Capitalization Rate</div><div class="metric-definition"><div class="metric-definition-title">What it is:</div><div class="metric-definition-text">Ratio of NOI to property value. Lower cap rate = higher value for same NOI.</div></div><div class="metric-definition"><div class="metric-definition-title">Formula:</div><div class="metric-definition-text">Value = NOI / Cap Rate</div></div><div class="metric-definition"><div class="metric-definition-title">Sustainability impact:</div><div class="metric-definition-text">Green buildings command 20-25bps cap rate compression due to lower risk, stable tenant demand, and regulatory compliance.</div></div></div>
-            <div class="detail-content" id="metric-exit-yield"><div class="detail-title">Exit Yield</div><div class="metric-definition"><div class="metric-definition-title">What it is:</div><div class="metric-definition-text">Assumed cap rate at disposition used to calculate terminal value in DCF.</div></div><div class="metric-definition"><div class="metric-definition-title">Sustainability impact:</div><div class="metric-definition-text">Green buildings see 20-25bps lower exit yields. This compression creates significant terminal value uplift — often 50%+ of total NPV in long-hold DCF models.</div></div></div>
-            <div class="detail-content" id="metric-rental-income"><div class="detail-title">Rental Income</div><div class="metric-definition"><div class="metric-definition-title">Sustainability impact:</div><div class="metric-definition-text">Certified green buildings achieve 2-3% rent premium over non-green comparables, reflecting lower operating costs, brand value, and regulatory compliance.</div></div><div class="source-note">Source: Fuerst &amp; McAllister (2011), CoStar Analytics (2023)</div></div>
-            <div class="detail-content" id="metric-opex"><div class="detail-title">Operating Expenses (Opex)</div><div class="metric-definition"><div class="metric-definition-title">Sustainability impact:</div><div class="metric-definition-text">Energy-efficient buildings reduce utility costs by 15-25%. Combined opex reduction directly increases NOI margin.</div></div><div class="source-note">Source: CBRE Benchmarking (2024), Better Buildings Alliance (2023)</div></div>
-            <div class="detail-content" id="metric-income-cap"><div class="detail-title">Income Capitalization Method</div><div class="metric-definition"><div class="metric-definition-title">What it is:</div><div class="metric-definition-text">Direct valuation: NOI / Cap Rate = Property Value.</div></div><div class="metric-definition"><div class="metric-definition-title">Sustainability impact:</div><div class="metric-definition-text">Green buildings benefit from both higher NOI (numerator) and lower cap rates (denominator), creating multiplicative value uplift.</div></div></div>
-            <div class="detail-content" id="metric-comparables"><div class="detail-title">Comparables Method</div><div class="metric-definition"><div class="metric-definition-title">Sustainability impact:</div><div class="metric-definition-text">Green buildings show 5-10% transaction premium over non-green comparables.</div></div><div class="source-note">Source: MSCI/IPD Green Property Index (2024), Kok &amp; Jennen (2012)</div></div>
-            <div class="detail-content" id="metric-value"><div class="detail-title">Property Valuation Formula</div><div class="metric-definition"><div class="metric-definition-title">Direct capitalization formula:</div><div class="metric-definition-text">Property Value = NOI ÷ Cap Rate</div></div><div class="metric-definition"><div class="metric-definition-title">Example:</div><div class="metric-definition-text">$2M NOI at 6% = $33.3M. With green: $2.2M NOI at 5.75% = $38.3M = $5M increase.</div></div></div>
+
+            <!-- Stage 1: Opportunity Identification -->
+            <div class="detail-content" id="detail-1">
+                <div class="detail-title">Opportunity Identification → Valuation Links</div>
+                <div class="connection-list">
+                    <h4>How sourcing decisions impact returns:</h4>
+                    <div class="connection-item"><strong>Green financing advantage</strong> → Lower cost of debt → Higher NPV in DCF</div>
+                    <div class="connection-item"><strong>Deferred capex assets</strong> → Price discount opportunity → Improved IRR if retrofit cost &lt; value uplift</div>
+                    <div class="connection-item"><strong>Certification gap screening</strong> → Targets buildings where cert cost &lt; present value of rent premium uplift</div>
+                </div>
+                <div class="metric-highlight"><strong>Financial impact (indicative):</strong> Sourcing green-ready assets with deferred capex may generate 50–100bps IRR uplift vs stabilised green buildings acquired at full premium, subject to retrofit cost and execution risk.<sup>1</sup></div>
+                <div class="footnotes">
+                    <div class="footnotes-title">Sources</div>
+                    <div class="footnote"><span class="footnote-ref">[1]</span> CBRE Research (2024), "Value-Add Green Retrofit Returns Study"; ULI Preserve Tool methodology (2023). IRR uplift is deal-specific and sensitive to retrofit cost assumptions.</div>
+                </div>
+            </div>
+
+            <!-- Stage 2: Acquisition -->
+            <div class="detail-content" id="detail-2">
+                <div class="detail-title">Acquisition → Valuation Links</div>
+                <div class="connection-list">
+                    <h4>How underwriting sustainability impacts valuation:</h4>
+                    <div class="connection-item"><strong>Exit yield compression (10–15bps)</strong> → Higher terminal value → Increases NPV in DCF<sup>1</sup></div>
+                    <div class="connection-item"><strong>Sustainability-linked loan pricing (2–5bps for large corporates)</strong> → Lower debt service → Marginal improvement to levered IRR<sup>2</sup></div>
+                    <div class="connection-item"><strong>Modelled NOI improvement</strong> → Green premium + opex savings → Supports acquisition price</div>
+                </div>
+                <div class="metric-highlight"><strong>Financial impact (indicative):</strong> 10–15bps exit yield compression on a $50M APAC asset (at 4.5% base cap rate) implies approximately $1.0–1.7M terminal value uplift. SLL pricing benefit for a large corporate at 2–5bps on 60% LTV ≈ $6–15k annual debt service saving.</div>
+                <div class="footnotes">
+                    <div class="footnotes-title">Sources</div>
+                    <div class="footnote"><span class="footnote-ref">[1]</span> JLL Research (2023), "Global Green Building Premium Study"; GRESB Real Estate Assessment data (2020–2024)</div>
+                    <div class="footnote"><span class="footnote-ref">[2]</span> Green Finance Institute (2024). SLL margin step-downs of 2–5bps are typical for large investment-grade corporates; smaller borrowers may see wider adjustments. Green use-of-proceeds loans may carry slightly wider pricing benefit.</div>
+                </div>
+            </div>
+
+            <!-- Stage 3: Asset Management -->
+            <div class="detail-content" id="detail-3">
+                <div class="detail-title">Asset Management → Valuation Links</div>
+                <div class="connection-list">
+                    <h4>Leasing &amp; Renewals → Rental Income → NOI:</h4>
+                    <div class="connection-item"><strong>Rent premium (1.5–3%)</strong> → Directly increases rental income → Higher NOI → Higher value<sup>1</sup></div>
+                    <div class="connection-item"><strong>Occupancy improvement (1–1.5pp)</strong> → Reduces vacancy loss → Higher effective rental income<sup>2</sup></div>
+                    <div class="connection-item"><strong>Faster lease-up</strong> → Reduced void periods → Faster NOI stabilisation</div>
+                </div>
+                <div class="connection-list">
+                    <h4>Property Management → Operating Expenses → NOI:</h4>
+                    <div class="connection-item"><strong>Energy efficiency (10–20% reduction)</strong> → Lower utility costs → Reduced opex → Higher NOI<sup>3</sup></div>
+                    <div class="connection-item"><strong>Lower maintenance costs</strong> → Modern efficient systems → Reduced opex margin</div>
+                    <div class="connection-item"><strong>Insurance premium control</strong> → Climate resilience → Slower cost escalation over hold period</div>
+                </div>
+                <div class="connection-list">
+                    <h4>Capex → Value Protection:</h4>
+                    <div class="connection-item"><strong>Proactive MEPS compliance</strong> → Avoids stranding risk → Protects future NOI and exit value</div>
+                    <div class="connection-item"><strong>Obsolescence mitigation</strong> → Maintains tenant appeal → Protects rental income over hold period</div>
+                </div>
+                <div class="metric-highlight"><strong>Financial impact (indicative, 100,000 sqft office at $50/sqft base rent):</strong> 2% rent premium = $100k/year additional NOI. 15% energy savings at $4/sqft = $60k/year opex reduction. Combined NOI increase ≈ $160k/year. At 4.5% cap rate = c.$3.6M value creation.</div>
+                <div class="footnotes">
+                    <div class="footnotes-title">Sources</div>
+                    <div class="footnote"><span class="footnote-ref">[1]</span> Fuerst &amp; McAllister (2011), Real Estate Economics 39(1); CoStar Analytics (2023)</div>
+                    <div class="footnote"><span class="footnote-ref">[2]</span> GRESB Performance Analysis (2024); Eichholtz, Kok &amp; Quigley (2010), American Economic Review 100(5)</div>
+                    <div class="footnote"><span class="footnote-ref">[3]</span> CBRE Benchmarking Study (2024); Better Buildings Alliance dataset (2023)</div>
+                </div>
+            </div>
+
+            <!-- Stage 4: Disposition -->
+            <div class="detail-content" id="detail-4">
+                <div class="detail-title">Disposition → Valuation Links</div>
+                <div class="connection-list">
+                    <h4>How green credentials impact exit value:</h4>
+                    <div class="connection-item"><strong>Exit yield compression (10–15bps)</strong> → Lower cap rate applied to exit NOI → Higher sale price<sup>1</sup></div>
+                    <div class="connection-item"><strong>ESG-mandate buyer pool</strong> → Competitive tension → Premium pricing above valuation<sup>2</sup></div>
+                    <div class="connection-item"><strong>Embedded compliance advantage</strong> → Buyer avoids deferred capex → Justifies price premium</div>
+                </div>
+                <div class="metric-highlight"><strong>Financial impact (indicative):</strong> $2M stabilised NOI at 4.35% exit yield (vs 4.5% non-green, 15bps compression) = $46.0M vs $44.4M = approximately $1.6M premium. Sale process timelines vary by market and asset type.</div>
+                <div class="footnotes">
+                    <div class="footnotes-title">Sources</div>
+                    <div class="footnote"><span class="footnote-ref">[1]</span> MSCI/IPD Green Property Index (2024); Kok &amp; Jennen (2012), Energy Policy 46</div>
+                    <div class="footnote"><span class="footnote-ref">[2]</span> INREV/ANREV (2024); Preqin Investor Survey on ESG mandates (2023)</div>
+                </div>
+            </div>
+
+            <!-- Metric: DCF Method -->
+            <div class="detail-content" id="metric-dcf">
+                <div class="detail-title">DCF Method (Discounted Cash Flow)</div>
+                <div class="metric-definition">
+                    <div class="metric-definition-title">What it is:</div>
+                    <div class="metric-definition-text">A valuation method that estimates the present value of an investment by discounting all expected future cash flows — annual NOI over the hold period plus a terminal value at disposal — back to today using a required rate of return (the discount rate). The most widely used method for value-add and development strategies where income is not yet stabilised.</div>
+                </div>
+                <div class="metric-definition">
+                    <div class="metric-definition-title">Formula:</div>
+                    <div class="metric-definition-text">NPV = Σ [NOI<sub>t</sub> / (1+r)<sup>t</sup>] + [Exit NOI / Exit Yield / (1+r)<sup>n</sup>] − Purchase Price</div>
+                </div>
+                <div class="metric-definition">
+                    <div class="metric-definition-title">Sustainability impact:</div>
+                    <div class="metric-definition-text">Green interventions increase annual NOI (higher cash flows each year), reduce the exit yield (higher terminal value), and may marginally reduce the discount rate via green financing. The terminal value effect is often the dominant uplift in long-hold DCF models.</div>
+                </div>
+            </div>
+
+            <!-- Metric: NOI -->
+            <div class="detail-content" id="metric-noi">
+                <div class="detail-title">NOI (Net Operating Income)</div>
+                <div class="metric-definition">
+                    <div class="metric-definition-title">What it is:</div>
+                    <div class="metric-definition-text">The annual income a property generates after deducting all operating expenses — maintenance, management fees, insurance, and utilities — but before debt service, depreciation, and tax. It is the primary input for both the income capitalisation method and DCF cash flow projections, and the single most important driver of property value.</div>
+                </div>
+                <div class="metric-definition">
+                    <div class="metric-definition-title">Formula:</div>
+                    <div class="metric-definition-text">NOI = Gross Rental Income − Vacancy Loss − Operating Expenses</div>
+                </div>
+                <div class="metric-definition">
+                    <div class="metric-definition-title">Sustainability impact:</div>
+                    <div class="metric-definition-text">Green buildings increase NOI through: (1) higher rental income (1.5–3% premium over non-green comparables), (2) lower vacancy and faster lease-up, and (3) reduced operating expenses (10–20% energy savings).</div>
+                </div>
+                <div class="calc-box">
+                    <div class="calc-box-title">NOI Calculator</div>
+                    <div class="calc-row">
+                        <label>Gross Rental Income</label>
+                        <input type="number" id="noi-gri" placeholder="e.g. 5000000" oninput="calcNOI()">
+                    </div>
+                    <div class="calc-row">
+                        <label>Vacancy Loss</label>
+                        <input type="number" id="noi-vac" placeholder="e.g. 250000" oninput="calcNOI()">
+                    </div>
+                    <div class="calc-row">
+                        <label>Operating Expenses</label>
+                        <input type="number" id="noi-opex" placeholder="e.g. 1000000" oninput="calcNOI()">
+                    </div>
+                    <div class="calc-result" id="noi-result">NOI: —</div>
+                    <div class="calc-note">All figures in same currency. NOI = Gross Rent − Vacancy − OpEx.</div>
+                </div>
+            </div>
+
+            <!-- Metric: Cap Rate -->
+            <div class="detail-content" id="metric-cap-rate">
+                <div class="detail-title">Capitalisation Rate (Cap Rate)</div>
+                <div class="metric-definition">
+                    <div class="metric-definition-title">What it is:</div>
+                    <div class="metric-definition-text">The expected annual return on an unlevered property investment, calculated as NOI divided by current market value. It reflects risk premium, asset quality, location, and prevailing market conditions. A lower cap rate signals lower perceived risk and translates to higher property value for the same income. Core office and logistics assets in major APAC markets (Singapore, Tokyo, Sydney, Hong Kong) typically trade at 3–5%.</div>
+                </div>
+                <div class="metric-definition">
+                    <div class="metric-definition-title">Formula:</div>
+                    <div class="metric-definition-text">Cap Rate = NOI / Current Market Value &nbsp;|&nbsp; Value = NOI / Cap Rate</div>
+                </div>
+                <div class="metric-definition">
+                    <div class="metric-definition-title">Sustainability impact:</div>
+                    <div class="metric-definition-text">Green-certified buildings tend to trade at 10–15bps cap rate compression vs non-green comparables, reflecting lower obsolescence risk, stronger occupier demand, and improved regulatory positioning.</div>
+                </div>
+                <div class="calc-box">
+                    <div class="calc-box-title">Cap Rate Calculator</div>
+                    <div class="calc-row">
+                        <label>NOI (annual)</label>
+                        <input type="number" id="cr-noi" placeholder="e.g. 2000000" oninput="calcCapRate()">
+                    </div>
+                    <div class="calc-row">
+                        <label>Property Value</label>
+                        <input type="number" id="cr-val" placeholder="e.g. 44000000" oninput="calcCapRate()">
+                    </div>
+                    <div class="calc-result" id="cr-result">Cap Rate: —</div>
+                    <div class="calc-note">Cap Rate = NOI ÷ Property Value. APAC core assets typically 3–5%.</div>
+                </div>
+            </div>
+
+            <!-- Metric: Exit Yield -->
+            <div class="detail-content" id="metric-exit-yield">
+                <div class="detail-title">Exit Yield</div>
+                <div class="metric-definition">
+                    <div class="metric-definition-title">What it is:</div>
+                    <div class="metric-definition-text">The capitalisation rate assumed at the point of disposal, used in DCF models to calculate terminal value (Terminal Value = Exit NOI / Exit Yield). It represents the market's expected pricing of the asset at the end of the hold period. The exit yield is typically set at or slightly above the entry cap rate, adjusted for anticipated market movements and asset quality at exit.</div>
+                </div>
+                <div class="metric-definition">
+                    <div class="metric-definition-title">Sustainability impact:</div>
+                    <div class="metric-definition-text">Green buildings can attract a 10–15bps lower exit yield vs non-green assets at disposal, reflecting buyer demand, ESG mandate alignment, and reduced obsolescence. This compression increases terminal value and can represent a material share of total NPV in long-hold DCF models.</div>
+                </div>
+            </div>
+
+            <!-- Metric: Rental Income -->
+            <div class="detail-content" id="metric-rental-income">
+                <div class="detail-title">Rental Income</div>
+                <div class="metric-definition">
+                    <div class="metric-definition-title">What it is:</div>
+                    <div class="metric-definition-text">The contractual income received from tenants under lease agreements. Effective rental income is gross rent less vacancy loss and any rent-free periods. It is the primary revenue line feeding into NOI.</div>
+                </div>
+                <div class="metric-definition">
+                    <div class="metric-definition-title">Sustainability impact:</div>
+                    <div class="metric-definition-text">Certified green buildings typically achieve a 1.5–3% rent premium over non-green comparables, reflecting lower occupancy costs for tenants (energy, utilities), brand and compliance value, and in tightening regulatory environments, reduced risk of occupier departure.</div>
+                </div>
+                <div class="source-note">Source: Fuerst &amp; McAllister (2011), Real Estate Economics; CoStar Analytics (2023). Premium estimates vary by market, asset class, and certification standard.</div>
+            </div>
+
+            <!-- Metric: Opex -->
+            <div class="detail-content" id="metric-opex">
+                <div class="detail-title">Operating Expenses (Opex)</div>
+                <div class="metric-definition">
+                    <div class="metric-definition-title">What it is:</div>
+                    <div class="metric-definition-text">The costs incurred to manage and maintain a property in income-producing condition, including utilities, insurance, property management fees, routine maintenance, and rates. Opex is deducted from gross income to arrive at NOI; reducing opex directly increases NOI margin without requiring higher rents.</div>
+                </div>
+                <div class="metric-definition">
+                    <div class="metric-definition-title">Sustainability impact:</div>
+                    <div class="metric-definition-text">Energy-efficient buildings reduce utility costs by approximately 10–20% relative to standard equivalents. Combined with lower maintenance requirements from modern building systems, opex reduction is often the most immediately measurable sustainability benefit.</div>
+                </div>
+                <div class="source-note">Source: CBRE Benchmarking Study (2024); Better Buildings Alliance dataset (2023).</div>
+            </div>
+
+            <!-- Metric: Income Cap -->
+            <div class="detail-content" id="metric-income-cap">
+                <div class="detail-title">Income Capitalisation Method</div>
+                <div class="metric-definition">
+                    <div class="metric-definition-title">What it is:</div>
+                    <div class="metric-definition-text">A direct valuation approach that converts a single year's stabilised NOI into a capital value by applying a market-derived capitalisation rate: Value = NOI / Cap Rate. It is the most widely used method for stabilised income-producing properties and forms the basis for most commercial real estate appraisals.</div>
+                </div>
+                <div class="metric-definition">
+                    <div class="metric-definition-title">Sustainability impact:</div>
+                    <div class="metric-definition-text">Green buildings benefit from both a higher numerator (NOI uplift via rent premium and opex savings) and a lower denominator (cap rate compression of 10–15bps), creating a multiplicative value uplift that exceeds the sum of either effect alone.</div>
+                </div>
+            </div>
+
+            <!-- Metric: Comparables -->
+            <div class="detail-content" id="metric-comparables">
+                <div class="detail-title">Comparables Method</div>
+                <div class="metric-definition">
+                    <div class="metric-definition-title">What it is:</div>
+                    <div class="metric-definition-text">A relative valuation approach that infers property value from recent transaction prices of similar assets, adjusted for differences in size, location, condition, lease profile, and specification. It anchors income-based valuations to market evidence and is particularly influential in active transaction markets.</div>
+                </div>
+                <div class="metric-definition">
+                    <div class="metric-definition-title">Sustainability impact:</div>
+                    <div class="metric-definition-text">Green-certified buildings show a 3–8% transaction premium over non-green comparables in markets with sufficient data. As the certified building stock grows, green status is increasingly treated as a distinct adjustment variable in formal appraisals rather than an intangible.</div>
+                </div>
+                <div class="source-note">Source: MSCI/IPD Green Property Index (2024); Kok &amp; Jennen (2012), Energy Policy 46. Premium estimates vary materially by market depth and data availability.</div>
+            </div>
+
+            <!-- Metric: Value formula -->
+            <div class="detail-content" id="metric-value">
+                <div class="detail-title">Property Valuation Formula</div>
+                <div class="metric-definition">
+                    <div class="metric-definition-title">Direct capitalisation formula:</div>
+                    <div class="metric-definition-text">Property Value = NOI ÷ Cap Rate. This relationship means that a simultaneous increase in NOI and decrease in cap rate creates a multiplicative value uplift — both the numerator rises and the denominator falls.</div>
+                </div>
+                <div class="metric-definition">
+                    <div class="metric-definition-title">Illustrative example (APAC core asset):</div>
+                    <div class="metric-definition-text">$2M NOI at 4.5% cap rate = $44.4M. With green: $2.1M NOI (5% uplift) at 4.35% (15bps compression) = $48.3M = approximately $3.9M value increase (+8.7%).</div>
+                </div>
+                <div class="calc-box">
+                    <div class="calc-box-title">Value Calculator</div>
+                    <div class="calc-row">
+                        <label>NOI (annual)</label>
+                        <input type="number" id="val-noi" placeholder="e.g. 2000000" oninput="calcValue()">
+                    </div>
+                    <div class="calc-row">
+                        <label>Cap Rate (%)</label>
+                        <input type="number" id="val-cr" placeholder="e.g. 4.5" step="0.05" oninput="calcValue()">
+                    </div>
+                    <div class="calc-result" id="val-result">Property Value: —</div>
+                    <div class="calc-note">Value = NOI ÷ Cap Rate. Enter cap rate as a percentage (e.g. 4.5 for 4.5%).</div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -532,6 +894,51 @@
                 md.classList.add('active');
                 document.getElementById('empty-state').style.display = 'none';
                 document.querySelector(`[data-metric="${metricId}"]`).classList.add('highlight');
+            }
+        }
+
+        // --- Calculators ---
+
+        function fmt(n) {
+            return new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(n);
+        }
+
+        function calcCapRate() {
+            const noi = parseFloat(document.getElementById('cr-noi').value);
+            const val = parseFloat(document.getElementById('cr-val').value);
+            const el = document.getElementById('cr-result');
+            if (noi > 0 && val > 0) {
+                const cr = (noi / val) * 100;
+                el.textContent = `Cap Rate: ${cr.toFixed(2)}%`;
+            } else {
+                el.textContent = 'Cap Rate: —';
+            }
+        }
+
+        function calcValue() {
+            const noi = parseFloat(document.getElementById('val-noi').value);
+            const cr = parseFloat(document.getElementById('val-cr').value);
+            const el = document.getElementById('val-result');
+            if (noi > 0 && cr > 0) {
+                const value = noi / (cr / 100);
+                el.textContent = `Property Value: ${fmt(value)}`;
+            } else {
+                el.textContent = 'Property Value: —';
+            }
+        }
+
+        function calcNOI() {
+            const gri = parseFloat(document.getElementById('noi-gri').value) || 0;
+            const vac = parseFloat(document.getElementById('noi-vac').value) || 0;
+            const opex = parseFloat(document.getElementById('noi-opex').value) || 0;
+            const el = document.getElementById('noi-result');
+            if (gri > 0) {
+                const noi = gri - vac - opex;
+                el.textContent = `NOI: ${fmt(noi)}`;
+                el.style.color = noi >= 0 ? 'var(--bronze)' : '#c0392b';
+            } else {
+                el.textContent = 'NOI: —';
+                el.style.color = 'var(--bronze)';
             }
         }
     </script>
