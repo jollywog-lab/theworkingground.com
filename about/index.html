@@ -30,7 +30,6 @@
       flex-direction: column;
     }
 
-    /* Header */
     header {
       padding: 3rem 2rem 2rem;
       max-width: 1100px;
@@ -55,7 +54,6 @@
       font-weight: 300;
     }
 
-    /* Main */
     main {
       flex: 1;
       max-width: 1100px;
@@ -68,7 +66,6 @@
       max-width: 620px;
     }
 
-    /* Section label */
     .section-label {
       font-size: 0.72rem;
       font-weight: 500;
@@ -78,7 +75,6 @@
       margin-bottom: 1.5rem;
     }
 
-    /* About */
     .about-lede {
       font-family: 'DM Serif Display', serif;
       font-size: clamp(1.25rem, 2.5vw, 1.5rem);
@@ -99,7 +95,6 @@
       margin-bottom: 1.75rem;
     }
 
-    /* Links */
     .about-links {
       display: flex;
       gap: 1.5rem;
@@ -130,7 +125,6 @@
 
     .icon { width: 14px; height: 14px; flex-shrink: 0; }
 
-    /* Divider */
     .rule {
       border: none;
       border-top: 1px solid var(--border);
@@ -138,7 +132,6 @@
       max-width: 620px;
     }
 
-    /* Suggestion box */
     .suggest-heading {
       font-family: 'DM Serif Display', serif;
       font-size: clamp(1.2rem, 2.5vw, 1.4rem);
@@ -230,7 +223,6 @@
       line-height: 1.5;
     }
 
-    /* Footer */
     footer {
       border-top: 1px solid var(--border);
       padding: 1.5rem 2rem;
@@ -245,7 +237,6 @@
     }
 
     .footer-copy { font-size: 0.78rem; color: var(--muted); }
-
     .footer-nav { display: flex; gap: 1.5rem; list-style: none; }
 
     .footer-nav a {
@@ -257,7 +248,6 @@
 
     .footer-nav a:hover { color: var(--warm-dark); }
 
-    /* Responsive */
     @media (max-width: 600px) {
       header { padding: 2rem 1.25rem 1.5rem; }
       main { padding: 0.75rem 1.25rem 3rem; }
@@ -277,7 +267,6 @@
   <main>
     <div class="content">
 
-      <!-- ABOUT -->
       <p class="section-label">About</p>
 
       <p class="about-lede">The Working Ground is where my work and curiosity overlap. A space for projects that are useful, intentional, and (hopefully) make life a little clearer or a little better.</p>
@@ -309,8 +298,7 @@
 
       <hr class="rule">
 
-      <!-- SUGGESTION BOX -->
-      <p class="section-label">What should I build next?</p>
+      <p id="suggest" class="section-label">What should I build next?</p>
 
       <h2 class="suggest-heading">Have an idea? Send it through.</h2>
 
@@ -347,7 +335,7 @@
     <span class="footer-copy">&copy; The Working Ground</span>
     <ul class="footer-nav">
       <li><a href="/about/">About</a></li>
-      <li><a href="/suggest/">What should we build next?</a></li>
+      <li><a href="/about/#suggest">What should we build next?</a></li>
     </ul>
   </footer>
 
