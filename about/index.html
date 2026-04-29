@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — The Working Ground</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:     #F7F4EF;
+      --warm-dark: #1C1A17;
+      --muted:     #7A7167;
+      --accent:    #B87333;
+      --card-bg:   #FFFFFF;
+      --border:    #E2DDD6;
+      --tag-bg:    #EDE9E2;
+    }
+
+    body {
+      background: var(--cream);
+      color: var(--warm-dark);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    header {
+      padding: 3rem 2rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .site-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -0.02em;
+      color: var(--warm-dark);
+      line-height: 1.1;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .site-tagline {
+      margin-top: 0.6rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 300;
+    }
+
+    /* Main */
+    main {
+      flex: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 1rem 2rem 5rem;
+    }
+
+    .content {
+      max-width: 620px;
+    }
+
+    /* Section label */
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+
+    /* About */
+    .about-lede {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+      font-style: italic;
+      line-height: 1.55;
+      color: var(--warm-dark);
+      margin-bottom: 1.5rem;
+    }
+
+    .about-body p {
+      font-size: 0.97rem;
+      line-height: 1.8;
+      color: var(--warm-dark);
+      margin-bottom: 1rem;
+    }
+
+    .about-body p:last-of-type {
+      margin-bottom: 1.75rem;
+    }
+
+    /* Links */
+    .about-links {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .about-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2px;
+      transition: border-color 0.2s;
+    }
+
+    .about-links a:hover { border-color: var(--accent); }
+
+    .about-links .sep {
+      color: var(--border);
+      font-size: 1rem;
+      user-select: none;
+    }
+
+    .icon { width: 14px; height: 14px; flex-shrink: 0; }
+
+    /* Divider */
+    .rule {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 3.5rem 0;
+      max-width: 620px;
+    }
+
+    /* Suggestion box */
+    .suggest-heading {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.2rem, 2.5vw, 1.4rem);
+      font-style: italic;
+      font-weight: normal;
+      color: var(--warm-dark);
+      margin-bottom: 0.6rem;
+    }
+
+    .suggest-sub {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 1.75rem;
+      line-height: 1.65;
+    }
+
+    .suggest-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      max-width: 560px;
+    }
+
+    .suggest-form textarea {
+      width: 100%;
+      min-height: 110px;
+      padding: 12px 14px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--warm-dark);
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s;
+      line-height: 1.6;
+    }
+
+    .suggest-form textarea::placeholder { color: #B8B3AB; }
+    .suggest-form textarea:focus { border-color: var(--accent); }
+
+    .form-row {
+      display: flex;
+      gap: 0.75rem;
+      align-items: stretch;
+      flex-wrap: wrap;
+    }
+
+    .suggest-form input[type="email"] {
+      flex: 1;
+      min-width: 180px;
+      padding: 10px 13px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--warm-dark);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .suggest-form input[type="email"]::placeholder { color: #B8B3AB; }
+    .suggest-form input[type="email"]:focus { border-color: var(--accent); }
+
+    .btn-submit {
+      padding: 10px 22px;
+      background: var(--warm-dark);
+      color: var(--cream);
+      border: none;
+      border-radius: 4px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-submit:hover { background: #2e2c28; }
+
+    .form-note {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-copy { font-size: 0.78rem; color: var(--muted); }
+
+    .footer-nav { display: flex; gap: 1.5rem; list-style: none; }
+
+    .footer-nav a {
+      font-size: 0.82rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .footer-nav a:hover { color: var(--warm-dark); }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      header { padding: 2rem 1.25rem 1.5rem; }
+      main { padding: 0.75rem 1.25rem 3rem; }
+      footer { padding: 1.25rem; flex-direction: column; align-items: flex-start; }
+      .form-row { flex-direction: column; }
+      .btn-submit { width: 100%; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a class="site-name" href="/">The Working Ground</a>
+    <p class="site-tagline">Tools for work or wonder: built for usefulness, clarity &amp; delight.</p>
+  </header>
+
+  <main>
+    <div class="content">
+
+      <!-- ABOUT -->
+      <p class="section-label">About</p>
+
+      <p class="about-lede">The Working Ground is where my work and curiosity overlap. A space for projects that are useful, intentional, and (hopefully) make life a little clearer or a little better.</p>
+
+      <div class="about-body">
+        <p>By day, I work on sustainability in the built environment, helping developers, asset managers, and investors cut through the noise to focus on what actually matters. Real reductions. Decisions that hold up. Systems that last.</p>
+        <p>By instinct, I'm drawn to design, nature, and the way things are made. I ask a lot of questions and I find most good ideas at the intersection of different disciplines.</p>
+        <p>If something here is useful to you, that's the point.</p>
+      </div>
+
+      <div class="about-links">
+        <a href="https://www.linkedin.com/in/joellechen" target="_blank" rel="noopener">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+            <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+          </svg>
+          LinkedIn
+        </a>
+        <span class="sep" aria-hidden="true">·</span>
+        <a href="https://www.instagram.com/patternsofliving" target="_blank" rel="noopener">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
+          </svg>
+          @patternsofliving
+        </a>
+      </div>
+
+      <hr class="rule">
+
+      <!-- SUGGESTION BOX -->
+      <p class="section-label">What should I build next?</p>
+
+      <h2 class="suggest-heading">Have an idea? Send it through.</h2>
+
+      <p class="suggest-sub">If there's a gap you think I can help fill, I'm listening.</p>
+
+      <form
+        class="suggest-form"
+        action="https://formsubmit.co/theworkingground@gmail.com"
+        method="POST"
+      >
+        <input type="text" name="_honey" style="display:none">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://www.theworkingground.com/about/">
+        <input type="hidden" name="_subject" value="New suggestion - The Working Ground">
+
+        <textarea
+          name="suggestion"
+          placeholder="What would be useful?"
+          required
+        ></textarea>
+
+        <div class="form-row">
+          <input type="email" name="email" placeholder="Your email (optional)">
+          <button type="submit" class="btn-submit">Send suggestion</button>
+        </div>
+
+        <p class="form-note">Goes directly to Joelle. No newsletter, no follow-up unless you'd like one.</p>
+      </form>
+
+    </div>
+  </main>
+
+  <footer>
+    <span class="footer-copy">&copy; The Working Ground</span>
+    <ul class="footer-nav">
+      <li><a href="/about/">About</a></li>
+      <li><a href="/suggest/">What should we build next?</a></li>
+    </ul>
+  </footer>
+
+</body>
+</html>
