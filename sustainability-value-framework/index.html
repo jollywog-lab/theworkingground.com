@@ -57,13 +57,12 @@
         }
 
         .preamble {
-            max-width: 900px;
-            margin: 0 auto 2rem;
+            margin-bottom: 2rem;
             background: white;
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 1.5rem 2rem;
             border-left: 4px solid var(--teal);
-            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
         }
 
         .preamble p {
@@ -87,7 +86,6 @@
             border-radius: 12px;
             padding: 2.5rem;
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            margin-bottom: 2rem;
         }
 
         .framework-grid {
@@ -118,11 +116,67 @@
             text-align: center;
         }
 
-        .detail-panel {
+        /* ── DRAWER BACKDROP ───────────────────────────────────────────── */
+        .drawer-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(61, 57, 53, 0.25);
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .drawer-backdrop.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* ── DRAWER PANEL ───────────────────────────────────────────────── */
+        .drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 400px;
+            height: 100vh;
             background: white;
-            border-radius: 12px;
-            padding: 2.5rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            z-index: 200;
+            box-shadow: -4px 0 24px rgba(0,0,0,0.12);
+            transform: translateX(100%);
+            transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .drawer.open {
+            transform: translateX(0);
+        }
+        .drawer-bar {
+            height: 4px;
+            background: linear-gradient(to right, var(--teal), var(--bronze));
+            flex-shrink: 0;
+        }
+        .drawer-close {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: #f0ede9;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            line-height: 28px;
+            text-align: center;
+            color: var(--stone);
+            transition: background 0.15s ease;
+            z-index: 10;
+        }
+        .drawer-close:hover { background: #e5e1db; color: var(--charcoal); }
+        .drawer-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem 1.75rem 2rem;
         }
 
         .detail-content {
@@ -131,19 +185,12 @@
 
         .detail-content.active {
             display: block;
-            animation: fadeIn 0.3s ease;
+            animation: fadeIn 0.25s ease;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(6px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-
-        .empty-state {
-            padding: 3rem;
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.9rem;
         }
 
         .detail-title {
@@ -495,8 +542,8 @@
                         <!-- Cap Rate bottom → Value top -->
                         <line x1="340" y1="295" x2="340" y2="319" stroke="#9d7860" stroke-width="1.5" opacity="0.5" marker-end="url(#arr-bronze)"/>
 
-                        <!-- DCF bottom → Exit Yield top (straight line) -->
-                        <line x1="115" y1="81" x2="110" y2="258" stroke="#6b8e8f" stroke-width="1.5" opacity="0.5" marker-end="url(#arr-teal)"/>
+                        <!-- DCF bottom → Exit Yield top (straight vertical) -->
+                        <line x1="115" y1="81" x2="115" y2="258" stroke="#6b8e8f" stroke-width="1.5" opacity="0.5" marker-end="url(#arr-teal)"/>
 
                         <!-- Hidden connection paths, activated on stage select -->
                         <path id="conn-rent" d="M 215 208 Q 160 175, 115 82" stroke="#8a9b84" stroke-width="1.5" opacity="0" fill="none"/>
@@ -577,13 +624,21 @@
             </div>
         </div>
 
-        <!-- Detail panel -->
-        <div class="detail-panel">
-            <div class="empty-state" id="empty-state">Select a stage from the investment cycle or click valuation metrics to see definitions and connections</div>
+    </div><!-- /container -->
+
+    <!-- Backdrop -->
+    <div class="drawer-backdrop" id="drawer-backdrop" onclick="closeDrawer()"></div>
+
+    <!-- Drawer -->
+    <div class="drawer" id="drawer">
+        <div class="drawer-bar"></div>
+        <button class="drawer-close" onclick="closeDrawer()" aria-label="Close">×</button>
+        <div class="drawer-body">
+            <div class="empty-state" id="empty-state" style="display:none">Select a stage or metric to see definitions and connections</div>
 
             <!-- Stage 1: Opportunity Identification -->
             <div class="detail-content" id="detail-1">
-                <div class="detail-title">Opportunity Identification → Valuation Links</div>
+                <div class="detail-title">Opportunity Identification</div>
                 <div class="connection-list">
                     <h4>How sourcing decisions impact returns:</h4>
                     <div class="connection-item"><strong>Green financing advantage</strong> → Lower cost of debt → Higher NPV in DCF</div>
@@ -599,7 +654,7 @@
 
             <!-- Stage 2: Acquisition -->
             <div class="detail-content" id="detail-2">
-                <div class="detail-title">Acquisition → Valuation Links</div>
+                <div class="detail-title">Acquisition</div>
                 <div class="connection-list">
                     <h4>How underwriting sustainability impacts valuation:</h4>
                     <div class="connection-item"><strong>Exit yield compression (10–15bps)</strong> → Higher terminal value → Increases NPV in DCF<sup>1</sup></div>
@@ -616,24 +671,30 @@
 
             <!-- Stage 3: Asset Management -->
             <div class="detail-content" id="detail-3">
-                <div class="detail-title">Asset Management → Valuation Links</div>
+                <div class="detail-title">Asset Management</div>
+                <p style="font-size:0.875rem; color:var(--text-muted); margin-bottom:1.25rem; line-height:1.7;">Sustainability acts on NOI through three distinct channels during operations. Each channel has a specific building attribute or management action as its origin.</p>
+
                 <div class="connection-list">
-                    <h4>Leasing &amp; Renewals → Rental Income → NOI:</h4>
-                    <div class="connection-item"><strong>Rent premium (1.5–3%)</strong> → Directly increases rental income → Higher NOI → Higher value<sup>1</sup></div>
-                    <div class="connection-item"><strong>Occupancy improvement (1–1.5pp)</strong> → Reduces vacancy loss → Higher effective rental income<sup>2</sup></div>
-                    <div class="connection-item"><strong>Faster lease-up</strong> → Reduced void periods → Faster NOI stabilisation</div>
+                    <h4>↑ Income channel — certification &amp; tenant demand</h4>
+                    <div class="connection-item"><span class="tag driver">Sustainability lever</span> Green certification (LEED, BREEAM, Green Star, NABERS), low-carbon specification, tenant ESG disclosure requirements</div>
+                    <div class="connection-item"><strong>Rent premium (1.5–3%)</strong> → higher rental income → higher NOI → higher value<sup>1</sup></div>
+                    <div class="connection-item"><strong>Occupancy improvement (1–1.5pp)</strong> → lower vacancy loss → higher effective income<sup>2</sup></div>
                 </div>
+
                 <div class="connection-list">
-                    <h4>Property Management → Operating Expenses → NOI:</h4>
-                    <div class="connection-item"><strong>Energy efficiency (10–20% reduction)</strong> → Lower utility costs → Reduced opex → Higher NOI<sup>3</sup></div>
-                    <div class="connection-item"><strong>Lower maintenance costs</strong> → Modern efficient systems → Reduced opex margin</div>
-                    <div class="connection-item"><strong>Insurance premium control</strong> → Climate resilience → Slower cost escalation over hold period</div>
+                    <h4>↓ Cost channel — energy &amp; operational efficiency</h4>
+                    <div class="connection-item"><span class="tag driver">Sustainability lever</span> Energy efficiency upgrades, building management systems, carbon monitoring, efficient plant and equipment</div>
+                    <div class="connection-item"><strong>Energy cost reduction (10–20%)</strong> → lower utility opex → higher NOI margin<sup>3</sup></div>
+                    <div class="connection-item"><strong>Lower maintenance requirements</strong> from modern systems → reduced opex over hold period</div>
                 </div>
+
                 <div class="connection-list">
-                    <h4>Capex → Value Protection:</h4>
-                    <div class="connection-item"><strong>Proactive MEPS compliance</strong> → Avoids stranding risk → Protects future NOI and exit value</div>
-                    <div class="connection-item"><strong>Obsolescence mitigation</strong> → Maintains tenant appeal → Protects rental income over hold period</div>
+                    <h4>⚠ Resilience channel — regulatory &amp; obsolescence risk</h4>
+                    <div class="connection-item"><span class="tag protector">Sustainability lever</span> Proactive compliance with MEPS, building energy codes, climate disclosure obligations</div>
+                    <div class="connection-item"><strong>Avoids regulatory stranding</strong> → protects future NOI and exit value from forced capex or vacant space</div>
+                    <div class="connection-item"><strong>Maintains tenant appeal</strong> → protects lease renewal rates and rental income trajectory</div>
                 </div>
+
                 <div class="metric-highlight"><strong>Financial impact (illustrative, 100,000 sqft office at $50/sqft base rent):</strong> 2% rent premium = $100k/year additional NOI. 15% energy savings at $4/sqft = $60k/year opex reduction. Combined NOI increase ≈ $160k/year. At 4.5% cap rate = c.$3.6M value creation.</div>
                 <div class="footnotes">
                     <div class="footnotes-title">Sources</div>
@@ -645,7 +706,7 @@
 
             <!-- Stage 4: Disposition -->
             <div class="detail-content" id="detail-4">
-                <div class="detail-title">Disposition → Valuation Links</div>
+                <div class="detail-title">Disposition</div>
                 <div class="connection-list">
                     <h4>How green credentials impact exit value:</h4>
                     <div class="connection-item"><strong>Exit yield compression (10–15bps)</strong> → Lower cap rate applied to exit NOI → Higher sale price<sup>1</sup></div>
@@ -842,7 +903,27 @@
         let currentStage = null;
         let currentMetric = null;
 
+        function openDrawer() {
+            document.getElementById('drawer').classList.add('open');
+            document.getElementById('drawer-backdrop').classList.add('open');
+            document.querySelector('.drawer-body').scrollTo({ top: 0, behavior: 'instant' });
+        }
+
+        function closeDrawer() {
+            document.getElementById('drawer').classList.remove('open');
+            document.getElementById('drawer-backdrop').classList.remove('open');
+            // Clear highlights and active states
+            if (currentStage !== null) {
+                document.querySelector(`[data-stage="${currentStage}"]`).classList.remove('active');
+                currentStage = null;
+            }
+            document.querySelectorAll('.metric-node').forEach(n => n.classList.remove('highlight'));
+            document.querySelectorAll('.detail-content').forEach(el => el.classList.remove('active'));
+            currentMetric = null;
+        }
+
         function selectStage(stageNum) {
+            // Clear previous
             if (currentStage !== null) {
                 document.querySelector(`[data-stage="${currentStage}"]`).classList.remove('active');
                 const d = document.getElementById(`detail-${currentStage}`);
@@ -854,11 +935,14 @@
                 currentMetric = null;
             }
             document.querySelectorAll('.metric-node').forEach(n => n.classList.remove('highlight'));
+
+            // Activate new stage
             currentStage = stageNum;
             document.querySelector(`[data-stage="${stageNum}"]`).classList.add('active');
             const nd = document.getElementById(`detail-${stageNum}`);
             if (nd) nd.classList.add('active');
-            document.getElementById('empty-state').style.display = 'none';
+
+            // Cross-highlight connected metrics
             if (stageNum === 1) {
                 document.querySelector('[data-metric="dcf"]').classList.add('highlight');
             } else if (stageNum === 2) {
@@ -874,9 +958,12 @@
                 document.querySelector('[data-metric="cap-rate"]').classList.add('highlight');
                 document.querySelector('[data-metric="value"]').classList.add('highlight');
             }
+
+            openDrawer();
         }
 
         function showMetricDetail(metricId) {
+            // Clear previous
             if (currentStage !== null) {
                 document.querySelector(`[data-stage="${currentStage}"]`).classList.remove('active');
                 const d = document.getElementById(`detail-${currentStage}`);
@@ -888,13 +975,16 @@
                 if (d) d.classList.remove('active');
             }
             document.querySelectorAll('.metric-node').forEach(n => n.classList.remove('highlight'));
+
+            // Activate metric
             currentMetric = metricId;
             const md = document.getElementById(`metric-${metricId}`);
             if (md) {
                 md.classList.add('active');
-                document.getElementById('empty-state').style.display = 'none';
                 document.querySelector(`[data-metric="${metricId}"]`).classList.add('highlight');
             }
+
+            openDrawer();
         }
 
         // --- Calculators ---
