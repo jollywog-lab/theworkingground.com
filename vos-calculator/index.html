@@ -33,6 +33,7 @@
             background: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
+            padding-top: 2.5rem;
         }
 
         .container {
@@ -350,9 +351,29 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        .site-nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+            background: var(--bg-primary); border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1.5rem;
+        }
+        .site-nav-back {
+            font-family: 'Inter', sans-serif; font-size: 0.8rem;
+            color: var(--text-secondary); text-decoration: none; transition: color 0.15s;
+        }
+        .site-nav-back:hover { color: var(--text-primary); }
+        .site-footer {
+            text-align: center; padding: 1.75rem 1.5rem 2rem; margin-top: 2rem;
+            border-top: 1px solid var(--border); font-family: 'Inter', sans-serif;
+            font-size: 0.8rem; color: var(--text-secondary);
+        }
+        .site-footer a { color: var(--text-secondary); text-decoration: none; transition: color 0.15s; }
+        .site-footer a:hover { color: var(--text-primary); }
+        .site-footer-sep { margin: 0 0.75rem; }
     </style>
 </head>
 <body>
+    <nav class="site-nav"><a href="/" class="site-nav-back">← The Working Ground</a></nav>
     <div class="container">
         <header>
             <h1>Value of Sustainability Calculator</h1>
@@ -598,6 +619,10 @@
             * Methodology draws on the Preserve framework, ULI climate change research, and a Value Drivers/Protectors framework. Benchmark coefficients sourced from GRESB, CBRE, JLL, and CoStar. Replace with portfolio-calibrated data for internal use. IRR is approximated via bisection; exit value uplift uses the income capitalisation delta formula (NOI × bps / (r × (r − bps))). Carbon savings are intentionally small at current APAC pricing levels — this is accurate, not a model error.
         </div>
     </div>
+
+    <footer class="site-footer">
+        <a href="/about/">About</a><span class="site-footer-sep">·</span><a href="/about/#suggest">What to build next</a>
+    </footer>
 
     <script>
         const INTERVENTION_NAMES = {
