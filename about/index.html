@@ -95,33 +95,32 @@
       margin-bottom: 1.75rem;
     }
 
-    .about-links {
-      display: flex;
-      gap: 1.5rem;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .about-links a {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.85rem;
-      font-weight: 500;
+    .about-body a {
       color: var(--accent);
       text-decoration: none;
       border-bottom: 1px solid var(--border);
-      padding-bottom: 2px;
+    }
+
+    .about-body a:hover {
+      border-bottom-color: var(--accent);
+    }
+
+    .connect-text {
+      font-size: 0.9rem;
+      color: var(--warm-dark);
+      margin-bottom: 0.85rem;
+      line-height: 1.7;
+    }
+
+    .connect-text a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      font-weight: 500;
       transition: border-color 0.2s;
     }
 
-    .about-links a:hover { border-color: var(--accent); }
-
-    .about-links .sep {
-      color: var(--border);
-      font-size: 1rem;
-      user-select: none;
-    }
+    .connect-text a:hover { border-bottom-color: var(--accent); }
 
     .icon { width: 14px; height: 14px; flex-shrink: 0; }
 
@@ -269,32 +268,17 @@
 
       <p class="section-label">About</p>
 
-      <p class="about-lede">The Working Ground is a place for personal projects that are work-in-progress.</p>
+      <p class="about-lede">Hello. Thanks for stopping by.</p>
 
       <div class="about-body">
-        <p>I work in sustainability in real estate. The topics are similar: how quickly regulations shift, barriers to decarbonisation, ways to mitigate climate risk, and the business case for sustainability. The tools here started as answers to those questions.</p>
-        <p>I'm trained as an architect. Beauty and delight are the goal; colour, craft, nature and materials are the palette.</p>
-        <p>If something here is useful to you, that's the point. If you see a gap, the suggestion box is real.</p>
+        <p>I work in sustainability in real estate: making everyday building operations more efficient through better data, processes &amp; operations; and decarbonising new construction through using less and using better building materials.</p>
+        <p>Across different markets, questions that come up consistently: building a credible business case, mitigating climate risk, and getting traction with teams where sustainability isn't intuitive. These tools are for those situations.</p>
+        <p>I was trained as an architect. I love form with function, the idea of wabi-sabi, working with nature. Beauty and delight are the goal; colour, craft, nature and materials are the palette.</p>
+        <p>If something here is useful to you, that's the point. If you see a gap, the suggestion box is real. You can also email me at <a href="mailto:theworkingground@gmail.com">theworkingground@gmail.com</a> if you have a more complex suggestion.</p>
       </div>
 
-      <div class="about-links">
-        <a href="https://www.linkedin.com/in/joellechen" target="_blank" rel="noopener">
-          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-            <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
-          </svg>
-          LinkedIn
-        </a>
-        <span class="sep" aria-hidden="true">·</span>
-        <a href="https://www.instagram.com/patternsofliving" target="_blank" rel="noopener">
-          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-            <circle cx="12" cy="12" r="4"/>
-            <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
-          </svg>
-          @patternsofliving
-        </a>
-      </div>
+      <p class="connect-text">Connect with me on <a href="https://www.linkedin.com/in/joellechen" target="_blank" rel="noopener">LinkedIn</a> or follow my slow living (and very slowly building) portfolio on <a href="https://www.instagram.com/patternsofliving" target="_blank" rel="noopener">Instagram</a>.</p>
+
       <div style="margin-top: 1.5rem;">
         <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script><script type='text/javascript'>kofiwidget2.init('Support me on Ko-fi', '#B87333', 'O5O01ZA7EF');kofiwidget2.draw();</script>
       </div>
@@ -337,7 +321,7 @@
   <footer>
     <span class="footer-copy">&copy; The Working Ground</span>
     <ul class="footer-nav">
-      <li><a href="/about/">About · What to build next?</a></li>
+      <li><a href="/about/">About &middot; What to build next?</a></li>
     </ul>
   </footer>
 
