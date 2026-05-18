@@ -282,9 +282,7 @@
         @media (max-width: 960px)  { .all-grid { grid-template-columns: repeat(6, 1fr); } }
         .all-card {
             cursor: pointer; border-radius: 4px; overflow: hidden; position: relative;
-            border: 3px solid #fff;
-            background: #fff;
-            padding: 3px; transition: all 0.18s;
+            border: none; transition: all 0.18s;
         }
         .all-card:hover  { transform: scale(1.04); box-shadow: 0 6px 18px rgba(0,0,0,0.18); z-index: 2; }
         .all-card.selected { border-color: var(--charcoal); z-index: 3; }
@@ -359,6 +357,7 @@
         .site-footer a:hover { color: var(--charcoal); }
         .site-footer-sep { margin: 0 0.75rem; }
         body { padding-top: 2.75rem; }
+        .grid-intro { font-size: 0.78rem; color: var(--text-muted); margin: 0.4rem 0 0.6rem 0.25rem; }
     </style>
 </head>
 <body>
@@ -419,6 +418,7 @@
         <div class="all-detail-wrap" id="all-detail-wrap" style="display:none">
             <div class="all-detail-panel" id="all-detail-panel"></div>
         </div>
+        <div class="grid-intro" id="grid-intro">Click any palette to explore the full combination and find related palettes</div>
         <div class="all-grid" id="all-grid"></div>
     </div>
  
@@ -535,7 +535,7 @@ function selectAllCard(num) {
         .map(n => allCombinations.find(c => c.num === n)).filter(Boolean);
  
     const relatedHtml = relatedCombos.length
-        ? `<div class="all-detail-related-title">Related combinations</div>
+        ? `<div class="all-detail-related-title">Related combinations — click to explore</div>
            <div class="all-related-grid">${relatedCombos.map(rc => {
                const sw = rc.colors.map(c => `<div class="all-related-swatch" style="background:${c.h}"></div>`).join('');
                return `<div class="all-related-card" onclick="selectAllCard(${rc.num})" title="No. ${rc.num}">
