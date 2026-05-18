@@ -283,7 +283,9 @@
         @media (max-width: 960px)  { .all-grid { grid-template-columns: repeat(6, 1fr); } }
         .all-card {
             cursor: pointer; border-radius: 4px; overflow: hidden; position: relative;
-            border: 2px solid transparent; transition: all 0.18s;
+            border: 3px solid #fff;
+            background: #fff;
+            padding: 3px; transition: all 0.18s;
         }
         .all-card:hover  { transform: scale(1.04); box-shadow: 0 6px 18px rgba(0,0,0,0.18); z-index: 2; }
         .all-card.selected { border-color: var(--charcoal); z-index: 3; }
@@ -365,13 +367,7 @@
 
 <div class="container">
 
-    <div class="about-section">
-        <div class="section-title">About Sanzo Wada</div>
-        <p class="about-text">Sanzo Wada (1883–1967) was a Japanese artist, costume designer, and professor who compiled the <em>Dictionary of Colour Combinations</em> from his six-volume <em>Haishoku Soukan</em>, originally published in the 1930s for kimono and fashion design. Seigensha published the collected edition in 2010. The work contains 348 palettes grounded in natural observation and cultural memory.</p>
-        <p class="about-text">His approach prioritises surprising harmony over safe gradation. Where algorithmic generators produce colours sharing obvious relationships, Wada juxtaposes temperatures, saturations, and cultural contexts to create combinations that shouldn't work but do. The 23 palettes curated here are selected for range across temperature, harmony type, and contrast — and for combinations that are striking without being obvious.</p>
-        <p class="about-text">Colour values are derived from Wada's original CMYK specifications, converted to hex via the open-source dataset by Dain M. Blodorn Kim. Combination numbers reference Wada's original catalogue. Click any swatch to copy its hex code to clipboard.</p>
-    </div>
-
+    
     <header>
         <h1>Sanzo Wada · Colour Palettes</h1>
         <p class="subtitle">Colour combinations from Wada's <em>Dictionary of Colour Combinations</em> (1933). All 348 original combinations — click any to explore colours and find related palettes.</p>
@@ -379,6 +375,14 @@
     </header>
     <!-- All 348 View -->
     <div id="view-all">
+
+    <div class="about-section">
+        <div class="section-title">About Sanzo Wada</div>
+        <p class="about-text">Sanzo Wada (1883–1967) was a Japanese artist, costume designer, and professor who compiled the <em>Dictionary of Colour Combinations</em> from his six-volume <em>Haishoku Soukan</em>, originally published in the 1930s for kimono and fashion design. Seigensha published the collected edition in 2010. The work contains 348 palettes grounded in natural observation and cultural memory.</p>
+        <p class="about-text">His approach prioritises surprising harmony over safe gradation. Where algorithmic generators produce colours sharing obvious relationships, Wada juxtaposes temperatures, saturations, and cultural contexts to create combinations that shouldn't work but do. The 23 palettes curated here are selected for range across temperature, harmony type, and contrast — and for combinations that are striking without being obvious.</p>
+        <p class="about-text">Colour values are derived from Wada's original CMYK specifications, converted to hex via the open-source dataset by Dain M. Blodorn Kim. Combination numbers reference Wada's original catalogue. Click any swatch to copy its hex code to clipboard.</p>
+    </div>
+
         <div class="theory-filters">
             <div class="theory-filter-group">
                 <span class="filter-label">Temperature</span>
