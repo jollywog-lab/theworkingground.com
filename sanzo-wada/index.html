@@ -122,9 +122,7 @@
         .thumbnail-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px; }
         .thumbnail-card {
             cursor: pointer; border-radius: 4px; overflow: hidden; position: relative;
-            border: 3px solid #fff;
-            background: #fff;
-            padding: 3px; transition: all 0.18s; background: white;
+            border: 2px solid transparent; transition: all 0.18s; background: white;
         }
         .thumbnail-card:hover { transform: scale(1.04); box-shadow: 0 6px 18px rgba(0,0,0,0.18); z-index: 2; }
         .thumbnail-card.selected { border-color: var(--charcoal); box-shadow: 0 0 0 2px var(--charcoal); z-index: 3; }
@@ -233,6 +231,7 @@
             opacity: 0; transition: opacity 0.15s;
             pointer-events: none; letter-spacing: 0.01em;
         }
+        #all-grid { background: white; border-radius: 12px; padding: 1rem; margin-top: 0.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
         .all-card:hover .curated-card-reason { opacity: 1; }
         .all-card.hidden { display: none; }
         /* Theory tags in detail panel */
