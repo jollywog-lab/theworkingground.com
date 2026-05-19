@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mentor guide — The Working Ground</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --cream: #F7F4EF; --warm-dark: #1C1A17; --muted: #7A7167; --accent: #887333; --card-bg: #FFFFFF; --border: #E2D0D5; --tag-bg: #EDE9E2; }
+    body { background-color: var(--cream); color: var(--warm-dark); font-family: 'DM Sans', sans-serif; font-weight: 300; min-height: 100vh; display: flex; flex-direction: column; }
+    .site-nav { background: var(--cream); border-bottom: 1px solid var(--border); padding: 0.5rem 2rem; }
+    .site-nav-back { font-size: 0.78rem; color: var(--muted); text-decoration: none; transition: color 0.15s; }
+    .site-nav-back:hover { color: var(--warm-dark); }
+    header { padding: 2.5rem 2rem 1.5rem; max-width: 760px; margin: 0 auto; width: 100%; }
+    .page-tag { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.5em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 0.75rem; }
+    .page-title { font-family: 'DM Serif Display', serif; font-size: clamp(1.75rem, 3.5vw, 2.5rem); letter-spacing: -0.02em; color: var(--warm-dark); line-height: 1.1; margin-bottom: 0.75rem; }
+    .page-intro { font-size: 0.9rem; color: var(--muted); line-height: 1.7; max-width: 540px; }
+    main { flex: 1; max-width: 760px; width: 100%; margin: 0 auto; padding: 0.5rem 2rem 4rem; }
+    .section-nav { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+    .section-nav a { font-size: 0.78rem; color: var(--muted); text-decoration: none; padding: 0.3rem 0.75rem; border: 1px solid var(--border); border-radius: 2px; transition: color 0.15s, border-color 0.15s; }
+    .section-nav a:hover { color: var(--warm-dark); border-color: var(--accent); }
+    .content-section { background: var(--card-bg); border-radius: 4px; padding: 2rem; margin-top: 1.25rem; }
+    .section-heading { font-family: 'DM Serif Display', serif; font-size: 1.35rem; color: var(--warm-dark); margin-bottom: 1rem; line-height: 1.2; }
+    .body-text { font-size: 0.88rem; color: var(--muted); line-height: 1.75; }
+    .body-text + .body-text { margin-top: 0.85rem; }
+    .body-text strong { font-weight: 500; color: var(--warm-dark); }
+    .sub-heading { font-size: 0.82rem; font-weight: 500; letter-spacing: 0.03em; color: var(--warm-dark); margin-top: 1.5rem; margin-bottom: 0.5rem; }
+    .session-arc { display: grid; gap: 0; margin-top: 1rem; border: 1px solid var(--border); border-radius: 3px; overflow: hidden; }
+    .arc-row { display: grid; grid-template-columns: 80px 1fr; border-bottom: 1px solid var(--border); }
+    .arc-row:last-child { border-bottom: none; }
+    .arc-time { padding: 0.75rem; font-size: 0.75rem; font-weight: 500; color: var(--accent); border-right: 1px solid var(--border); background: var(--tag-bg); display: flex; align-items: center; }
+    .arc-content { padding: 0.75rem 1rem; font-size: 0.85rem; color: var(--warm-dark); line-height: 1.5; }
+    .arc-content span { display: block; font-size: 0.78rem; color: var(--muted); margin-top: 0.2rem; }
+    .opener-list { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 0.75rem; }
+    .opener-item { background: var(--cream); border: 1px solid var(--border); border-radius: 3px; padding: 0.75rem 1rem; }
+    .opener-q { font-size: 0.88rem; color: var(--warm-dark); font-style: italic; margin-bottom: 0.3rem; }
+    .opener-note { font-size: 0.78rem; color: var(--muted); line-height: 1.55; }
+    .tool-notes { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin-top: 0.75rem; }
+    .tool-notes th { text-align: left; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); padding: 0.4rem 0.75rem 0.6rem; border-bottom: 1px solid var(--border); }
+    .tool-notes td { padding: 0.75rem; vertical-align: top; border-bottom: 1px solid var(--border); color: var(--muted); line-height: 1.55; }
+    .tool-notes tr:last-child td { border-bottom: none; }
+    .tool-notes td:first-child { font-weight: 400; color: var(--warm-dark); white-space: nowrap; }
+    .flag-list { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 0.75rem; }
+    .flag-item { display: grid; grid-template-columns: auto 1fr; gap: 0.75rem; align-items: start; }
+    .flag-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); margin-top: 0.35rem; flex-shrink: 0; }
+    .flag-text { font-size: 0.86rem; color: var(--muted); line-height: 1.6; }
+    .flag-text strong { font-weight: 500; color: var(--warm-dark); display: block; margin-bottom: 0.15rem; }
+    footer { border-top: 2px solid var(--border); padding: 1.5rem 2rem; max-width: 760px; margin: 0 auto; width: 100%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-copy { font-size: 0.82rem; color: var(--muted); }
+    .footer-nav { display: flex; gap: 1.5rem; list-style: none; }
+    .footer-nav a { font-size: 0.78rem; color: var(--muted); text-decoration: none; transition: color 0.15s; }
+    .footer-nav a:hover { color: var(--warm-dark); }
+    @media print { .site-nav, .section-nav, footer { display: none !important; } body { background: #fff; } .content-section { box-shadow: none; padding: 0; margin-top: 1.5rem; } header { padding: 0 0 1rem; } main { padding: 0; } @page { margin: 2cm 2.5cm; } }
+    @media (max-width: 600px) { header { padding: 2rem 1.25rem 1.25rem; } main { padding: 0.5rem 1.25rem 3rem; } .content-section { padding: 1.5rem 1.25rem; } footer { padding: 1.25rem; flex-direction: column; align-items: flex-start; } .arc-row { grid-template-columns: 60px 1fr; } }
+  </style>
+</head>
+<body>
+  <nav class="site-nav"><a href="/mentoring/" class="site-nav-back">← Mentoring</a></nav>
+  <header>
+    <span class="page-tag">For mentors</span>
+    <h1 class="page-title">Mentor guide</h1>
+    <p class="page-intro">Notes on how to run sessions, how to use each tool, and how to handle the harder parts of mentoring — including when you should share your own story and when you should hold back.</p>
+  </header>
+  <main>
+    <nav class="section-nav" aria-label="Sections">
+      <a href="#philosophy">Mentoring vs. coaching</a>
+      <a href="#structure">Session structure</a>
+      <a href="#openers">Openers</a>
+      <a href="#tools">Using the tools</a>
+      <a href="#exchange">Personal exchange</a>
+      <a href="#flags">Red flags</a>
+    </nav>
+    <div class="content-section" id="philosophy">
+      <h2 class="section-heading">Mentoring is not coaching</h2>
+      <p class="body-text">Coaching is non-directive. The coach asks questions, reflects back what they hear, and lets the person find their own answers. The coach's experience is largely irrelevant — the method is the point.</p>
+      <p class="body-text">Mentoring works differently. A mentor has navigated terrain the mentee hasn't yet reached. They offer perspective from experience — what they tried, what didn't work, what they wish they'd known. They give opinions when asked. They make introductions. They tell you when they think you're wrong.</p>
+      <p class="body-text">The distinction matters because it defines what you're being asked to do. <strong>You're not facilitating a discovery process</strong> — you're in a peer relationship with someone earlier in their path. The mentee can ask you to be a sounding board, and you can reflect without prescribing. But you can also say: "In my experience, here's what that looked like."</p>
+      <p class="body-text">The risk of over-coaching: the mentee leaves every session with more questions and no clearer idea of what to do. The risk of over-mentoring: you give answers before you've understood the actual problem, or you project your experience onto a situation that's different from yours.</p>
+      <p class="body-text">The working version is somewhere in the middle. Ask enough to understand the specific situation. Then offer what's genuinely useful from where you stand.</p>
+    </div>
+    <div class="content-section" id="structure">
+      <h2 class="section-heading">Session structure</h2>
+      <p class="body-text">A suggested arc for a 60-minute session. Adjust as needed — some sessions will skip the structure entirely if something urgent comes up, and that's fine.</p>
+      <div class="session-arc">
+        <div class="arc-row"><div class="arc-time">0–5 min</div><div class="arc-content">Open<span>What's on their mind. Let them set the agenda. Don't start with your own update.</span></div></div>
+        <div class="arc-row"><div class="arc-time">5–10 min</div><div class="arc-content">Check-in on last session<span>What did they do with what came out of the previous session? What moved, what didn't?</span></div></div>
+        <div class="arc-row"><div class="arc-time">10–50 min</div><div class="arc-content">Main topic<span>Work on the thing they brought. Use tools where relevant. Ask questions before offering answers.</span></div></div>
+        <div class="arc-row"><div class="arc-time">50–60 min</div><div class="arc-content">Close<span>"What are you taking away from this?" and "What will you do before we next meet?" — named specifically, not generally.</span></div></div>
+      </div>
+      <p class="body-text" style="margin-top: 1rem;">If the mentee hasn't completed the pre-session prep, start by asking the three questions verbally. It's a more useful use of five minutes than catching up on their week.</p>
+    </div>
+    <div class="content-section" id="openers">
+      <h2 class="section-heading">Session openers</h2>
+      <p class="body-text">A good opener hands the session to the mentee without requiring them to have a prepared agenda. The less structure you impose at the start, the more honest the answer. Pick one — don't stack them.</p>
+      <div class="opener-list">
+        <div class="opener-item"><p class="opener-q">"What's been on your mind since we last spoke?"</p><p class="opener-note">The default. Broad enough that they can take it anywhere. Usually gets to the real thing within a minute or two.</p></div>
+        <div class="opener-item"><p class="opener-q">"What's one thing you want to leave today having worked out?"</p><p class="opener-note">Useful when someone arrives vague or scattered. Forces a single priority.</p></div>
+        <div class="opener-item"><p class="opener-q">"Where are you stuck?"</p><p class="opener-note">Direct. Works well for mentees who are action-oriented and find open-ended openers slow.</p></div>
+        <div class="opener-item"><p class="opener-q">"What would make today useful?"</p><p class="opener-note">Good for early-stage relationships where you're still calibrating what kind of help they actually want.</p></div>
+        <div class="opener-item"><p class="opener-q">"What's changed since we last spoke — and what hasn't?"</p><p class="opener-note">Useful for mentees who are working through a decision over multiple sessions. Keeps continuity.</p></div>
+      </div>
+    </div>
+    <div class="content-section" id="tools">
+      <h2 class="section-heading">How to use each tool</h2>
+      <p class="body-text">These tools are designed to be completed by the mentee, ideally before or between sessions — not filled in together in real time. Your role is to debrief what comes out, not facilitate the exercise itself.</p>
+      <table class="tool-notes">
+        <thead><tr><th>Tool</th><th>When to introduce it</th><th>How to debrief it</th></tr></thead>
+        <tbody>
+          <tr><td>Personal profile</td><td>Ask them to complete before session 1</td><td>Read it before you meet. Use it to skip the background and start somewhere specific. Ask: "You said X — tell me more about that."</td></tr>
+          <tr><td>Career Line</td><td>Session 1 or early in the relationship</td><td>Ask them to walk you through it. Don't interrupt. Notice what they dwell on and what they skip. Ask about the lows — those usually contain more signal than the highs.</td></tr>
+          <tr><td>Glass ball exercise</td><td>Session 1–2, after the Career Line</td><td>Ask which balls they're most afraid of dropping. Then ask which ones they'd be least bothered by. The gap between those answers is often where the real work is.</td></tr>
+          <tr><td>Odyssey Plan</td><td>After you have enough background — usually session 2 or 3</td><td>Ask them to talk you through all three scenarios — including the one they think is unrealistic. Pay attention to which scenario they describe with the most energy.</td></tr>
+          <tr><td>Personal Dev Plan</td><td>When they have a direction they're working toward</td><td>Check whether the actions are specific and owned. "Learn more about X" is not an action — "speak to three people in X field by the end of next month" is. Push for that level of specificity.</td></tr>
+          <tr><td>Board of advisors</td><td>When they're building skills or navigating a transition</td><td>Most people under 30 have a thin board. Help them name who belongs in each seat — and who is missing. The sponsor seat is the hardest for most people to fill.</td></tr>
+          <tr><td>Pre-session prep</td><td>Ask them to use it before every session from session 2 onward</td><td>If they haven't done it, ask the three questions verbally at the start. Sessions with a clear agenda are more useful than sessions that find the agenda halfway through.</td></tr>
+          <tr><td>Pivot diagnostic</td><td>When a career change is on the table</td><td>Ask them to complete it before the session. Debrief by asking: "What did working through it tell you?" — not by reading the output together.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="content-section" id="exchange">
+      <h2 class="section-heading">Sharing your own story</h2>
+      <p class="body-text">One of the most useful things you can do as a mentor is share your own experience honestly — including what went wrong. The risk is that it takes up too much room. The mentee came to talk about their situation, not to hear your career retrospective.</p>
+      <p class="sub-heading">When to share</p>
+      <p class="body-text">Share when your experience is directly relevant to the specific situation they're in — not just thematically similar. A useful frame: share the insight, not the full story. "I spent three years in a role that looked good on paper and felt wrong — what I learned from that was X" is more useful than the full account.</p>
+      <p class="sub-heading">The personal exchange — session 1</p>
+      <p class="body-text">There's value in giving the mentee some picture of who you are before you start asking them to reflect on their career. A short personal exchange at the start of the relationship — five to ten minutes — establishes that this is a peer relationship, not an assessment. Cover: where you've worked, one or two pivots that shaped your path, and something you got wrong.</p>
+      <p class="body-text">The "something I got wrong" part matters. It signals that the relationship is safe for honesty. Most mentees won't admit uncertainty to someone who appears to have had an unbroken run of good decisions.</p>
+      <p class="sub-heading">When to hold back</p>
+      <p class="body-text">Hold back when you find yourself talking for more than a few minutes in a row. Hold back when the mentee is mid-reflection and you feel the urge to relate — let them finish first. A practical check: if the mentee is speaking less than 60% of the time, you're probably taking up too much space.</p>
+    </div>
+    <div class="content-section" id="flags">
+      <h2 class="section-heading">Red flags</h2>
+      <p class="body-text" style="margin-bottom: 1rem;">Signs that the relationship needs a reset — or, in some cases, an honest conversation about whether to continue.</p>
+      <div class="flag-list">
+        <div class="flag-item"><div class="flag-dot"></div><div class="flag-text"><strong>Consistently unprepared</strong>Sessions start with "I haven't had much time to think about this." If it happens twice, name it directly: "I notice we're spending the first part of each session finding the agenda — can we fix that?"</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div class="flag-text"><strong>The sessions feel like therapy</strong>Mentoring can hold emotion, but if sessions are primarily processing feelings rather than thinking through decisions, the mentee may need a different kind of support. Name it without judgment.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div class="flag-text"><strong>No movement over multiple sessions</strong>If the same issues are surfacing session after session without any action taken, ask directly: "What's getting in the way of moving on this?" Sometimes the answer reveals a real blocker. Sometimes it reveals that the stated problem isn't the real one.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div class="flag-text"><strong>Dependency forming</strong>The mentee checks in between sessions for approval on decisions, or says they can't move forward without your input. This is a sign the relationship has tipped toward reliance rather than capability-building.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div class="flag-text"><strong>Mismatched expectations</strong>They want introductions and job referrals; you thought you were there to help them think. Have the conversation about what the relationship is actually for.</div></div>
+        <div class="flag-item"><div class="flag-dot"></div><div class="flag-text"><strong>The relationship has run its course</strong>Not every mentoring relationship needs to be indefinite. If the mentee is making good decisions independently and you're covering the same ground, it's fine to wind down intentionally. That's a good outcome, not a failure.</div></div>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <p class="footer-copy">© The Working Ground</p>
+    <nav><ul class="footer-nav"><li><a href="/about/">About</a></li><li><a href="/about/#what-to-build">What to build next?</a></li></ul></nav>
+  </footer>
+</body>
+</html>
