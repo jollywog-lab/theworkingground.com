@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mentoring — The Working Ground</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream: #F7F4EF;
+      --warm-dark: #1C1A17;
+      --muted: #7A7167;
+      --accent: #887333;
+      --card-bg: #FFFFFF;
+      --border: #E2D0D5;
+      --tag-bg: #EDE9E2;
+    }
+    body {
+      background-color: var(--cream);
+      color: var(--warm-dark);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .site-nav {
+      background: var(--cream);
+      border-bottom: 1px solid var(--border);
+      padding: 0.5rem 2rem;
+    }
+    .site-nav-back {
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .site-nav-back:hover { color: var(--warm-dark); }
+    header {
+      padding: 2.5rem 2rem 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .site-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -0.02em;
+      color: var(--warm-dark);
+      line-height: 1.1;
+    }
+    .site-tagline {
+      margin-top: 0.6rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 300;
+    }
+    main {
+      flex: 1;
+      max-width: 1100px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1rem 2rem 4rem;
+    }
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 0.75rem;
+    }
+    .page-intro {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 560px;
+      margin-bottom: 2rem;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 0.5rem;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-bg);
+      border-radius: 4px;
+      padding: 1.75rem;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 2px 16px rgba(184,115,51,0.08);
+    }
+    .card-tag {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: var(--tag-bg);
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      border-radius: 2px;
+      width: fit-content;
+    }
+    .card-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      line-height: 1.3;
+      color: var(--warm-dark);
+    }
+    .card-desc {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.65;
+      flex: 1;
+    }
+    .card-arrow {
+      font-size: 0.82rem;
+      color: var(--accent);
+      margin-top: 0.25rem;
+    }
+    footer {
+      border-top: 2px solid var(--border);
+      padding: 1.5rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-copy { font-size: 0.82rem; color: var(--muted); }
+    .footer-nav { display: flex; gap: 1.5rem; list-style: none; }
+    .footer-nav a { font-size: 0.78rem; color: var(--muted); text-decoration: none; transition: color 0.15s; }
+    .footer-nav a:hover { color: var(--warm-dark); }
+    @media (max-width: 600px) {
+      header { padding: 2rem 1.25rem 1.5rem; }
+      main { padding: 0.75rem 1.25rem 3rem; }
+      footer { padding: 1.25rem; flex-direction: column; align-items: flex-start; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="/" class="site-nav-back">← The Working Ground</a>
+  </nav>
+  <header>
+    <div class="site-name">The Working Ground</div>
+    <p class="site-tagline">Tools for work or wonder.</p>
+  </header>
+  <main>
+    <span class="section-label">Mentoring</span>
+    <p class="page-intro">A set of tools for navigating a mentoring relationship — from before your first session through to career design, network building, and ongoing check-ins. Work through them at your own pace.</p>
+    <div class="card-grid">
+      <a class="card" href="/mentoring/start/">
+        <span class="card-tag">Before you start</span>
+        <div class="card-title">Before you begin</div>
+        <p class="card-desc">A short personal profile to share with your mentor. Complete before your first session.</p>
+        <div class="card-arrow">Open →</div>
+      </a>
+      <a class="card" href="/mentoring/know-yourself/">
+        <span class="card-tag">Step 1</span>
+        <div class="card-title">Know yourself</div>
+        <p class="card-desc">Career highlights and lowlights. Glass ball exercise. Finding your ikigai.</p>
+        <div class="card-arrow">Open →</div>
+      </a>
+      <a class="card" href="/mentoring/design/">
+        <span class="card-tag">Step 2</span>
+        <div class="card-title">Design your career</div>
+        <p class="card-desc">Odyssey Plan. Personal Development Plan on a Page.</p>
+        <div class="card-arrow">Open →</div>
+      </a>
+      <a class="card" href="/mentoring/network/">
+        <span class="card-tag">Step 3</span>
+        <div class="card-title">Build your network</div>
+        <p class="card-desc">Personal board of advisors. How to network without being weird.</p>
+        <div class="card-arrow">Open →</div>
+      </a>
+      <a class="card" href="/mentoring/sessions/">
+        <span class="card-tag">Ongoing</span>
+        <div class="card-title">Session tools</div>
+        <p class="card-desc">Pre-session prep. Pivot Diagnostic.</p>
+        <div class="card-arrow">Open →</div>
+      </a>
+      <a class="card" href="/mentoring/mentor-guide/">
+        <span class="card-tag">For mentors</span>
+        <div class="card-title">Mentor guide</div>
+        <p class="card-desc">Structuring your mentoring sessions. Suggestions for openers, facilitation notes and how to use each tool.</p>
+        <div class="card-arrow">Open →</div>
+      </a>
+    </div>
+  </main>
+  <footer>
+    <p class="footer-copy">© The Working Ground</p>
+    <nav>
+      <ul class="footer-nav">
+        <li><a href="/about/">About</a></li>
+        <li><a href="/about/#what-to-build">What to build next?</a></li>
+      </ul>
+    </nav>
+  </footer>
+</body>
+</html>
