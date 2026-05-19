@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Session tools — The Working Ground</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream: #F7F4EF;
+      --warm-dark: #1C1A17;
+      --muted: #7A7167;
+      --accent: #887333;
+      --card-bg: #FFFFFF;
+      --border: #E2D0D5;
+      --tag-bg: #EDE9E2;
+    }
+    body {
+      background-color: var(--cream);
+      color: var(--warm-dark);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .site-nav {
+      background: var(--cream);
+      border-bottom: 1px solid var(--border);
+      padding: 0.5rem 2rem;
+    }
+    .site-nav-back {
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .site-nav-back:hover { color: var(--warm-dark); }
+    header {
+      padding: 2.5rem 2rem 1.5rem;
+      max-width: 760px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .page-tag {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 0.75rem;
+    }
+    .page-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+      letter-spacing: -0.02em;
+      color: var(--warm-dark);
+      line-height: 1.1;
+      margin-bottom: 0.75rem;
+    }
+    .page-intro {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 540px;
+    }
+    main {
+      flex: 1;
+      max-width: 760px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0.5rem 2rem 4rem;
+    }
+    .tool-tabs {
+      display: flex;
+      gap: 0;
+      margin-top: 1.5rem;
+      border-bottom: 2px solid var(--border);
+    }
+    .tool-tab {
+      font-size: 0.82rem;
+      font-weight: 400;
+      color: var(--muted);
+      padding: 0.6rem 1.2rem;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      transition: color 0.15s, border-color 0.15s;
+      background: none;
+      border-left: none;
+      border-right: none;
+      border-top: none;
+    }
+    .tool-tab.active {
+      color: var(--warm-dark);
+      border-bottom-color: var(--accent);
+    }
+    .tool-tab:hover { color: var(--warm-dark); }
+    .tool-panel { display: none; }
+    .tool-panel.active { display: block; }
+    .panel-card {
+      background: var(--card-bg);
+      border-radius: 4px;
+      padding: 2rem;
+      margin-top: 1.5rem;
+    }
+    .panel-intro {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 1.75rem;
+      max-width: 520px;
+    }
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 0.6rem;
+    }
+    .question-block {
+      margin-bottom: 1.75rem;
+    }
+    .question-text {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.05rem;
+      color: var(--warm-dark);
+      line-height: 1.4;
+      margin-bottom: 0.6rem;
+    }
+    .question-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 0.6rem;
+      line-height: 1.6;
+    }
+    textarea {
+      width: 100%;
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 0.55rem 0.75rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: var(--warm-dark);
+      transition: border-color 0.15s;
+      resize: vertical;
+      min-height: 90px;
+      line-height: 1.6;
+    }
+    textarea:focus { outline: none; border-color: var(--accent); }
+    .form-divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+    .diagnostic-intro {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 1.75rem;
+    }
+    .diag-question {
+      margin-bottom: 1.5rem;
+    }
+    .diag-q-text {
+      font-size: 0.9rem;
+      color: var(--warm-dark);
+      line-height: 1.5;
+      margin-bottom: 0.5rem;
+      font-weight: 400;
+    }
+    .diag-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .diag-option {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 0.4rem 0.6rem;
+      border-radius: 3px;
+      border: 1px solid transparent;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .diag-option input[type="radio"] { margin-top: 0.15rem; flex-shrink: 0; accent-color: var(--accent); }
+    .diag-option:has(input:checked) {
+      border-color: var(--border);
+      color: var(--warm-dark);
+      background: var(--tag-bg);
+    }
+    .diag-open { min-height: 70px; }
+    .diag-result {
+      display: none;
+      background: var(--tag-bg);
+      border-radius: 3px;
+      padding: 1.25rem 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .diag-result.visible { display: block; }
+    .diag-result-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1rem;
+      color: var(--warm-dark);
+      margin-bottom: 0.5rem;
+    }
+    .diag-result-text {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+    .actions {
+      margin-top: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      padding: 0.6rem 1.4rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 400;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-secondary {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 0.6rem 1.2rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 300;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--warm-dark); }
+    .save-note { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+    footer {
+      border-top: 2px solid var(--border);
+      padding: 1.5rem 2rem;
+      max-width: 760px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-copy { font-size: 0.82rem; color: var(--muted); }
+    .footer-nav { display: flex; gap: 1.5rem; list-style: none; }
+    .footer-nav a { font-size: 0.78rem; color: var(--muted); text-decoration: none; transition: color 0.15s; }
+    .footer-nav a:hover { color: var(--warm-dark); }
+    @media print {
+      .site-nav, .tool-tabs, .actions, footer, .btn-primary, .btn-secondary { display: none !important; }
+      .tool-panel { display: block !important; }
+      body { background: #fff; }
+      .panel-card { box-shadow: none; border: none; padding: 0; margin-top: 0; }
+      header { padding: 0 0 1rem; }
+      main { padding: 0; }
+      textarea { border: none; border-bottom: 1px solid #ccc; background: transparent; border-radius: 0; min-height: 60px; }
+      .diag-result { display: block !important; }
+      @page { margin: 2cm 2.5cm; }
+    }
+    @media (max-width: 600px) {
+      header { padding: 2rem 1.25rem 1.25rem; }
+      main { padding: 0.5rem 1.25rem 3rem; }
+      .panel-card { padding: 1.5rem 1.25rem; }
+      footer { padding: 1.25rem; flex-direction: column; align-items: flex-start; }
+      .tool-tab { padding: 0.6rem 0.75rem; font-size: 0.78rem; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="/mentoring/" class="site-nav-back">← Mentoring</a>
+  </nav>
+  <header>
+    <span class="page-tag">Ongoing</span>
+    <h1 class="page-title">Session tools</h1>
+    <p class="page-intro">Two tools for ongoing sessions: a short prep sheet to complete 48 hours before you meet, and a pivot diagnostic to run when you're weighing a career change.</p>
+  </header>
+  <main>
+    <div class="tool-tabs">
+      <button class="tool-tab active" onclick="switchTab('prep', this)">Pre-session prep</button>
+      <button class="tool-tab" onclick="switchTab('pivot', this)">Pivot diagnostic</button>
+    </div>
+    <div id="panel-prep" class="tool-panel active">
+      <div class="panel-card">
+        <p class="panel-intro">Complete these three questions in the 48 hours before your session. Keep it short — five minutes. The point is to arrive with a clear head, not a polished presentation.</p>
+        <div class="question-block">
+          <span class="section-label">Question 1</span>
+          <p class="question-text">What has happened since we last spoke that's worth bringing to the session?</p>
+          <p class="question-note">A decision made, something you tried, a conversation you had, something that shifted — or didn't.</p>
+          <textarea id="prep-q1"></textarea>
+        </div>
+        <div class="question-block">
+          <span class="section-label">Question 2</span>
+          <p class="question-text">What do you want to leave this session having worked out?</p>
+          <p class="question-note">One specific thing. If you have three, pick the one that matters most right now.</p>
+          <textarea id="prep-q2"></textarea>
+        </div>
+        <div class="question-block">
+          <span class="section-label">Question 3</span>
+          <p class="question-text">What do you need from your mentor today?</p>
+          <p class="question-note">A sounding board. A push. A different way of seeing it. Someone who has been there. An honest reaction. Something else.</p>
+          <textarea id="prep-q3"></textarea>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn-primary" onclick="window.print()">Print / Save as PDF</button>
+        <button class="btn-secondary" onclick="clearPrep()">Clear</button>
+        <p class="save-note">Your answers stay in your browser — nothing is sent anywhere.</p>
+      </div>
+    </div>
+    <div id="panel-pivot" class="tool-panel">
+      <div class="panel-card">
+        <p class="panel-intro">Work through this when you're seriously considering a career change — a new industry, function, or a step sideways that isn't a promotion. It's designed to help you distinguish between a problem that needs solving in your current situation and a genuine case for moving on.</p>
+        <div class="diag-question">
+          <p class="diag-q-text">1. Are you moving away from something, or toward something?</p>
+          <div class="diag-options">
+            <label class="diag-option"><input type="radio" name="d1" value="away"> Mainly away — I'm burned out, misaligned, or unhappy where I am</label>
+            <label class="diag-option"><input type="radio" name="d1" value="toward"> Mainly toward — there's something specific I want to build, learn, or become</label>
+            <label class="diag-option"><input type="radio" name="d1" value="both"> Both — I have real reasons to leave and a clear direction I want to go</label>
+          </div>
+        </div>
+        <div class="diag-question">
+          <p class="diag-q-text">2. What is the actual problem?</p>
+          <div class="diag-options">
+            <label class="diag-option"><input type="radio" name="d2" value="role"> The role — the work itself isn't right for me</label>
+            <label class="diag-option"><input type="radio" name="d2" value="manager"> The manager or team — the work is fine, the environment isn't</label>
+            <label class="diag-option"><input type="radio" name="d2" value="org"> The organisation — the culture, the politics, the direction</label>
+            <label class="diag-option"><input type="radio" name="d2" value="industry"> The industry — I want to be doing something fundamentally different</label>
+            <label class="diag-option"><input type="radio" name="d2" value="unclear"> Unclear — I just know something feels wrong</label>
+          </div>
+        </div>
+        <div class="diag-question">
+          <p class="diag-q-text">3. What have you already tried to change about your current situation?</p>
+          <textarea class="diag-open" id="d3-text" placeholder="Have you had the conversation? Asked for a different role or scope? Tried to find a new manager internally?"></textarea>
+        </div>
+        <hr class="form-divider">
+        <div class="diag-question">
+          <p class="diag-q-text">4. What would need to be true for you to stay?</p>
+          <textarea class="diag-open" id="d4-text" placeholder="Name it specifically. If you can't — that tells you something."></textarea>
+        </div>
+        <div class="diag-question">
+          <p class="diag-q-text">5. Who do you know who is doing what you want to do?</p>
+          <textarea class="diag-open" id="d5-text" placeholder="Name them. Have you spoken to them about their path? If not — do that before you make any decisions."></textarea>
+        </div>
+        <div class="diag-question">
+          <p class="diag-q-text">6. What's the minimum viable version of the new direction?</p>
+          <p class="question-note" style="margin-bottom: 0.5rem;">Before a full pivot, is there a smaller test — a side project, a secondment, a voluntary role, a course, a conversation — that lets you find out if you're right about wanting this?</p>
+          <textarea class="diag-open" id="d6-text"></textarea>
+        </div>
+        <hr class="form-divider">
+        <div class="diag-question">
+          <p class="diag-q-text">7. What is your honest read of the situation right now?</p>
+          <textarea id="d7-text" style="min-height: 110px;" placeholder="Having worked through the above — what does the picture look like? What does it tell you about what to do next?"></textarea>
+        </div>
+        <div id="diag-result" class="diag-result">
+          <p class="diag-result-title" id="diag-result-title"></p>
+          <p class="diag-result-text" id="diag-result-text"></p>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn-primary" onclick="runDiagnostic()">Read the diagnostic</button>
+        <button class="btn-secondary" onclick="window.print()">Print / Save as PDF</button>
+        <p class="save-note">Your answers stay in your browser — nothing is sent anywhere.</p>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <p class="footer-copy">© The Working Ground</p>
+    <nav><ul class="footer-nav"><li><a href="/about/">About</a></li><li><a href="/about/#what-to-build">What to build next?</a></li></ul></nav>
+  </footer>
+  <script>
+    function switchTab(id, btn) {
+      document.querySelectorAll('.tool-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('panel-' + id).classList.add('active');
+    }
+    function clearPrep() {
+      if (confirm('Clear all fields?')) { ['prep-q1','prep-q2','prep-q3'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; }); }
+    }
+    function runDiagnostic() {
+      const d1 = document.querySelector('input[name="d1"]:checked');
+      const d2 = document.querySelector('input[name="d2"]:checked');
+      const d3 = document.getElementById('d3-text').value.trim();
+      const d4 = document.getElementById('d4-text').value.trim();
+      const resultEl = document.getElementById('diag-result');
+      const titleEl = document.getElementById('diag-result-title');
+      const textEl = document.getElementById('diag-result-text');
+      let title = '', text = '';
+      if (!d1 && !d2) { title = 'Start with the first two questions'; text = 'Select an answer for at least the first two questions to get a read.'; }
+      else if (d1 && d1.value === 'away' && d2 && d2.value === 'manager') { title = 'This may be a fixable problem, not a pivot'; text = 'When the issue is the manager or team rather than the work itself, a move within the organisation or a change in environment often resolves it. A full industry or function change carries more risk than the situation warrants.'; }
+      else if (d1 && d1.value === 'toward' && d2 && (d2.value === 'industry' || d2.value === 'role')) { title = 'This looks like a genuine case for a pivot'; text = 'You have a direction and a clear read of why the current path is not it. The key question is whether you have enough real-world signal — conversations with people doing the thing, a small test, a clear picture of what entry looks like. If not, get that before committing.'; }
+      else if (d1 && d1.value === 'away' && d2 && d2.value === 'unclear') { title = 'The problem needs more definition before you can solve it'; text = 'Moving without a clear diagnosis tends to replicate the same problem in a new setting. It is worth sitting with this longer — what specifically feels wrong, what a good version of your current situation would look like, and whether you have tried to get there.'; }
+      else if (d1 && d1.value === 'both') { title = 'You have good raw material to work with'; text = 'Having a real reason to leave and a direction to move toward is a stronger position than most people start from. The work now is getting specific about the new direction — who is doing it, what the path looks like, and what the minimum viable test is.'; }
+      else { title = 'A few things to bring to your next session'; text = 'Based on your answers: ' + (d3.length < 20 ? 'You may not have exhausted what is possible in your current situation. ' : '') + (d4.length < 10 ? 'You could not name what would need to be true to stay — that is often a signal. ' : '') + 'Bring this to your mentor with your honest read from question 7.'; }
+      titleEl.textContent = title; textEl.textContent = text; resultEl.classList.add('visible'); resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  </script>
+</body>
+</html>
