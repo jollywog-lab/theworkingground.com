@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design your career — The Working Ground</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --cream: #F7F4EF; --warm-dark: #1C1A17; --muted: #7A7167; --accent: #887333; --card-bg: #FFFFFF; --border: #E2D0D5; --tag-bg: #EDE9E2; }
+    body { background: var(--cream); color: var(--warm-dark); font-family: 'DM Sans', sans-serif; font-weight: 300; min-height: 100vh; display: flex; flex-direction: column; }
+    .site-nav { background: var(--cream); border-bottom: 1px solid var(--border); padding: 0.5rem 2rem; }
+    .site-nav-back { font-size: 0.78rem; color: var(--muted); text-decoration: none; }
+    .site-nav-back:hover { color: var(--warm-dark); }
+    header { padding: 2.5rem 2rem 1.5rem; max-width: 760px; margin: 0 auto; width: 100%; }
+    .page-tag { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.5em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 0.75rem; }
+    .page-title { font-family: 'DM Serif Display', serif; font-size: clamp(1.75rem, 3.5vw, 2.5rem); letter-spacing: -0.02em; color: var(--warm-dark); line-height: 1.1; margin-bottom: 0.75rem; }
+    .page-intro { font-size: 0.9rem; color: var(--muted); line-height: 1.7; max-width: 540px; }
+    main { flex: 1; max-width: 760px; width: 100%; margin: 0 auto; padding: 0.5rem 2rem 4rem; }
+    .tool-tabs { display: flex; margin-top: 1.5rem; border-bottom: 2px solid var(--border); }
+    .tool-tab { font-size: 0.82rem; font-weight: 400; color: var(--muted); padding: 0.6rem 1.2rem; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; background: none; border-left: none; border-right: none; border-top: none; transition: color 0.15s, border-color 0.15s; }
+    .tool-tab.active { color: var(--warm-dark); border-bottom-color: var(--accent); }
+    .tool-panel { display: none; }
+    .tool-panel.active { display: block; }
+    .panel-card { background: var(--card-bg); border-radius: 4px; padding: 2rem; margin-top: 1.5rem; }
+    .panel-intro { font-size: 0.88rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.75rem; max-width: 520px; }
+    .section-label { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.5em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 0.5rem; }
+    textarea { width: 100%; background: var(--cream); border: 1px solid var(--border); border-radius: 3px; padding: 0.55rem 0.75rem; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 300; color: var(--warm-dark); transition: border-color 0.15s; resize: vertical; min-height: 80px; line-height: 1.6; }
+    textarea:focus { outline: none; border-color: var(--accent); }
+    input[type="text"] { width: 100%; background: var(--cream); border: 1px solid var(--border); border-radius: 3px; padding: 0.5rem 0.75rem; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 300; color: var(--warm-dark); transition: border-color 0.15s; }
+    input[type="text"]:focus { outline: none; border-color: var(--accent); }
+    .form-divider { border: none; border-top: 1px solid var(--border); margin: 1.75rem 0; }
+    label { display: block; font-size: 0.78rem; font-weight: 500; color: var(--warm-dark); margin-bottom: 0.3rem; }
+    label .sub { font-weight: 300; color: var(--muted); }
+    .field-group { margin-bottom: 1.25rem; }
+    .actions { margin-top: 1.5rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary { background: var(--accent); color: #fff; border: none; border-radius: 3px; padding: 0.6rem 1.4rem; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 400; cursor: pointer; transition: opacity 0.15s; }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-secondary { background: transparent; color: var(--muted); border: 1px solid var(--border); border-radius: 3px; padding: 0.6rem 1.2rem; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 300; cursor: pointer; transition: border-color 0.15s, color 0.15s; }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--warm-dark); }
+    .save-note { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+    .scenario-card { border: 1px solid var(--border); border-radius: 4px; padding: 1.5rem; margin-bottom: 1.25rem; }
+    .scenario-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; }
+    .scenario-number { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: var(--tag-bg); padding: 0.2rem 0.6rem; border-radius: 2px; }
+    .scenario-title-input { flex: 1; background: transparent; border: none; border-bottom: 1px solid var(--border); padding: 0.25rem 0; font-family: 'DM Serif Display', serif; font-size: 1rem; color: var(--warm-dark); font-style: italic; }
+    .scenario-title-input:focus { outline: none; border-bottom-color: var(--accent); }
+    .scenario-title-input::placeholder { color: var(--muted); font-style: italic; }
+    .ratings-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+    .rating-item label { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.4rem; }
+    .rating-stars { display: flex; gap: 4px; }
+    .star { width: 22px; height: 22px; cursor: pointer; border: 1px solid var(--border); border-radius: 2px; background: var(--cream); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: var(--muted); transition: background 0.1s; }
+    .star.selected { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .pdp-actions-list { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 0.5rem; }
+    .pdp-action-row { display: grid; grid-template-columns: 1fr 140px; gap: 0.75rem; align-items: start; }
+    .pdp-action-row input[type="text"] { font-size: 0.85rem; }
+    footer { border-top: 2px solid var(--border); padding: 1.5rem 2rem; max-width: 760px; margin: 0 auto; width: 100%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-copy { font-size: 0.82rem; color: var(--muted); }
+    .footer-nav { display: flex; gap: 1.5rem; list-style: none; }
+    .footer-nav a { font-size: 0.78rem; color: var(--muted); text-decoration: none; }
+    .footer-nav a:hover { color: var(--warm-dark); }
+    @media print {
+      .site-nav, .tool-tabs, .actions, footer { display: none !important; }
+      .tool-panel { display: block !important; }
+      body { background: #fff; }
+      .panel-card { box-shadow: none; padding: 0; margin-top: 0; }
+      header { padding: 0 0 1rem; } main { padding: 0; }
+      textarea { border: none; border-bottom: 1px solid #ccc; background: transparent; border-radius: 0; min-height: 60px; }
+      input[type="text"] { border: none; border-bottom: 1px solid #ccc; border-radius: 0; background: transparent; }
+      .scenario-title-input { border-bottom: 1px solid #ccc; }
+      @page { margin: 2cm 2.5cm; }
+    }
+    @media (max-width: 600px) {
+      header { padding: 2rem 1.25rem 1.25rem; } main { padding: 0.5rem 1.25rem 3rem; }
+      .panel-card { padding: 1.5rem 1.25rem; } footer { padding: 1.25rem; flex-direction: column; align-items: flex-start; }
+      .ratings-row { grid-template-columns: 1fr; }
+      .pdp-action-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav"><a href="/mentoring/" class="site-nav-back">← Mentoring</a></nav>
+  <header>
+    <span class="page-tag">Step 2</span>
+    <h1 class="page-title">Design your career</h1>
+    <p class="page-intro">Two tools for moving from self-knowledge to a plan. The Odyssey Plan explores multiple futures before committing to one. The PDP translates direction into specific actions.</p>
+  </header>
+  <main>
+    <div class="tool-tabs">
+      <button class="tool-tab active" onclick="switchTab('odyssey', this)">Odyssey Plan</button>
+      <button class="tool-tab" onclick="switchTab('pdp', this)">Personal Dev Plan</button>
+    </div>
+    <div id="panel-odyssey" class="tool-panel active">
+      <div class="panel-card">
+        <p class="panel-intro">Bill Burnett and Dave Evans describe the Odyssey Plan as three alternative five-year plans for your life — not optimistic/pessimistic versions of the same plan, but genuinely different directions. Map all three before deciding on one. The point is to see what you're choosing between.</p>
+        <div class="scenario-card">
+          <div class="scenario-header">
+            <span class="scenario-number">Plan A</span>
+            <input class="scenario-title-input" type="text" placeholder="Give this plan a title" id="s1-title">
+          </div>
+          <div class="field-group">
+            <label for="s1-desc">What does the next five years look like? <span class="sub">— be specific about role, organisation, location, lifestyle</span></label>
+            <textarea id="s1-desc" style="min-height:100px;"></textarea>
+          </div>
+          <div class="field-group">
+            <label for="s1-resources">What resources or capabilities do you need that you don't currently have?</label>
+            <textarea id="s1-resources" style="min-height:70px;"></textarea>
+          </div>
+          <div class="field-group">
+            <label for="s1-questions">What questions or concerns does this plan raise?</label>
+            <textarea id="s1-questions" style="min-height:70px;"></textarea>
+          </div>
+          <div class="ratings-row">
+            <div class="rating-item"><label>Confidence <span class="sub">— how likely is this?</span></label><div class="rating-stars" id="s1-conf"></div></div>
+            <div class="rating-item"><label>Engagement <span class="sub">— how excited are you?</span></label><div class="rating-stars" id="s1-eng"></div></div>
+            <div class="rating-item"><label>Coherence <span class="sub">— does it fit who you are?</span></label><div class="rating-stars" id="s1-coh"></div></div>
+          </div>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-header">
+            <span class="scenario-number">Plan B</span>
+            <input class="scenario-title-input" type="text" placeholder="Give this plan a title" id="s2-title">
+          </div>
+          <p style="font-size:0.8rem; color:var(--muted); margin-bottom:1rem; line-height:1.5;">If Plan A isn't available, or if you decided not to do it — what would you do instead? A genuinely different direction, not a fallback version of Plan A.</p>
+          <div class="field-group"><label for="s2-desc">What does the next five years look like?</label><textarea id="s2-desc" style="min-height:100px;"></textarea></div>
+          <div class="field-group"><label for="s2-resources">Resources or capabilities needed?</label><textarea id="s2-resources" style="min-height:70px;"></textarea></div>
+          <div class="field-group"><label for="s2-questions">Questions or concerns?</label><textarea id="s2-questions" style="min-height:70px;"></textarea></div>
+          <div class="ratings-row">
+            <div class="rating-item"><label>Confidence</label><div class="rating-stars" id="s2-conf"></div></div>
+            <div class="rating-item"><label>Engagement</label><div class="rating-stars" id="s2-eng"></div></div>
+            <div class="rating-item"><label>Coherence</label><div class="rating-stars" id="s2-coh"></div></div>
+          </div>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-header">
+            <span class="scenario-number">Plan C</span>
+            <input class="scenario-title-input" type="text" placeholder="Give this plan a title" id="s3-title">
+          </div>
+          <p style="font-size:0.8rem; color:var(--muted); margin-bottom:1rem; line-height:1.5;">If money and reputation weren't factors — if you couldn't fail and no one was watching — what would you do? This one is allowed to feel unrealistic.</p>
+          <div class="field-group"><label for="s3-desc">What does the next five years look like?</label><textarea id="s3-desc" style="min-height:100px;"></textarea></div>
+          <div class="field-group"><label for="s3-resources">Resources or capabilities needed?</label><textarea id="s3-resources" style="min-height:70px;"></textarea></div>
+          <div class="field-group"><label for="s3-questions">Questions or concerns?</label><textarea id="s3-questions" style="min-height:70px;"></textarea></div>
+          <div class="ratings-row">
+            <div class="rating-item"><label>Confidence</label><div class="rating-stars" id="s3-conf"></div></div>
+            <div class="rating-item"><label>Engagement</label><div class="rating-stars" id="s3-eng"></div></div>
+            <div class="rating-item"><label>Coherence</label><div class="rating-stars" id="s3-coh"></div></div>
+          </div>
+        </div>
+        <div class="form-divider"></div>
+        <div class="field-group">
+          <label for="odyssey-reflect">Looking at all three — what do you notice?</label>
+          <p style="font-size:0.8rem; color:var(--muted); margin-bottom:0.5rem; line-height:1.5;">Which plan did you describe with the most energy? Which one surprised you? What would need to be true to make Plan C more possible?</p>
+          <textarea id="odyssey-reflect" style="min-height:110px;"></textarea>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn-primary" onclick="window.print()">Print / Save as PDF</button>
+        <p class="save-note">Your answers stay in your browser — nothing is sent anywhere.</p>
+      </div>
+    </div>
+    <div id="panel-pdp" class="tool-panel">
+      <div class="panel-card">
+        <p class="panel-intro">A Personal Development Plan on a single page. Keep it focused — one main thing you're working toward, three specific actions, and a clear timeframe. Bring it to your next session and update it every quarter.</p>
+        <div class="field-group"><label for="pdp-focus">Focus area <span class="sub">— what are you developing toward?</span></label><input type="text" id="pdp-focus" placeholder="e.g. Move into a sustainability strategy role in the next 18 months"></div>
+        <div class="form-divider"></div>
+        <div class="field-group"><label for="pdp-current">Current state <span class="sub">— where are you now?</span></label><textarea id="pdp-current" style="min-height:80px;" placeholder="What skills, experience, and relationships do you currently have that are relevant?"></textarea></div>
+        <div class="field-group"><label for="pdp-target">Target state <span class="sub">— what does success look like?</span></label><textarea id="pdp-target" style="min-height:80px;" placeholder="Be specific. What will you be doing, what will you know, who will know you?"></textarea></div>
+        <div class="form-divider"></div>
+        <div class="field-group">
+          <label>Actions <span class="sub">— three specific things you will do, with deadlines</span></label>
+          <p style="font-size:0.78rem; color:var(--muted); margin-bottom:0.6rem; line-height:1.5;">"Learn more about X" is not an action. "Speak to three people working in X field before end of [month]" is.</p>
+          <div class="pdp-actions-list">
+            <div class="pdp-action-row"><input type="text" id="pdp-a1" placeholder="Action 1 — specific and owned"><input type="text" id="pdp-a1-by" placeholder="By when"></div>
+            <div class="pdp-action-row"><input type="text" id="pdp-a2" placeholder="Action 2"><input type="text" id="pdp-a2-by" placeholder="By when"></div>
+            <div class="pdp-action-row"><input type="text" id="pdp-a3" placeholder="Action 3"><input type="text" id="pdp-a3-by" placeholder="By when"></div>
+          </div>
+        </div>
+        <div class="form-divider"></div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+          <div class="field-group"><label for="pdp-metric">How will you know you've made progress?</label><textarea id="pdp-metric" style="min-height:70px;" placeholder="A concrete signal — not 'feel more confident' but 'have had three informational conversations and applied for one role'"></textarea></div>
+          <div class="field-group"><label for="pdp-support">What support do you need?</label><textarea id="pdp-support" style="min-height:70px;" placeholder="Introductions, feedback, accountability, something else?"></textarea></div>
+        </div>
+        <div class="field-group" style="margin-top:0.5rem;"><label for="pdp-review">Next review date</label><input type="text" id="pdp-review" placeholder="e.g. End of September 2025" style="max-width:260px;"></div>
+      </div>
+      <div class="actions">
+        <button class="btn-primary" onclick="window.print()">Print / Save as PDF</button>
+        <p class="save-note">Your answers stay in your browser — nothing is sent anywhere.</p>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <p class="footer-copy">© The Working Ground</p>
+    <nav><ul class="footer-nav"><li><a href="/about/">About</a></li><li><a href="/about/#what-to-build">What to build next?</a></li></ul></nav>
+  </footer>
+  <script>
+    function switchTab(id, btn) {
+      document.querySelectorAll('.tool-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('panel-' + id).classList.add('active');
+    }
+    function initStars(containerId) {
+      const c = document.getElementById(containerId);
+      if (!c) return;
+      for (let i = 1; i <= 5; i++) {
+        const s = document.createElement('div');
+        s.className = 'star'; s.textContent = i; s.dataset.val = i;
+        s.onclick = function() {
+          const all = c.querySelectorAll('.star');
+          const v = parseInt(this.dataset.val);
+          all.forEach((st, idx) => st.classList.toggle('selected', idx < v));
+        };
+        c.appendChild(s);
+      }
+    }
+    ['s1-conf','s1-eng','s1-coh','s2-conf','s2-eng','s2-coh','s3-conf','s3-eng','s3-coh'].forEach(initStars);
+  </script>
+</body>
+</html>
