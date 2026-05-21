@@ -1,419 +1,387 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Build your network — The Working Ground</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --cream: #F7F4EF; --warm-dark: #1C1A17; --muted: #7A7167; --accent: #887333; --card-bg: #FFFFFF; --border: #E2D0D5; --tag-bg: #EDE9E2; }
-    body { background: var(--cream); color: var(--warm-dark); font-family: 'DM Sans', sans-serif; font-weight: 300; min-height: 100vh; display: flex; flex-direction: column; }
-    .site-nav { background: var(--cream); border-bottom: 1px solid var(--border); padding: 0.5rem 2rem; }
-    .site-nav-back { font-size: 0.78rem; color: var(--muted); text-decoration: none; }
-    .site-nav-back:hover { color: var(--warm-dark); }
-    header { padding: 2.5rem 2rem 1.5rem; max-width: 760px; margin: 0 auto; width: 100%; }
-    .page-tag { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.5em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 0.75rem; }
-    .page-title { font-family: 'DM Serif Display', serif; font-size: clamp(1.75rem, 3.5vw, 2.5rem); letter-spacing: -0.02em; color: var(--warm-dark); line-height: 1.1; margin-bottom: 0.75rem; }
-    .page-intro { font-size: 0.9rem; color: var(--muted); line-height: 1.7; max-width: 540px; }
-    main { flex: 1; max-width: 760px; width: 100%; margin: 0 auto; padding: 0.5rem 2rem 4rem; }
-    .tool-tabs { display: flex; margin-top: 1.5rem; border-bottom: 2px solid var(--border); }
-    .tool-tab { font-size: 0.82rem; font-weight: 400; color: var(--muted); padding: 0.6rem 1.2rem; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; background: none; border-left: none; border-right: none; border-top: none; transition: color 0.15s, border-color 0.15s; }
-    .tool-tab.active { color: var(--warm-dark); border-bottom-color: var(--accent); }
-    .tool-panel { display: none; }
-    .tool-panel.active { display: block; }
-    .panel-card { background: var(--card-bg); border-radius: 4px; padding: 2rem; margin-top: 1.5rem; }
-    .panel-intro { font-size: 0.88rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.75rem; max-width: 520px; }
-    textarea { width: 100%; background: var(--cream); border: 1px solid var(--border); border-radius: 3px; padding: 0.55rem 0.75rem; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 300; color: var(--warm-dark); transition: border-color 0.15s; resize: vertical; min-height: 70px; line-height: 1.6; }
-    textarea:focus { outline: none; border-color: var(--accent); }
-    input[type="text"] { width: 100%; background: var(--cream); border: 1px solid var(--border); border-radius: 3px; padding: 0.5rem 0.75rem; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 300; color: var(--warm-dark); transition: border-color 0.15s; }
-    input[type="text"]:focus { outline: none; border-color: var(--accent); }
-    label { display: block; font-size: 0.75rem; font-weight: 500; color: var(--muted); margin-bottom: 0.3rem; }
-    .form-divider { border: none; border-top: 1px solid var(--border); margin: 1.75rem 0; }
-    .actions { margin-top: 1.5rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
-    .btn-primary { background: var(--accent); color: #fff; border: none; border-radius: 3px; padding: 0.6rem 1.4rem; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 400; cursor: pointer; transition: opacity 0.15s; }
-    .btn-primary:hover { opacity: 0.85; }
-    .save-note { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build your network — The Working Ground</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --cream: #F7F4EF; --warm-dark: #1C1A17; --muted: #7A7167; --accent: #887333; --card-bg: #FFFFFF; --border: #E2D0D5; --tag-bg: #EDE9E2; }
+body { background: var(--cream); color: var(--warm-dark); font-family: 'DM Sans', sans-serif; font-weight: 300; min-height: 100vh; display: flex; flex-direction: column; }
+.site-nav { background: var(--cream); border-bottom: 1px solid var(--border); padding: 0.5rem 2rem; }
+.site-nav-back { font-size: 0.78rem; color: var(--muted); text-decoration: none; }
+.site-nav-back:hover { color: var(--warm-dark); }
+header { padding: 2.5rem 2rem 1.5rem; max-width: 760px; margin: 0 auto; width: 100%; }
+.page-tag { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.5em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 0.75rem; }
+.page-title { font-family: 'DM Serif Display', serif; font-size: clamp(1.75rem, 3.5vw, 2.5rem); letter-spacing: -0.02em; color: var(--warm-dark); line-height: 1.1; margin-bottom: 0.75rem; }
+.page-intro { font-size: 0.9rem; color: var(--muted); line-height: 1.7; max-width: 540px; }
+main { flex: 1; max-width: 760px; width: 100%; margin: 0 auto; padding: 0.5rem 2rem 4rem; }
+.tool-tabs { display: flex; margin-top: 1.5rem; border-bottom: 2px solid var(--border); }
+.tool-tab { font-size: 0.82rem; font-weight: 400; color: var(--muted); padding: 0.6rem 1.2rem; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; background: none; border-left: none; border-right: none; border-top: none; transition: color 0.15s, border-color 0.15s; }
+.tool-tab.active { color: var(--warm-dark); border-bottom-color: var(--accent); }
+.tool-panel { display: none; }
+.tool-panel.active { display: block; }
+.panel-card { background: var(--card-bg); border-radius: 4px; padding: 2rem; margin-top: 1.5rem; }
+.panel-intro { font-size: 0.88rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.75rem; max-width: 520px; }
+textarea { width: 100%; background: var(--cream); border: 1px solid var(--border); border-radius: 3px; padding: 0.55rem 0.75rem; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 300; color: var(--warm-dark); transition: border-color 0.15s; resize: vertical; min-height: 70px; line-height: 1.6; }
+textarea:focus { outline: none; border-color: var(--accent); }
+input[type="text"] { width: 100%; background: var(--cream); border: 1px solid var(--border); border-radius: 3px; padding: 0.5rem 0.75rem; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 300; color: var(--warm-dark); transition: border-color 0.15s; }
+input[type="text"]:focus { outline: none; border-color: var(--accent); }
+label { display: block; font-size: 0.75rem; font-weight: 500; color: var(--muted); margin-bottom: 0.3rem; }
+.form-divider { border: none; border-top: 1px solid var(--border); margin: 1.75rem 0; }
+.actions { margin-top: 1.5rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.btn-primary { background: var(--accent); color: #fff; border: none; border-radius: 3px; padding: 0.6rem 1.4rem; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 400; cursor: pointer; transition: opacity 0.15s; }
+.btn-primary:hover { opacity: 0.85; }
+.save-note { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
 
-    /* Board of advisors */
-    .board-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 0.5rem; }
-    .board-seat { border: 1px solid var(--border); border-radius: 4px; padding: 1.25rem; }
-    .seat-tag { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); display: inline-block; margin-bottom: 0.4rem; }
-    .seat-title { font-family: 'DM Serif Display', serif; font-size: 1rem; color: var(--warm-dark); margin-bottom: 0.3rem; }
-    .seat-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.55; margin-bottom: 1rem; }
-    .seat-field { margin-bottom: 0.75rem; }
-    .seat-empty { border-style: dashed; background: transparent; }
-    .seat-empty .seat-title { color: var(--muted); }
+/* Board of advisors */
+.board-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 0.5rem; }
+.board-seat { border: 1px solid var(--border); border-radius: 4px; padding: 1.25rem; }
+.seat-tag { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); display: inline-block; margin-bottom: 0.4rem; }
+.seat-title { font-family: 'DM Serif Display', serif; font-size: 1rem; color: var(--warm-dark); margin-bottom: 0.3rem; }
+.seat-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.55; margin-bottom: 1rem; }
+.seat-field { margin-bottom: 0.75rem; }
 
-    /* Life stage guide */
-    .stage-tabs { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.5rem; margin-bottom: 1.5rem; }
-    .stage-tab { font-size: 0.78rem; color: var(--muted); padding: 0.3rem 0.75rem; border: 1px solid var(--border); border-radius: 2px; cursor: pointer; background: none; transition: color 0.12s, border-color 0.12s; }
-    .stage-tab.active { color: var(--warm-dark); border-color: var(--accent); background: var(--tag-bg); }
-    .stage-content { display: none; }
-    .stage-content.active { display: block; }
-    .stage-heading { font-family: 'DM Serif Display', serif; font-size: 1.15rem; color: var(--warm-dark); margin-bottom: 0.5rem; }
-    .stage-body { font-size: 0.86rem; color: var(--muted); line-height: 1.7; margin-bottom: 0.75rem; }
-    .stage-focus-label { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--warm-dark); margin-bottom: 0.4rem; }
-    .stage-focus-list { display: flex; flex-direction: column; gap: 0.3rem; }
-    .stage-focus-item { font-size: 0.84rem; color: var(--muted); padding-left: 0.75rem; position: relative; line-height: 1.5; }
-    .stage-focus-item::before { content: '—'; position: absolute; left: 0; color: var(--accent); }
-    .stage-question-list { margin-top: 1rem; display: flex; flex-direction: column; gap: 0.4rem; }
-    .stage-question { font-size: 0.84rem; color: var(--muted); padding-left: 0.75rem; position: relative; line-height: 1.55; font-style: italic; }
-    .stage-question::before { content: ''; position: absolute; left: 0; top: 0.55rem; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
-    .stage-caveat { font-size: 0.78rem; color: var(--muted); line-height: 1.6; margin-top: 1.25rem; padding: 0.75rem 1rem; background: var(--tag-bg); border-radius: 3px; }
+/* Life stage guide */
+.stage-grid { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.5rem; }
+.stage-card { flex: 1; min-width: 200px; border: 1px solid var(--border); border-radius: 4px; padding: 1.25rem; }
+.stage-card.active-stage { border-color: var(--accent); }
+.stage-name { font-family: 'DM Serif Display', serif; font-size: 0.95rem; color: var(--warm-dark); margin-bottom: 0.35rem; }
+.stage-years { font-size: 0.72rem; font-weight: 500; color: var(--accent); letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 0.6rem; }
+.stage-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.6; margin-bottom: 0.75rem; }
+.stage-focus-label { font-size: 0.7rem; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.3rem; }
+.stage-focus { font-size: 0.78rem; color: var(--warm-dark); line-height: 1.55; }
+.stage-reflection { margin-top: 1.5rem; border-top: 1px solid var(--border); padding-top: 1.5rem; }
+.stage-reflection label { font-size: 0.78rem; font-weight: 500; color: var(--warm-dark); margin-bottom: 0.35rem; }
 
-    /* Networking guide */
-    .net-section { margin-bottom: 2rem; }
-    .net-heading { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--warm-dark); margin-bottom: 0.6rem; }
-    .net-body { font-size: 0.86rem; color: var(--muted); line-height: 1.75; }
-    .net-body + .net-body { margin-top: 0.75rem; }
-    .net-body strong { font-weight: 500; color: var(--warm-dark); }
-    .net-script { background: var(--tag-bg); border-left: 2px solid var(--accent); padding: 0.75rem 1rem; border-radius: 0 3px 3px 0; margin-top: 0.75rem; font-size: 0.84rem; color: var(--warm-dark); line-height: 1.6; font-style: italic; }
-    .net-divider { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+/* Network map */
+.map-circles { position: relative; width: 320px; height: 320px; margin: 0 auto 2rem; flex-shrink: 0; }
+.map-circles svg { width: 100%; height: 100%; }
+.map-legend { flex: 1; min-width: 200px; }
+.map-legend-item { display: flex; align-items: flex-start; gap: 0.6rem; margin-bottom: 0.75rem; }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 3px; }
+.legend-text { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+.legend-text strong { color: var(--warm-dark); font-weight: 500; display: block; }
+.map-layout { display: flex; gap: 2rem; align-items: flex-start; flex-wrap: wrap; }
+.panel-subtitle { font-family: 'DM Serif Display', serif; font-size: 1rem; color: var(--warm-dark); margin-bottom: 0.75rem; }
 
-    footer { border-top: 2px solid var(--border); padding: 1.5rem 2rem; max-width: 760px; margin: 0 auto; width: 100%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
-    .footer-copy { font-size: 0.82rem; color: var(--muted); }
-    .footer-nav { display: flex; gap: 1.5rem; list-style: none; }
-    .footer-nav a { font-size: 0.78rem; color: var(--muted); text-decoration: none; }
-    .footer-nav a:hover { color: var(--warm-dark); }
+/* In the room */
+.ref-section { margin-bottom: 1.75rem; }
+.ref-section:last-of-type { margin-bottom: 0; }
+.ref-heading { font-family: 'DM Serif Display', serif; font-size: 1rem; color: var(--warm-dark); margin-bottom: 0.75rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); }
+.ref-row { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+.ref-col { flex: 1; min-width: 200px; }
+.ref-item { margin-bottom: 0.75rem; }
+.ref-label { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.2rem; }
+.ref-text { font-size: 0.82rem; color: var(--warm-dark); line-height: 1.6; }
+.ref-text em { color: var(--muted); font-style: normal; }
+.mentor-note { background: var(--tag-bg); border-radius: 3px; padding: 0.75rem 1rem; margin-bottom: 1.75rem; font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+.mentor-note strong { color: var(--warm-dark); font-weight: 500; }
 
-    @media print {
-      .site-nav, .tool-tabs, .actions, footer { display: none !important; }
-      .tool-panel { display: block !important; }
-      body { background: #fff; }
-      .panel-card { box-shadow: none; padding: 0; margin-top: 0; }
-      header { padding: 0 0 1rem; } main { padding: 0; }
-      textarea { border: none; border-bottom: 1px solid #ccc; background: transparent; border-radius: 0; min-height: 50px; }
-      input[type="text"] { border: none; border-bottom: 1px solid #ccc; border-radius: 0; background: transparent; }
-      .stage-content { display: block !important; }
-      @page { margin: 2cm 2.5cm; }
-    }
-    @media (max-width: 600px) {
-      header { padding: 2rem 1.25rem 1.25rem; } main { padding: 0.5rem 1.25rem 3rem; }
-      .panel-card { padding: 1.5rem 1.25rem; } footer { padding: 1.25rem; flex-direction: column; align-items: flex-start; }
-      .tool-tab { padding: 0.6rem 0.75rem; font-size: 0.78rem; }
-      .board-grid { grid-template-columns: 1fr; }
-    }
-  </style>
+footer { border-top: 2px solid var(--border); padding: 1.5rem 2rem; max-width: 760px; margin: 0 auto; width: 100%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+.footer-copy { font-size: 0.82rem; color: var(--muted); }
+.footer-nav { display: flex; gap: 1.5rem; list-style: none; }
+.footer-nav a { font-size: 0.78rem; color: var(--muted); text-decoration: none; }
+.footer-nav a:hover { color: var(--warm-dark); }
+
+@media print {
+.site-nav, .tool-tabs, .actions, footer { display: none !important; }
+.tool-panel { display: none !important; }
+.tool-panel.active { display: block !important; }
+body { background: #fff; }
+.panel-card { box-shadow: none; }
+@page { margin: 2cm 2.5cm; }
+}
+@media (max-width: 600px) {
+header { padding: 2rem 1.25rem 1.25rem; }
+main { padding: 0.5rem 1.25rem 3rem; }
+.panel-card { padding: 1.5rem 1.25rem; }
+footer { padding: 1.25rem; flex-direction: column; align-items: flex-start; }
+.board-grid { grid-template-columns: 1fr; }
+.map-circles { width: 260px; height: 260px; }
+.field-row { grid-template-columns: 1fr; }
+}
+</style>
 </head>
 <body>
-  <nav class="site-nav"><a href="/mentoring/" class="site-nav-back">← Mentoring</a></nav>
-  <header>
-    <span class="page-tag">Step 3</span>
-    <h1 class="page-title">Build your network</h1>
-    <p class="page-intro">Four tools: mapping who is in your corner, understanding your life stage, how to build relationships without it feeling transactional, and what to actually do when you are in the room.</p>
-  </header>
-  <main>
-    <div class="tool-tabs">
-      <button class="tool-tab active" onclick="switchTab('board', this)">Board of advisors</button>
-      <button class="tool-tab" onclick="switchTab('stages', this)">Life stage guide</button>
-      <button class="tool-tab" onclick="switchTab('networking', this)">How to network</button>
-      <button class="tool-tab" onclick="switchTab('intheroom', this)">In the room</button>
-    </div>
+<nav class="site-nav">
+<a href="/mentoring/" class="site-nav-back">← Mentoring</a>
+</nav>
+<header>
+<span class="page-tag">Step 3 of 4</span>
+<h1 class="page-title">Build your network</h1>
+<p class="page-intro">Four tools: mapping who is in your corner, understanding your life stage, how to build relationships without it feeling transactional, and what to actually do when you are in the room.</p>
+</header>
+<main>
+<div class="tool-tabs">
+<button class="tool-tab active" onclick="switchTab('board', this)">Board of advisors</button>
+<button class="tool-tab" onclick="switchTab('lifestage', this)">Life stage</button>
+<button class="tool-tab" onclick="switchTab('relationship', this)">Relationship building</button>
+<button class="tool-tab" onclick="switchTab('intheroom', this)">In the room</button>
+</div>
 
-    <!-- BOARD OF ADVISORS -->
-    <div id="panel-board" class="tool-panel active">
-      <div class="panel-card">
-        <p class="panel-intro">Your personal board of advisors is the small group of people who support your development in different ways. Each seat serves a distinct function — having all five is useful, but most people start with gaps. Name who's currently in each seat, and who you want there.</p>
+<!-- BOARD OF ADVISORS -->
+<div class="tool-panel active" id="panel-board">
+<div class="panel-card">
+<p class="panel-intro">Think of this as your personal board of advisors. Not a contact list. These are people who show up for you in specific ways. Some seats are filled. Some will take time. Map what you have, then notice what is missing.</p>
+<div class="board-grid">
 
-        <div class="board-grid">
-          <div class="board-seat">
-            <span class="seat-tag">Seat 1</span>
-            <div class="seat-title">Mentor</div>
-            <p class="seat-desc">Someone further along a path you're interested in. Offers experience, perspective, and honest guidance. Ideally in a formal mentoring relationship.</p>
-            <div class="seat-field"><label>Who's in this seat?</label><input type="text" id="b1-who" placeholder="Name(s) or 'empty'"></div>
-            <div class="seat-field"><label>What do they bring?</label><textarea id="b1-brings" style="min-height:55px;"></textarea></div>
-            <div class="seat-field"><label>Who do you want in this seat?</label><input type="text" id="b1-want" placeholder="Name(s) or 'need to find'"></div>
-          </div>
+<!-- Seat 1: Sponsor -->
+<div class="board-seat">
+<span class="seat-tag">Sponsor</span>
+<p class="seat-title">The advocate</p>
+<p class="seat-desc">Someone senior who puts your name in rooms you are not in. They advocate for your career when it counts.</p>
+<div class="seat-field"><label>Name (if you have one)</label><input type="text" placeholder=""></div>
+<div class="seat-field"><label>How you know them</label><textarea style="min-height:50px;"></textarea></div>
+<div class="seat-field"><label>What you want from this relationship</label><textarea style="min-height:60px;"></textarea></div>
+</div>
 
-          <div class="board-seat">
-            <span class="seat-tag">Seat 2</span>
-            <div class="seat-title">Braintrust</div>
-            <p class="seat-desc">Peers — people at a similar stage — who you think alongside. They challenge your thinking, share what they're learning, and tell you when your reasoning is off.</p>
-            <div class="seat-field"><label>Who's in this seat?</label><input type="text" id="b2-who" placeholder="Name(s) or 'empty'"></div>
-            <div class="seat-field"><label>What do they bring?</label><textarea id="b2-brings" style="min-height:55px;"></textarea></div>
-            <div class="seat-field"><label>Who do you want in this seat?</label><input type="text" id="b2-want" placeholder="Name(s) or 'need to find'"></div>
-          </div>
+<!-- Seat 2: Mentor -->
+<div class="board-seat">
+<span class="seat-tag">Mentor</span>
+<p class="seat-title">The guide</p>
+<p class="seat-desc">Someone who has navigated similar terrain and can help you think through decisions, transitions, and blind spots.</p>
+<div class="seat-field"><label>Name (if you have one)</label><input type="text" placeholder=""></div>
+<div class="seat-field"><label>How you know them</label><textarea style="min-height:50px;"></textarea></div>
+<div class="seat-field"><label>What you want from this relationship</label><textarea style="min-height:60px;"></textarea></div>
+</div>
 
-          <div class="board-seat">
-            <span class="seat-tag">Seat 3</span>
-            <div class="seat-title">Sponsor</div>
-            <p class="seat-desc">Someone with influence who advocates for you in rooms you're not in. Different from a mentor — they use their capital on your behalf. The hardest seat to fill, and the most valuable.</p>
-            <div class="seat-field"><label>Who's in this seat?</label><input type="text" id="b3-who" placeholder="Name(s) or 'empty'"></div>
-            <div class="seat-field"><label>What do they bring?</label><textarea id="b3-brings" style="min-height:55px;"></textarea></div>
-            <div class="seat-field"><label>Who do you want in this seat?</label><input type="text" id="b3-want" placeholder="Name(s) or 'need to find'"></div>
-          </div>
+<!-- Seat 3: Peer -->
+<div class="board-seat">
+<span class="seat-tag">Peer</span>
+<p class="seat-title">The honest mirror</p>
+<p class="seat-desc">Someone at a similar level who gives you real feedback, not just support. You can be honest with each other.</p>
+<div class="seat-field"><label>Name (if you have one)</label><input type="text" placeholder=""></div>
+<div class="seat-field"><label>How you know them</label><textarea style="min-height:50px;"></textarea></div>
+<div class="seat-field"><label>What you want from this relationship</label><textarea style="min-height:60px;"></textarea></div>
+</div>
 
-          <div class="board-seat">
-            <span class="seat-tag">Seat 4</span>
-            <div class="seat-title">Coach</div>
-            <p class="seat-desc">A professional coach — trained to help you think through decisions, build self-awareness, and work through blockers. More relevant from around 30+ or when navigating a significant transition.</p>
-            <div class="seat-field"><label>Who's in this seat?</label><input type="text" id="b4-who" placeholder="Name(s) or 'not yet / not needed'"></div>
-            <div class="seat-field"><label>What do they bring?</label><textarea id="b4-brings" style="min-height:55px;"></textarea></div>
-            <div class="seat-field"><label>When might this become relevant for you?</label><input type="text" id="b4-want"></div>
-          </div>
+<!-- Seat 4: Connector -->
+<div class="board-seat">
+<span class="seat-tag">Connector</span>
+<p class="seat-title">The bridge</p>
+<p class="seat-desc">Someone who makes introductions and opens doors. They know everyone and are generous with access.</p>
+<div class="seat-field"><label>Name (if you have one)</label><input type="text" placeholder=""></div>
+<div class="seat-field"><label>How you know them</label><textarea style="min-height:50px;"></textarea></div>
+<div class="seat-field"><label>What you want from this relationship</label><textarea style="min-height:60px;"></textarea></div>
+</div>
 
-          <div class="board-seat seat-empty" style="grid-column: 1 / -1;">
-            <span class="seat-tag">Seat 5</span>
-            <div class="seat-title">Therapist</div>
-            <p class="seat-desc">A mental health professional. Not everyone needs this, but if emotional patterns are getting in the way of decisions or relationships at work, it's the right support — not a mentor or coach's job to fill. Mentoring is not therapy.</p>
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top:0.75rem;">
-              <div class="seat-field"><label>Is this relevant for you right now?</label><input type="text" id="b5-who" placeholder="Yes / No / Maybe"></div>
-              <div class="seat-field"><label>Notes</label><input type="text" id="b5-notes"></div>
-            </div>
-          </div>
-        </div>
+<!-- Seat 5: Domain expert -->
+<div class="board-seat">
+<span class="seat-tag">Domain expert</span>
+<p class="seat-title">The specialist</p>
+<p class="seat-desc">Someone with deep expertise in an area you need: finance, legal, a sector, a function. A resource you can call on.</p>
+<div class="seat-field"><label>Name (if you have one)</label><input type="text" placeholder=""></div>
+<div class="seat-field"><label>How you know them</label><textarea style="min-height:50px;"></textarea></div>
+<div class="seat-field"><label>What you want from this relationship</label><textarea style="min-height:60px;"></textarea></div>
+</div>
 
-        <div class="form-divider"></div>
+<!-- Seat 6: Challenger -->
+<div class="board-seat">
+<span class="seat-tag">Challenger</span>
+<p class="seat-title">The contrarian</p>
+<p class="seat-desc">Someone who disagrees with you productively. They stop you from operating in an echo chamber.</p>
+<div class="seat-field"><label>Name (if you have one)</label><input type="text" placeholder=""></div>
+<div class="seat-field"><label>How you know them</label><textarea style="min-height:50px;"></textarea></div>
+<div class="seat-field"><label>What you want from this relationship</label><textarea style="min-height:60px;"></textarea></div>
+</div>
 
-        <div style="margin-bottom:1.25rem;">
-          <p style="font-size:0.85rem; font-weight:500; color:var(--warm-dark); margin-bottom:0.5rem;">Looking at your board</p>
-          <p style="font-size:0.82rem; color:var(--muted); margin-bottom:0.6rem; line-height:1.6;">Which seats are empty or thin? Which relationship do you most need to build or deepen in the next 12 months?</p>
-          <textarea id="board-reflect" style="min-height:80px;"></textarea>
-        </div>
-      </div>
-      <div class="actions">
-        <button class="btn-primary" onclick="window.print()">Print / Save as PDF</button>
-        <p class="save-note">Your answers stay in your browser — nothing is sent anywhere.</p>
-      </div>
-    </div>
+</div>
 
-    <!-- LIFE STAGE GUIDE -->
-    <div id="panel-stages" class="tool-panel">
-      <div class="panel-card">
-        <p class="panel-intro">Different life stages bring different career questions. Pick the decade that most closely matches where you are now — or the one you're heading into. These are generalisations, not predictions. Use whatever is useful; ignore what isn't.</p>
+<div style="margin-top: 2rem; border-top: 1px solid var(--border); padding-top: 1.5rem;">
+<p class="panel-subtitle">What is missing?</p>
+<p style="font-size: 0.82rem; color: var(--muted); margin-bottom: 1rem; line-height: 1.6;">Look across the six seats. Which are empty? Which relationships are weak or one-sided? What would filling each gap make possible?</p>
+<label>Gaps I want to close</label>
+<textarea style="min-height:100px;" placeholder="Which roles are unfilled? Who do you want to build a stronger relationship with?"></textarea>
+</div>
 
-        <div class="stage-tabs">
-          <button class="stage-tab active" onclick="switchStage('s25', this)">25–30</button>
-          <button class="stage-tab" onclick="switchStage('s30', this)">30–35</button>
-          <button class="stage-tab" onclick="switchStage('s35', this)">35–40</button>
-          <button class="stage-tab" onclick="switchStage('s40', this)">40–45</button>
-          <button class="stage-tab" onclick="switchStage('s45', this)">45–50</button>
-        </div>
+<div class="actions">
+<button class="btn-primary" onclick="window.print()">Print / Save as PDF</button>
+<p class="save-note">Your answers stay in your browser. Nothing is sent anywhere.</p>
+</div>
+</div>
+</div>
 
-        <div id="stage-s25" class="stage-content active">
-          <p class="stage-heading">25–30: Building the foundation</p>
-          <p class="stage-body">This decade is about acquiring skills, discovering what you're good at, and starting to figure out what kind of work feels meaningful. It's also the decade where most people first realise that effort alone doesn't determine outcomes — and that relationships and visibility matter.</p>
-          <p class="stage-focus-label">What tends to matter most</p>
-          <div class="stage-focus-list">
-            <div class="stage-focus-item">Picking up hard skills quickly and being willing to do the less glamorous work</div>
-            <div class="stage-focus-item">Finding a manager or mentor who invests in your development</div>
-            <div class="stage-focus-item">Building your braintrust — people who will be your peers for decades</div>
-            <div class="stage-focus-item">Getting enough breadth to know what you actually want to specialise in</div>
-            <div class="stage-focus-item">Learning to manage upward, not just downward</div>
-          </div>
-          <div class="stage-question-list">
-            <div class="stage-question">What am I learning in this role — and is it still teaching me?</div>
-            <div class="stage-question">Who in my field do I want to be in 10 years? Have I spoken to them?</div>
-            <div class="stage-question">Am I being challenged, or just busy?</div>
-            <div class="stage-question">What do people consistently come to me for?</div>
-          </div>
-        </div>
+<!-- LIFE STAGE -->
+<div class="tool-panel" id="panel-lifestage">
+<div class="panel-card">
+<p class="panel-intro">Your career stage shapes what networking you need most. This is a rough map, not a prescription. Find your stage, read what it typically asks of you, then use the reflection to figure out what actually applies to your situation.</p>
+<div class="stage-grid">
+<div class="stage-card">
+<div class="stage-years">0–3 years</div>
+<div class="stage-name">Building foundations</div>
+<div class="stage-desc">Early in your career or in a new field. You are still figuring out what you are good at and what you want. Most of your network is within arm's reach.</div>
+<div class="stage-focus-label">What networking asks of you</div>
+<div class="stage-focus">Be visible inside your organisation. Say yes to things. Find a mentor. Build peer relationships you will carry forward.</div>
+</div>
+<div class="stage-card">
+<div class="stage-years">3–7 years</div>
+<div class="stage-name">Finding your edge</div>
+<div class="stage-desc">You have some track record. You are developing a point of view. People are starting to know your name, but you may not know what you want to be known for yet.</div>
+<div class="stage-focus-label">What networking asks of you</div>
+<div class="stage-focus">Build deliberately across organisations and sectors. Develop a reputation in one or two areas. Invest in people below you as well as above.</div>
+</div>
+<div class="stage-card">
+<div class="stage-years">7–15 years</div>
+<div class="stage-name">Building influence</div>
+<div class="stage-desc">You are operating at a senior level or building toward it. Your network is an asset. The question is whether you are managing it or just reacting to it.</div>
+<div class="stage-focus-label">What networking asks of you</div>
+<div class="stage-focus">Be selective. Give more than you take. Develop sponsors, not just mentors. Actively connect others. Think about your legacy network.</div>
+</div>
+</div>
+<div class="stage-reflection">
+<label>Which stage best describes you right now?</label>
+<input type="text" placeholder="e.g. Between stages 1 and 2" style="max-width: 340px; margin-bottom: 1.25rem;">
+<label>What does networking ask of you at this stage?</label>
+<textarea style="min-height:80px;" placeholder="Based on the stage above, what are you prioritising in how you build relationships?"></textarea>
+<label style="margin-top: 1rem;">Who do you want to add to your network in the next 12 months, and why?</label>
+<textarea style="min-height:80px;" placeholder="Be specific: name roles, organisations, or the type of person rather than just a number."></textarea>
+</div>
+<div class="actions">
+<button class="btn-primary" onclick="window.print()">Print / Save as PDF</button>
+<p class="save-note">Your answers stay in your browser. Nothing is sent anywhere.</p>
+</div>
+</div>
+</div>
 
-        <div id="stage-s30" class="stage-content">
-          <p class="stage-heading">30–35: The first fork</p>
-          <p class="stage-body">This is often when the first major career decision comes — whether to go deep in a specialisation, move into management, start something, or make a pivot. The decisions compound. It's also when the personal and professional start to feel like they're in direct competition with each other.</p>
-          <p class="stage-focus-label">What tends to matter most</p>
-          <div class="stage-focus-list">
-            <div class="stage-focus-item">Being deliberate about whether you want to be a manager or an individual contributor — the paths diverge here</div>
-            <div class="stage-focus-item">Identifying and building a sponsor relationship — someone who advocates for you in decisions you're not part of</div>
-            <div class="stage-focus-item">Getting clear on what you're optimising for: money, impact, flexibility, prestige, meaning — few people can have all of them at once</div>
-            <div class="stage-focus-item">Protecting relationships and health — both are easy to neglect during peak career-building</div>
-          </div>
-          <div class="stage-question-list">
-            <div class="stage-question">Am I moving toward something, or optimising within the current track?</div>
-            <div class="stage-question">Is this the right organisation for where I want to go, or do I need to leave to get there?</div>
-            <div class="stage-question">What am I tolerating that I shouldn't be?</div>
-            <div class="stage-question">Who knows what I'm capable of — and is there someone who doesn't, who should?</div>
-          </div>
-        </div>
+<!-- RELATIONSHIP BUILDING -->
+<div class="tool-panel" id="panel-relationship">
+<div class="panel-card">
+<p class="panel-intro">Networking feels transactional because most people only reach out when they need something. The alternative is building relationships before you need them, and making it easy for people to say yes to you.</p>
+<div class="map-layout">
+<div class="map-circles">
+<svg viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="160" cy="160" r="150" stroke="#E2D0D5" stroke-width="1" fill="none"/>
+<circle cx="160" cy="160" r="100" stroke="#E2D0D5" stroke-width="1" fill="none"/>
+<circle cx="160" cy="160" r="50" stroke="#E2D0D5" stroke-width="1" fill="none"/>
+<circle cx="160" cy="160" r="5" fill="#887333"/>
+<text x="160" y="150" text-anchor="middle" font-family="DM Sans" font-size="10" fill="#7A7167">Strong ties</text>
+<text x="160" y="88" text-anchor="middle" font-family="DM Sans" font-size="10" fill="#7A7167">Weak ties</text>
+<text x="160" y="300" text-anchor="middle" font-family="DM Sans" font-size="10" fill="#7A7167">Dormant</text>
+</svg>
+</div>
+<div class="map-legend">
+<div class="map-legend-item"><div class="legend-dot" style="background:#887333;"></div><div class="legend-text"><strong>Strong ties</strong>People you speak to regularly. They know your work and will actively support you.</div></div>
+<div class="map-legend-item"><div class="legend-dot" style="background:#D4C5B0;"></div><div class="legend-text"><strong>Weak ties</strong>Acquaintances and occasional contacts. Research shows weak ties are often the source of new opportunities.</div></div>
+<div class="map-legend-item"><div class="legend-dot" style="background:#E2D0D5;"></div><div class="legend-text"><strong>Dormant</strong>People you have not spoken to in a long time but the relationship still has value.</div></div>
+</div>
+</div>
+<hr class="form-divider">
+<p class="panel-subtitle" style="margin-bottom: 0.5rem;">How to reach out without it feeling transactional</p>
+<p style="font-size: 0.82rem; color: var(--muted); margin-bottom: 1.25rem; line-height: 1.6;">Most people do not reach out because they do not know what to say, or they only reach out when they want something. Neither builds a relationship. The approach below works because it is specific, low-burden, and does not require an immediate favour in return.</p>
+<div style="background: var(--tag-bg); border-radius: 3px; padding: 1.25rem; margin-bottom: 1.5rem;">
+<p style="font-size: 0.82rem; color: var(--warm-dark); line-height: 1.7; margin-bottom: 0.75rem;"><strong>The three-part message</strong></p>
+<p style="font-size: 0.82rem; color: var(--muted); line-height: 1.7; margin-bottom: 0.5rem;">1. A genuine reason to reach out (something they said, published, or did)</p>
+<p style="font-size: 0.82rem; color: var(--muted); line-height: 1.7; margin-bottom: 0.5rem;">2. One specific thing you want (a 20-minute call, their view on something, an introduction)</p>
+<p style="font-size: 0.82rem; color: var(--muted); line-height: 1.7;">3. Make it easy to say no ("no pressure if timing is off")</p>
+</div>
+<label style="font-size: 0.82rem; font-weight: 500; color: var(--warm-dark); margin-bottom: 0.5rem;">Draft a message to one person you have been meaning to reach out to</label>
+<textarea style="min-height:120px;" placeholder="Use the three-part structure above. First draft, not final copy."></textarea>
+<hr class="form-divider">
+<p class="panel-subtitle" style="margin-bottom: 0.5rem;">Staying in contact without a reason</p>
+<p style="font-size: 0.82rem; color: var(--muted); margin-bottom: 1.25rem; line-height: 1.6;">The easiest way to maintain a relationship is to give before you need. Share something useful. React to their work. Make an introduction. You do not need a reason to reach out.</p>
+<div style="background: var(--tag-bg); border-radius: 3px; padding: 1.25rem; margin-bottom: 1.5rem;">
+<p style="font-size: 0.82rem; color: var(--warm-dark); line-height: 1.7; margin-bottom: 0.75rem;"><strong>Low-effort, high-value touchpoints</strong></p>
+<p style="font-size: 0.82rem; color: var(--muted); line-height: 1.7; margin-bottom: 0.5rem;">Share an article with a one-line note on why you thought of them</p>
+<p style="font-size: 0.82rem; color: var(--muted); line-height: 1.7; margin-bottom: 0.5rem;">Congratulate on a promotion, award, or piece of work</p>
+<p style="font-size: 0.82rem; color: var(--muted); line-height: 1.7; margin-bottom: 0.5rem;">Make an introduction without being asked</p>
+<p style="font-size: 0.82rem; color: var(--muted); line-height: 1.7;">Comment meaningfully on something they published or presented</p>
+</div>
+<label style="font-size: 0.82rem; font-weight: 500; color: var(--warm-dark); margin-bottom: 0.5rem;">Two or three people you want to stay warm with, and how</label>
+<textarea style="min-height:100px;" placeholder="Name the person and the action."></textarea>
+<div class="actions">
+<button class="btn-primary" onclick="window.print()">Print / Save as PDF</button>
+<p class="save-note">Your answers stay in your browser. Nothing is sent anywhere.</p>
+</div>
+</div>
+</div>
 
-        <div id="stage-s35" class="stage-content">
-          <p class="stage-heading">35–40: Depth and direction</p>
-          <p class="stage-body">By this stage, most people have enough track record to be known for something — or realise they want to change what they're known for. If you're in a senior role, you're managing people and navigating politics in ways that require skills beyond technical competence. If you're changing direction, you have credibility to transfer and a clearer sense of what you're trading.</p>
-          <p class="stage-focus-label">What tends to matter most</p>
-          <div class="stage-focus-list">
-            <div class="stage-focus-item">Reputation management — being intentional about what you're known for and who knows it</div>
-            <div class="stage-focus-item">Building capability in others, not just yourself</div>
-            <div class="stage-focus-item">Deciding which relationships to invest in deeply, rather than maintaining a wide, shallow network</div>
-            <div class="stage-focus-item">Figuring out whether the trade-offs you've been making are still the right ones</div>
-          </div>
-          <div class="stage-question-list">
-            <div class="stage-question">What do I want to be doing in 10 years, and is the current path taking me there?</div>
-            <div class="stage-question">Am I developing the people around me as well as I'm developing myself?</div>
-            <div class="stage-question">What would I do if I weren't afraid of being wrong?</div>
-          </div>
-        </div>
+<!-- IN THE ROOM -->
+<div class="tool-panel" id="panel-intheroom">
+<div class="panel-card">
+<div class="mentor-note">Use this before your next industry event. Go through each section, identify one or two things you want to try, and come back with what happened.</div>
+<div class="ref-section">
+<h3 class="ref-heading">Before you go</h3>
+<div class="ref-row">
+<div class="ref-col">
+<div class="ref-item"><div class="ref-label">Research</div><div class="ref-text">Check who is speaking and who is attending. Identify two or three people you want to speak to. Know one thing about each of them.</div></div>
+<div class="ref-item"><div class="ref-label">Reach out beforehand</div><div class="ref-text">If you know someone will be there, message them in advance. <em>"I saw you are speaking at X. I will be there and would love to catch up briefly."</em> Much easier than a cold approach on the day.</div></div>
+</div>
+<div class="ref-col">
+<div class="ref-item"><div class="ref-label">Set a goal</div><div class="ref-text">One real conversation is worth more than fifteen exchanges of cards. Decide in advance: who do you want to meet and what do you want to learn?</div></div>
+<div class="ref-item"><div class="ref-label">Go with someone senior</div><div class="ref-text">If possible, arrive with a senior colleague who can introduce you. A warm introduction carries more weight than a cold one.</div></div>
+</div>
+</div>
+</div>
+<div class="ref-section">
+<h3 class="ref-heading">Where to stand</h3>
+<div class="ref-row">
+<div class="ref-col">
+<div class="ref-item"><div class="ref-label">High-traffic zones</div><div class="ref-text">Near the entrance, registration desk, or drinks station. People move through these areas, so conversations start naturally.</div></div>
+<div class="ref-item"><div class="ref-label">Not the edges</div><div class="ref-text">Avoid standing at the perimeter or near the exit. It signals disengagement and makes you harder to approach.</div></div>
+</div>
+<div class="ref-col">
+<div class="ref-item"><div class="ref-label">Read the room</div><div class="ref-text">Closed circles (people turned in, shoulders together) are harder to enter. Open groups or people standing alone are easier starting points.</div></div>
+</div>
+</div>
+</div>
+<div class="ref-section">
+<h3 class="ref-heading">Starting a conversation</h3>
+<div class="ref-row">
+<div class="ref-col">
+<div class="ref-item"><div class="ref-label">The handshake</div><div class="ref-text">Firm, palm tilted slightly upward. It signals openness rather than dominance. Match the energy of the other person.</div></div>
+<div class="ref-item"><div class="ref-label">Entering a group</div><div class="ref-text">Approach from the side, not the front. Make eye contact with one person, smile, and wait for a natural pause. Do not interrupt.</div></div>
+</div>
+<div class="ref-col">
+<div class="ref-item"><div class="ref-label">Approaching someone alone</div><div class="ref-text">Easier than it looks. A direct introduction works: <em>"Hi, I do not think we have met. I am [name], I work in [function] at [organisation]."</em> People standing alone at events are almost always relieved to be approached.</div></div>
+<div class="ref-item"><div class="ref-label">The opening question</div><div class="ref-text">Skip "What do you do?" and try something more specific: <em>"Are you here for the panel on X?"</em> or <em>"Did you catch the earlier session?"</em> Gives them something real to respond to.</div></div>
+</div>
+</div>
+</div>
+<div class="ref-section">
+<h3 class="ref-heading">Moving through the room</h3>
+<div class="ref-row">
+<div class="ref-col">
+<div class="ref-item"><div class="ref-label">Bring others in</div><div class="ref-text">If you are talking to someone and you see another person you know, bring them into the conversation. <em>"Have you met [name]? She works in [area], you two should talk."</em> It shows confidence and generosity.</div></div>
+<div class="ref-item"><div class="ref-label">Depth over volume</div><div class="ref-text">Two real conversations are better than ten superficial ones. When you find someone interesting, don't feel rushed to move on too quickly because you feel you have to work the room. A genuine connection is worth your time, any day.</div></div>
+</div>
+<div class="ref-col">
+<div class="ref-item"><div class="ref-label">Exiting gracefully</div><div class="ref-text">"It was great to meet you. I am going to grab a drink and say hello to a few people, but let us stay in touch." Then follow up. Do not just drift away.</div></div>
+</div>
+</div>
+</div>
+<div class="ref-section">
+<h3 class="ref-heading">After the event</h3>
+<div class="ref-row">
+<div class="ref-col">
+<div class="ref-item"><div class="ref-label">Follow up within 24 hours</div><div class="ref-text">A short message is enough: <em>"Good to meet you at [event]. I enjoyed our conversation about [topic]. Worth staying in touch."</em> The sooner the better, while you are still fresh in their mind.</div></div>
+</div>
+<div class="ref-col">
+<div class="ref-item"><div class="ref-label">Be specific</div><div class="ref-text">Reference something from your conversation. It shows you were paying attention, and it makes you memorable.</div></div>
+</div>
+</div>
+</div>
+<div class="actions">
+<button class="btn-primary" onclick="window.print()">Print / Save as PDF</button>
+</div>
+</div>
+</div>
 
-        <div id="stage-s40" class="stage-content">
-          <p class="stage-heading">40–45: Consolidation and recalibration</p>
-          <p class="stage-body">This decade often brings a re-evaluation — not necessarily a crisis, but a recognition that the ambitions and trade-offs of your 30s may no longer be the right ones. What you want from work may have shifted. The relationship between identity and career becomes more conscious.</p>
-          <p class="stage-focus-label">What tends to matter most</p>
-          <div class="stage-focus-list">
-            <div class="stage-focus-item">Separating identity from job title — which gets harder, not easier, at this stage</div>
-            <div class="stage-focus-item">Finding work that has meaning beyond advancement — contribution, legacy, craft</div>
-            <div class="stage-focus-item">Managing energy, not just time — what depletes you vs. what restores you</div>
-            <div class="stage-focus-item">Giving back in the form of mentoring — which also forces you to clarify what you actually believe</div>
-          </div>
-          <div class="stage-question-list">
-            <div class="stage-question">What's my definition of success now — and how has it changed?</div>
-            <div class="stage-question">Am I staying somewhere out of inertia, or is there a real reason?</div>
-            <div class="stage-question">What would I regret not having tried?</div>
-          </div>
-        </div>
-
-        <div id="stage-s45" class="stage-content">
-          <p class="stage-heading">45–50: The longer game</p>
-          <p class="stage-body">Career decisions at this stage are often about the next 20 years, not the next 2. Some people are at the peak of their influence; others are actively designing a different kind of life. Both are legitimate. The question is what you want to do with the expertise and relationships you've accumulated.</p>
-          <p class="stage-focus-label">What tends to matter most</p>
-          <div class="stage-focus-list">
-            <div class="stage-focus-item">Clarity on what you want the rest of your working life to look like — more of the same, or a deliberate shift</div>
-            <div class="stage-focus-item">Building toward a portfolio of activities rather than a single job</div>
-            <div class="stage-focus-item">The quality and depth of your relationships — who you want to keep working with</div>
-            <div class="stage-focus-item">Deciding how much of your time you want to give to the next generation vs. to your own work</div>
-          </div>
-          <div class="stage-question-list">
-            <div class="stage-question">What do I want to have contributed by the time I'm done?</div>
-            <div class="stage-question">What do I know that I haven't shared yet?</div>
-            <div class="stage-question">What would I tell my 30-year-old self?</div>
-          </div>
-        </div>
-
-        <div class="stage-caveat">These stages are a rough guide, not a map. Life doesn't follow the same arc for everyone — different starting conditions, different industries, different personal circumstances. Use what fits your situation.</div>
-      </div>
-    </div>
-
-    <!-- NETWORKING WITHOUT BEING WEIRD -->
-    <div id="panel-networking" class="tool-panel">
-      <div class="panel-card">
-
-        <div class="net-section">
-          <p class="net-heading">The problem with networking</p>
-          <p class="net-body">Most people dislike networking because the transactional version of it is genuinely unpleasant — going to events, collecting business cards, following up with people you don't remember. The version that actually works doesn't look like that.</p>
-          <p class="net-body">Strong networks are built through genuine curiosity and consistent contribution over time, not through targeted outreach when you need something. The practical implication: start before you need it.</p>
-        </div>
-
-        <div class="net-divider"></div>
-
-        <div class="net-section">
-          <p class="net-heading">What actually builds a network</p>
-          <p class="net-body"><strong>Do interesting work and talk about it.</strong> The easiest way to attract people worth knowing is to have a point of view and share it — in writing, in talks, in conversations. You don't need to be famous. You need to be findable.</p>
-          <p class="net-body"><strong>Be genuinely useful to people before you need anything.</strong> Share relevant information. Make introductions between people who should know each other. Remember what people are working on and ask about it. These are not tactics — they're just how good relationships work.</p>
-          <p class="net-body"><strong>Follow up on conversations that were worth having.</strong> If you had a good conversation with someone, send a note within 24 hours. Not a form letter — a specific reference to what you talked about. "I looked up the thing you mentioned about X — here's what I found" is more memorable than "Great to meet you."</p>
-          <p class="net-body"><strong>Maintain relationships at low effort.</strong> You don't need to have coffee with everyone twice a year. A message when you read something relevant, a reaction to a post, a congratulations on something public — these cost nothing and signal that you're paying attention.</p>
-        </div>
-
-        <div class="net-divider"></div>
-
-        <div class="net-section">
-          <p class="net-heading">Reaching out to people you don't know</p>
-          <p class="net-body">Cold outreach works when it is specific, brief, and clear about what you're asking for. The most common mistake is being vague — "I'd love to pick your brain" — or asking for too much from someone with no reason to help you.</p>
-          <p class="net-body">What works: a short message (four sentences maximum) that explains who you are, why you're reaching out to this specific person, what you're asking for (a 20-minute call, one question by email, a specific introduction), and makes it easy to say yes or no.</p>
-          <div class="net-script">"Hi [Name], I'm [who you are in one sentence]. I've been following your work on [specific thing] and found [specific piece] particularly useful for [specific reason]. I'm currently [relevant context]. Would you be open to a 20-minute call to share your perspective on [specific question]? Happy to work around your schedule."</div>
-          <p class="net-body" style="margin-top:0.75rem;">The response rate is not the measure of success. The quality of the conversations you do have is.</p>
-        </div>
-
-        <div class="net-divider"></div>
-
-        <div class="net-section">
-          <p class="net-heading">A few things that don't work</p>
-          <p class="net-body"><strong>Asking for a job in an outreach message.</strong> It makes the recipient responsible for your outcome and puts them in an awkward position. Ask for a conversation, not a favour.</p>
-          <p class="net-body"><strong>Only reaching out when you need something.</strong> People notice. Build the relationship before you need it — not during.</p>
-          <p class="net-body"><strong>Networking at scale instead of depth.</strong> Fifty shallow connections are less useful than five real ones. Prioritise the people you can genuinely help and who can genuinely help you.</p>
-          <p class="net-body"><strong>Treating every senior person as a target.</strong> The most useful relationships are often with peers — people at a similar stage who will be your colleagues, clients, and collaborators for decades.</p>
-        </div>
-
-        <div class="net-divider"></div>
-
-        <div class="net-section">
-          <p class="net-heading" style="margin-bottom:0.75rem;">Work through it</p>
-          <p style="font-size:0.82rem; color:var(--muted); margin-bottom:0.75rem; line-height:1.6;">Name two or three people you want to be in contact with who you currently aren't — and what you would actually say to them.</p>
-          <textarea id="net-reflect" style="min-height:110px;" placeholder="Name them, note why, draft the message."></textarea>
-        </div>
-
-      </div>
-      <div class="actions">
-        <button class="btn-primary" onclick="window.print()">Print / Save as PDF</button>
-        <p class="save-note">Your answers stay in your browser — nothing is sent anywhere.</p>
-      </div>
-    </div>
-
-    <!-- IN THE ROOM -->
-    <div id="panel-intheroom" class="tool-panel">
-      <div class="panel-card">
-
-        <div style="background: var(--tag-bg); border-radius: 3px; padding: 0.75rem 1rem; margin-bottom: 2rem;">
-          <p style="font-size:0.84rem; color:var(--warm-dark); line-height:1.6; font-weight: 400;">The most effective version of this: ask your mentor to bring you to an event and introduce you directly. One warm introduction from someone credible is worth ten cold approaches. Ask them to do this at least once.</p>
-        </div>
-
-        <div class="net-section">
-          <p class="net-heading">Before you go</p>
-          <p class="net-body"><strong>Research the event and the attendees.</strong> Who is likely to be there? What is the topic or theme? If there is a speaker list or guest list, look up two or three people you genuinely want to meet. Know one specific thing about their work before you walk in.</p>
-          <p class="net-body"><strong>Reach out beforehand.</strong> If you know someone who will be at the event, send a short message the day before: "I'll be at [event] tomorrow, would be good to catch up." It gives you a warm face to find when you arrive and takes the edge off walking in cold.</p>
-          <p class="net-body"><strong>Go with someone senior if you can.</strong> A senior introducer changes how people receive you. Ask your mentor or a senior colleague if they are attending and whether they would make a few introductions. Most people will say yes if asked directly.</p>
-        </div>
-
-        <div class="net-divider"></div>
-
-        <div class="net-section">
-          <p class="net-heading">Where to stand</p>
-          <p class="net-body"><strong>Near the entrance or the drinks.</strong> These are the highest-traffic spots in any room. People move through them naturally, which makes it easy to meet someone as they arrive or refill without interrupting a conversation already in progress.</p>
-          <p class="net-body"><strong>Not near the edges or the exit.</strong> Positioning yourself against a wall or near a door signals that you are waiting to leave. It is harder for people to approach you, and you appear less open than you are.</p>
-          <p class="net-body"><strong>Read the room before you move.</strong> Spend the first two minutes near the entrance. See who is standing alone versus in closed groups. Closed body language (shoulders inward, group facing inward, no visible gaps) means do not interrupt. Open body language (looser circle, people scanning the room) means you can step in.</p>
-        </div>
-
-        <div class="net-divider"></div>
-
-        <div class="net-section">
-          <p class="net-heading">Starting a conversation</p>
-          <p class="net-body"><strong>The handshake.</strong> Firm, palm tilted slightly upward or neutral. Not a grip, not a dead fish. Palm tilted slightly upward signals openness. Make eye contact and pause briefly before you speak. Smile once; do not hold it.</p>
-          <p class="net-body"><strong>Entering a group already talking.</strong> Wait for a natural pause. Step in at a slight angle rather than directly into the circle. Start with a question about what they were discussing, not a pivot to yourself. "What were you just talking about?" works better than it sounds.</p>
-          <p class="net-body"><strong>If you are standing alone.</strong> Approach someone else who is also standing alone. It is the easiest conversation to start and most people are relieved to have someone come to them.</p>
-          <div class="net-script">"I don't think we've met. I'm [name], I work in [one-line description]. How do you know [host / organiser / event]?"</div>
-        </div>
-
-        <div class="net-divider"></div>
-
-        <div class="net-section">
-          <p class="net-heading">Moving through the room</p>
-          <p class="net-body"><strong>Bring others in.</strong> If you are in a conversation and someone you know walks past, wave them over. "Have you met [name]? She works on [relevant thing]." This builds goodwill with both people and positions you as a connector rather than a collector.</p>
-          <p class="net-body"><strong>Exiting gracefully.</strong> The cleanest exit is a forward bridge: "I want to let you get back to the room, but this was really useful." Or use the practical: "I'm going to grab a drink, but I really enjoyed this." Do not apologise, do not over-explain. State it, shake hands, move.</p>
-          <p class="net-body">Two real conversations are better than ten superficial ones. When you find someone interesting, don't feel rushed to move on too quickly because you feel you have to work the room. A genuine connection is worth your time, any day.</p>
-        </div>
-
-        <div class="net-divider"></div>
-
-        <div class="net-section">
-          <p class="net-heading">After the event</p>
-          <p class="net-body">Send a follow-up message within 24 hours if the conversation was worth continuing. Reference something specific from what you talked about. Keep it to two or three sentences. The goal is not to convert everyone into a contact, just the conversations that had real energy.</p>
-        </div>
-
-      </div>
-      <div class="actions">
-        <button class="btn-primary" onclick="window.print()">Print / Save as PDF</button>
-      </div>
-    </div>
-
-  </main>
-  <footer>
-    <p class="footer-copy">© The Working Ground</p>
-    <nav><ul class="footer-nav"><li><a href="/about/">About</a></li><li><a href="/about/#what-to-build">What to build next?</a></li></ul></nav>
-  </footer>
-  <script>
-    function switchTab(id, btn) {
-      document.querySelectorAll('.tool-tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById('panel-' + id).classList.add('active');
-    }
-    function switchStage(id, btn) {
-      document.querySelectorAll('.stage-tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.stage-content').forEach(s => s.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById('stage-' + id).classList.add('active');
-    }
-  </script>
+</main>
+<footer>
+<p class="footer-copy">© The Working Ground</p>
+<nav><ul class="footer-nav"><li><a href="/about/">About</a></li><li><a href="/about/#what-to-build">What to build next?</a></li></ul></nav>
+</footer>
+<script>
+function switchTab(id, btn) {
+document.querySelectorAll('.tool-tab').forEach(t => t.classList.remove('active'));
+document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
+btn.classList.add('active');
+document.getElementById('panel-' + id).classList.add('active');
+}
+</script>
 </body>
 </html>
