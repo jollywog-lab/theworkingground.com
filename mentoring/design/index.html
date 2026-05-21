@@ -41,6 +41,8 @@
     .btn-secondary { background: transparent; color: var(--muted); border: 1px solid var(--border); border-radius: 3px; padding: 0.6rem 1.2rem; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 300; cursor: pointer; transition: border-color 0.15s, color 0.15s; }
     .btn-secondary:hover { border-color: var(--accent); color: var(--warm-dark); }
     .save-note { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+
+    /* Odyssey Plan */
     .scenario-card { border: 1px solid var(--border); border-radius: 4px; padding: 1.5rem; margin-bottom: 1.25rem; }
     .scenario-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; }
     .scenario-number { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: var(--tag-bg); padding: 0.2rem 0.6rem; border-radius: 2px; }
@@ -52,14 +54,18 @@
     .rating-stars { display: flex; gap: 4px; }
     .star { width: 22px; height: 22px; cursor: pointer; border: 1px solid var(--border); border-radius: 2px; background: var(--cream); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: var(--muted); transition: background 0.1s; }
     .star.selected { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    /* PDP */
     .pdp-actions-list { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 0.5rem; }
     .pdp-action-row { display: grid; grid-template-columns: 1fr 140px; gap: 0.75rem; align-items: start; }
     .pdp-action-row input[type="text"] { font-size: 0.85rem; }
+
     footer { border-top: 2px solid var(--border); padding: 1.5rem 2rem; max-width: 760px; margin: 0 auto; width: 100%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
     .footer-copy { font-size: 0.82rem; color: var(--muted); }
     .footer-nav { display: flex; gap: 1.5rem; list-style: none; }
     .footer-nav a { font-size: 0.78rem; color: var(--muted); text-decoration: none; }
     .footer-nav a:hover { color: var(--warm-dark); }
+
     @media print {
       .site-nav, .tool-tabs, .actions, footer { display: none !important; }
       .tool-panel { display: block !important; }
@@ -91,16 +97,21 @@
       <button class="tool-tab active" onclick="switchTab('odyssey', this)">Odyssey Plan</button>
       <button class="tool-tab" onclick="switchTab('pdp', this)">Personal Dev Plan</button>
     </div>
+
+    <!-- ODYSSEY PLAN -->
     <div id="panel-odyssey" class="tool-panel active">
       <div class="panel-card">
-        <p class="panel-intro">Bill Burnett and Dave Evans describe the Odyssey Plan as three alternative five-year plans for your life — not optimistic/pessimistic versions of the same plan, but genuinely different directions. Map all three before deciding on one. The point is to see what you're choosing between.</p>
+        <p class="panel-intro">Three five-year plans, each genuinely different. Plan A is the path you are already on. Plan B is the credible pivot. Plan C is the wild card. Map all three before committing to one. The point is to see what you are actually choosing between.</p>
+
+        <!-- Scenario 1 -->
         <div class="scenario-card">
           <div class="scenario-header">
             <span class="scenario-number">Plan A</span>
             <input class="scenario-title-input" type="text" placeholder="Give this plan a title" id="s1-title">
           </div>
+          <p style="font-size:0.8rem; color:var(--muted); margin-bottom:1rem; line-height:1.5;">Your default plan, carried forward with ambition. What does the next five years look like if you continue on your current path and push it further? This is the plan you could start tomorrow.</p>
           <div class="field-group">
-            <label for="s1-desc">What does the next five years look like? <span class="sub">— be specific about role, organisation, location, lifestyle</span></label>
+            <label for="s1-desc">What does the next five years look like? <span class="sub">be specific about role, organisation, location, lifestyle</span></label>
             <textarea id="s1-desc" style="min-height:100px;"></textarea>
           </div>
           <div class="field-group">
@@ -112,41 +123,91 @@
             <textarea id="s1-questions" style="min-height:70px;"></textarea>
           </div>
           <div class="ratings-row">
-            <div class="rating-item"><label>Confidence <span class="sub">— how likely is this?</span></label><div class="rating-stars" id="s1-conf"></div></div>
-            <div class="rating-item"><label>Engagement <span class="sub">— how excited are you?</span></label><div class="rating-stars" id="s1-eng"></div></div>
-            <div class="rating-item"><label>Coherence <span class="sub">— does it fit who you are?</span></label><div class="rating-stars" id="s1-coh"></div></div>
+            <div class="rating-item">
+              <label>Confidence <span class="sub">— how likely is this?</span></label>
+              <div class="rating-stars" id="s1-conf"></div>
+            </div>
+            <div class="rating-item">
+              <label>Engagement <span class="sub">— how excited are you?</span></label>
+              <div class="rating-stars" id="s1-eng"></div>
+            </div>
+            <div class="rating-item">
+              <label>Coherence <span class="sub">— does it fit who you are?</span></label>
+              <div class="rating-stars" id="s1-coh"></div>
+            </div>
           </div>
         </div>
+
+        <!-- Scenario 2 -->
         <div class="scenario-card">
           <div class="scenario-header">
             <span class="scenario-number">Plan B</span>
             <input class="scenario-title-input" type="text" placeholder="Give this plan a title" id="s2-title">
           </div>
-          <p style="font-size:0.8rem; color:var(--muted); margin-bottom:1rem; line-height:1.5;">If Plan A isn't available, or if you decided not to do it — what would you do instead? A genuinely different direction, not a fallback version of Plan A.</p>
-          <div class="field-group"><label for="s2-desc">What does the next five years look like?</label><textarea id="s2-desc" style="min-height:100px;"></textarea></div>
-          <div class="field-group"><label for="s2-resources">Resources or capabilities needed?</label><textarea id="s2-resources" style="min-height:70px;"></textarea></div>
-          <div class="field-group"><label for="s2-questions">Questions or concerns?</label><textarea id="s2-questions" style="min-height:70px;"></textarea></div>
+          <p style="font-size:0.8rem; color:var(--muted); margin-bottom:1rem; line-height:1.5;">The credible alternative if Plan A does not happen. What transferable skills and experience do you have right now that would let you pivot? This should be genuinely different, not a downgrade.</p>
+          <div class="field-group">
+            <label for="s2-desc">What does the next five years look like?</label>
+            <textarea id="s2-desc" style="min-height:100px;"></textarea>
+          </div>
+          <div class="field-group">
+            <label for="s2-resources">Resources or capabilities needed?</label>
+            <textarea id="s2-resources" style="min-height:70px;"></textarea>
+          </div>
+          <div class="field-group">
+            <label for="s2-questions">Questions or concerns?</label>
+            <textarea id="s2-questions" style="min-height:70px;"></textarea>
+          </div>
           <div class="ratings-row">
-            <div class="rating-item"><label>Confidence</label><div class="rating-stars" id="s2-conf"></div></div>
-            <div class="rating-item"><label>Engagement</label><div class="rating-stars" id="s2-eng"></div></div>
-            <div class="rating-item"><label>Coherence</label><div class="rating-stars" id="s2-coh"></div></div>
+            <div class="rating-item">
+              <label>Confidence</label>
+              <div class="rating-stars" id="s2-conf"></div>
+            </div>
+            <div class="rating-item">
+              <label>Engagement</label>
+              <div class="rating-stars" id="s2-eng"></div>
+            </div>
+            <div class="rating-item">
+              <label>Coherence</label>
+              <div class="rating-stars" id="s2-coh"></div>
+            </div>
           </div>
         </div>
+
+        <!-- Scenario 3 -->
         <div class="scenario-card">
           <div class="scenario-header">
             <span class="scenario-number">Plan C</span>
             <input class="scenario-title-input" type="text" placeholder="Give this plan a title" id="s3-title">
           </div>
-          <p style="font-size:0.8rem; color:var(--muted); margin-bottom:1rem; line-height:1.5;">If money and reputation weren't factors — if you couldn't fail and no one was watching — what would you do? This one is allowed to feel unrealistic.</p>
-          <div class="field-group"><label for="s3-desc">What does the next five years look like?</label><textarea id="s3-desc" style="min-height:100px;"></textarea></div>
-          <div class="field-group"><label for="s3-resources">Resources or capabilities needed?</label><textarea id="s3-resources" style="min-height:70px;"></textarea></div>
-          <div class="field-group"><label for="s3-questions">Questions or concerns?</label><textarea id="s3-questions" style="min-height:70px;"></textarea></div>
+          <p style="font-size:0.8rem; color:var(--muted); margin-bottom:1rem; line-height:1.5;">The wild card. If money, resources, and time were not constraints, what would you bet on to maximise your potential? This one is allowed to feel ambitious or strange.</p>
+          <div class="field-group">
+            <label for="s3-desc">What does the next five years look like?</label>
+            <textarea id="s3-desc" style="min-height:100px;"></textarea>
+          </div>
+          <div class="field-group">
+            <label for="s3-resources">Resources or capabilities needed?</label>
+            <textarea id="s3-resources" style="min-height:70px;"></textarea>
+          </div>
+          <div class="field-group">
+            <label for="s3-questions">Questions or concerns?</label>
+            <textarea id="s3-questions" style="min-height:70px;"></textarea>
+          </div>
           <div class="ratings-row">
-            <div class="rating-item"><label>Confidence</label><div class="rating-stars" id="s3-conf"></div></div>
-            <div class="rating-item"><label>Engagement</label><div class="rating-stars" id="s3-eng"></div></div>
-            <div class="rating-item"><label>Coherence</label><div class="rating-stars" id="s3-coh"></div></div>
+            <div class="rating-item">
+              <label>Confidence</label>
+              <div class="rating-stars" id="s3-conf"></div>
+            </div>
+            <div class="rating-item">
+              <label>Engagement</label>
+              <div class="rating-stars" id="s3-eng"></div>
+            </div>
+            <div class="rating-item">
+              <label>Coherence</label>
+              <div class="rating-stars" id="s3-coh"></div>
+            </div>
           </div>
         </div>
+
         <div class="form-divider"></div>
         <div class="field-group">
           <label for="odyssey-reflect">Looking at all three — what do you notice?</label>
@@ -159,29 +220,73 @@
         <p class="save-note">Your answers stay in your browser — nothing is sent anywhere.</p>
       </div>
     </div>
+
+    <!-- PDP -->
     <div id="panel-pdp" class="tool-panel">
       <div class="panel-card">
-        <p class="panel-intro">A Personal Development Plan on a single page. Keep it focused — one main thing you're working toward, three specific actions, and a clear timeframe. Bring it to your next session and update it every quarter.</p>
-        <div class="field-group"><label for="pdp-focus">Focus area <span class="sub">— what are you developing toward?</span></label><input type="text" id="pdp-focus" placeholder="e.g. Move into a sustainability strategy role in the next 18 months"></div>
+        <p class="panel-intro">A Personal Development Plan on a single page. One direction. Three actions. A clear timeframe. Bring it to your next session and update it every quarter.</p>
+
+        <div class="field-group">
+          <label for="pdp-known">What do you want to be known for? <span class="sub">(from your Ikigai exercise)</span></label>
+          <input type="text" id="pdp-known" placeholder="e.g. The person who...">
+        </div>
+
         <div class="form-divider"></div>
-        <div class="field-group"><label for="pdp-current">Current state <span class="sub">— where are you now?</span></label><textarea id="pdp-current" style="min-height:80px;" placeholder="What skills, experience, and relationships do you currently have that are relevant?"></textarea></div>
-        <div class="field-group"><label for="pdp-target">Target state <span class="sub">— what does success look like?</span></label><textarea id="pdp-target" style="min-height:80px;" placeholder="Be specific. What will you be doing, what will you know, who will know you?"></textarea></div>
+
+        <div class="field-group">
+          <label for="pdp-focus">Focus area <span class="sub">what are you developing toward?</span></label>
+          <input type="text" id="pdp-focus" placeholder="e.g. Move into a sustainability strategy role in the next 18 months">
+        </div>
+
         <div class="form-divider"></div>
+
+        <div class="field-group">
+          <label for="pdp-current">Current state <span class="sub">— where are you now?</span></label>
+          <textarea id="pdp-current" style="min-height:80px;" placeholder="What skills, experience, and relationships do you currently have that are relevant?"></textarea>
+        </div>
+        <div class="field-group">
+          <label for="pdp-target">Target state <span class="sub">— what does success look like?</span></label>
+          <textarea id="pdp-target" style="min-height:80px;" placeholder="Be specific. What will you be doing, what will you know, who will know you?"></textarea>
+        </div>
+
+        <div class="form-divider"></div>
+
         <div class="field-group">
           <label>Actions <span class="sub">— three specific things you will do, with deadlines</span></label>
           <p style="font-size:0.78rem; color:var(--muted); margin-bottom:0.6rem; line-height:1.5;">"Learn more about X" is not an action. "Speak to three people working in X field before end of [month]" is.</p>
           <div class="pdp-actions-list">
-            <div class="pdp-action-row"><input type="text" id="pdp-a1" placeholder="Action 1 — specific and owned"><input type="text" id="pdp-a1-by" placeholder="By when"></div>
-            <div class="pdp-action-row"><input type="text" id="pdp-a2" placeholder="Action 2"><input type="text" id="pdp-a2-by" placeholder="By when"></div>
-            <div class="pdp-action-row"><input type="text" id="pdp-a3" placeholder="Action 3"><input type="text" id="pdp-a3-by" placeholder="By when"></div>
+            <div class="pdp-action-row">
+              <input type="text" id="pdp-a1" placeholder="Action 1 — specific and owned">
+              <input type="text" id="pdp-a1-by" placeholder="By when">
+            </div>
+            <div class="pdp-action-row">
+              <input type="text" id="pdp-a2" placeholder="Action 2">
+              <input type="text" id="pdp-a2-by" placeholder="By when">
+            </div>
+            <div class="pdp-action-row">
+              <input type="text" id="pdp-a3" placeholder="Action 3">
+              <input type="text" id="pdp-a3-by" placeholder="By when">
+            </div>
           </div>
         </div>
+
         <div class="form-divider"></div>
+
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
-          <div class="field-group"><label for="pdp-metric">How will you know you've made progress?</label><textarea id="pdp-metric" style="min-height:70px;" placeholder="A concrete signal — not 'feel more confident' but 'have had three informational conversations and applied for one role'"></textarea></div>
-          <div class="field-group"><label for="pdp-support">What support do you need?</label><textarea id="pdp-support" style="min-height:70px;" placeholder="Introductions, feedback, accountability, something else?"></textarea></div>
+          <div class="field-group">
+            <label for="pdp-metric">How will you know you've made progress?</label>
+            <textarea id="pdp-metric" style="min-height:70px;" placeholder="A concrete signal — not 'feel more confident' but 'have had three informational conversations and applied for one role'"></textarea>
+          </div>
+          <div class="field-group">
+            <label for="pdp-support">What support do you need?</label>
+            <textarea id="pdp-support" style="min-height:70px;" placeholder="Introductions, feedback, accountability, something else?"></textarea>
+          </div>
         </div>
-        <div class="field-group" style="margin-top:0.5rem;"><label for="pdp-review">Next review date</label><input type="text" id="pdp-review" placeholder="e.g. End of September 2025" style="max-width:260px;"></div>
+
+        <div class="field-group" style="margin-top:0.5rem;">
+          <label for="pdp-review">Next review date</label>
+          <input type="text" id="pdp-review" placeholder="e.g. End of September 2025" style="max-width:260px;">
+        </div>
       </div>
       <div class="actions">
         <button class="btn-primary" onclick="window.print()">Print / Save as PDF</button>
@@ -200,12 +305,15 @@
       btn.classList.add('active');
       document.getElementById('panel-' + id).classList.add('active');
     }
+
     function initStars(containerId) {
       const c = document.getElementById(containerId);
       if (!c) return;
       for (let i = 1; i <= 5; i++) {
         const s = document.createElement('div');
-        s.className = 'star'; s.textContent = i; s.dataset.val = i;
+        s.className = 'star';
+        s.textContent = i;
+        s.dataset.val = i;
         s.onclick = function() {
           const all = c.querySelectorAll('.star');
           const v = parseInt(this.dataset.val);
