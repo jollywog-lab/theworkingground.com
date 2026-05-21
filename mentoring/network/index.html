@@ -47,7 +47,7 @@ label { display: block; font-size: 0.75rem; font-weight: 500; color: var(--muted
 
 /* Life stage guide */
 .stage-grid { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.5rem; }
-.stage-card { flex: 1; min-width: 200px; border: 1px solid var(--border); border-radius: 4px; padding: 1.25rem; }
+.stage-card { flex: 1; min-width: 160px; border: 1px solid var(--border); border-radius: 4px; padding: 1.25rem; }
 .stage-card.active-stage { border-color: var(--accent); }
 .stage-name { font-family: 'DM Serif Display', serif; font-size: 0.95rem; color: var(--warm-dark); margin-bottom: 0.35rem; }
 .stage-years { font-size: 0.72rem; font-weight: 500; color: var(--accent); letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 0.6rem; }
@@ -56,6 +56,7 @@ label { display: block; font-size: 0.75rem; font-weight: 500; color: var(--muted
 .stage-focus { font-size: 0.78rem; color: var(--warm-dark); line-height: 1.55; }
 .stage-reflection { margin-top: 1.5rem; border-top: 1px solid var(--border); padding-top: 1.5rem; }
 .stage-reflection label { font-size: 0.78rem; font-weight: 500; color: var(--warm-dark); margin-bottom: 0.35rem; }
+.stage-attribution { font-size: 0.72rem; color: var(--muted); margin-top: 1rem; }
 
 /* Network map */
 .map-circles { position: relative; width: 320px; height: 320px; margin: 0 auto 2rem; flex-shrink: 0; }
@@ -189,100 +190,146 @@ footer { padding: 1.25rem; flex-direction: column; align-items: flex-start; }
 <div class="seat-field"><label>What you want from this relationship</label><textarea style="min-height:60px;"></textarea></div>
 </div>
 
-</div>
+</div><!-- /.board-grid -->
 
 <div style="margin-top: 2rem; border-top: 1px solid var(--border); padding-top: 1.5rem;">
 <p class="panel-subtitle">What is missing?</p>
 <p style="font-size: 0.82rem; color: var(--muted); margin-bottom: 1rem; line-height: 1.6;">Look across the six seats. Which are empty? Which relationships are weak or one-sided? What would filling each gap make possible?</p>
 <label>Gaps I want to close</label>
-<textarea style="min-height:100px;" placeholder="Which roles are unfilled? Who do you want to build a stronger relationship with?"></textarea>
+<textarea class="tall" style="min-height:100px;" placeholder="Which roles are unfilled? Who do you want to build a stronger relationship with?"></textarea>
 </div>
 
 <div class="actions">
 <button class="btn-primary" onclick="window.print()">Print / Save as PDF</button>
 <p class="save-note">Your answers stay in your browser. Nothing is sent anywhere.</p>
 </div>
-</div>
-</div>
+</div><!-- /.panel-card -->
+</div><!-- /.tool-panel -->
 
 <!-- LIFE STAGE -->
 <div class="tool-panel" id="panel-lifestage">
 <div class="panel-card">
 <p class="panel-intro">Your career stage shapes what networking you need most. This is a rough map, not a prescription. Find your stage, read what it typically asks of you, then use the reflection to figure out what actually applies to your situation.</p>
+
 <div class="stage-grid">
+
 <div class="stage-card">
-<div class="stage-years">0–3 years</div>
-<div class="stage-name">Building foundations</div>
-<div class="stage-desc">Early in your career or in a new field. You are still figuring out what you are good at and what you want. Most of your network is within arm's reach.</div>
+<div class="stage-years">Stage 1 · Doers</div>
+<div class="stage-name">Building visibility</div>
+<div class="stage-desc">You are new to the working world or to a field. You are learning what good looks like. Most of your network is people in your immediate orbit.</div>
 <div class="stage-focus-label">What networking asks of you</div>
-<div class="stage-focus">Be visible inside your organisation. Say yes to things. Find a mentor. Build peer relationships you will carry forward.</div>
+<div class="stage-focus">Be present and consistent. Say yes to things. Find a mentor. Build peer relationships that will outlast this job.</div>
 </div>
+
 <div class="stage-card">
-<div class="stage-years">3–7 years</div>
+<div class="stage-years">Stage 2 · Achievers</div>
+<div class="stage-name">Building credibility</div>
+<div class="stage-desc">You have a track record and are deepening your expertise or starting to manage others. People know you, but mainly inside your organisation.</div>
+<div class="stage-focus-label">What networking asks of you</div>
+<div class="stage-focus">Expand beyond your immediate team. Build relationships across the organisation. Start developing a reputation in one or two areas.</div>
+</div>
+
+<div class="stage-card">
+<div class="stage-years">Stage 3 · Collaborators</div>
 <div class="stage-name">Finding your edge</div>
-<div class="stage-desc">You have some track record. You are developing a point of view. People are starting to know your name, but you may not know what you want to be known for yet.</div>
+<div class="stage-desc">You work across teams and functions. You have a point of view. People look to you for direction. The question is what you want to be known for.</div>
 <div class="stage-focus-label">What networking asks of you</div>
-<div class="stage-focus">Build deliberately across organisations and sectors. Develop a reputation in one or two areas. Invest in people below you as well as above.</div>
+<div class="stage-focus">Build deliberately across organisations and sectors. Develop your external reputation. Invest in people below you as well as above.</div>
 </div>
+
 <div class="stage-card">
-<div class="stage-years">7–15 years</div>
+<div class="stage-years">Stage 4 · Builders</div>
 <div class="stage-name">Building influence</div>
-<div class="stage-desc">You are operating at a senior level or building toward it. Your network is an asset. The question is whether you are managing it or just reacting to it.</div>
+<div class="stage-desc">You are operating at a senior level. Your network is a genuine asset. The question is whether you are managing it intentionally or just reacting to it.</div>
 <div class="stage-focus-label">What networking asks of you</div>
-<div class="stage-focus">Be selective. Give more than you take. Develop sponsors, not just mentors. Actively connect others. Think about your legacy network.</div>
+<div class="stage-focus">Be selective. Give more than you take. Develop sponsors, not just mentors. Actively connect others.</div>
 </div>
+
+<div class="stage-card">
+<div class="stage-years">Stage 5 · Expanders</div>
+<div class="stage-name">Shaping the ecosystem</div>
+<div class="stage-desc">You have reach. People want access to you. The question is how you use that reach and who you bring with you.</div>
+<div class="stage-focus-label">What networking asks of you</div>
+<div class="stage-focus">Think about your legacy network. Connect ecosystems, not just people. Give back deliberately. Be the sponsor someone else needs.</div>
 </div>
+
+</div>
+
+<p class="stage-attribution">Career stage framework: Tessa White (The Job Doctor)</p>
+
 <div class="stage-reflection">
 <label>Which stage best describes you right now?</label>
-<input type="text" placeholder="e.g. Between stages 1 and 2" style="max-width: 340px; margin-bottom: 1.25rem;">
+<input type="text" placeholder="e.g. Stage 2, or between 2 and 3" style="max-width: 340px; margin-bottom: 1.25rem;">
 <label>What does networking ask of you at this stage?</label>
 <textarea style="min-height:80px;" placeholder="Based on the stage above, what are you prioritising in how you build relationships?"></textarea>
 <label style="margin-top: 1rem;">Who do you want to add to your network in the next 12 months, and why?</label>
 <textarea style="min-height:80px;" placeholder="Be specific: name roles, organisations, or the type of person rather than just a number."></textarea>
 </div>
+
 <div class="actions">
 <button class="btn-primary" onclick="window.print()">Print / Save as PDF</button>
 <p class="save-note">Your answers stay in your browser. Nothing is sent anywhere.</p>
 </div>
-</div>
-</div>
+</div><!-- /.panel-card -->
+</div><!-- /.tool-panel -->
 
 <!-- RELATIONSHIP BUILDING -->
 <div class="tool-panel" id="panel-relationship">
 <div class="panel-card">
+
 <p class="panel-intro">Networking feels transactional because most people only reach out when they need something. The alternative is building relationships before you need them, and making it easy for people to say yes to you.</p>
+
 <div class="map-layout">
 <div class="map-circles">
 <svg viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+<!-- Outer circle -->
 <circle cx="160" cy="160" r="150" stroke="#E2D0D5" stroke-width="1" fill="none"/>
+<!-- Middle circle -->
 <circle cx="160" cy="160" r="100" stroke="#E2D0D5" stroke-width="1" fill="none"/>
+<!-- Inner circle -->
 <circle cx="160" cy="160" r="50" stroke="#E2D0D5" stroke-width="1" fill="none"/>
-<circle cx="160" cy="160" r="5" fill="#887333"/>
+<!-- Labels -->
 <text x="160" y="164" text-anchor="middle" font-family="DM Sans" font-size="10" fill="#7A7167">Strong ties</text>
 <text x="160" y="80" text-anchor="middle" font-family="DM Sans" font-size="10" fill="#7A7167">Weak ties</text>
 <text x="160" y="285" text-anchor="middle" font-family="DM Sans" font-size="10" fill="#7A7167">Dormant</text>
 </svg>
 </div>
 <div class="map-legend">
-<div class="map-legend-item"><div class="legend-dot" style="background:#887333;"></div><div class="legend-text"><strong>Strong ties</strong>People you speak to regularly. They know your work and will actively support you.</div></div>
-<div class="map-legend-item"><div class="legend-dot" style="background:#D4C5B0;"></div><div class="legend-text"><strong>Weak ties</strong>Acquaintances and occasional contacts. Research shows weak ties are often the source of new opportunities.</div></div>
-<div class="map-legend-item"><div class="legend-dot" style="background:#E2D0D5;"></div><div class="legend-text"><strong>Dormant</strong>People you have not spoken to in a long time but the relationship still has value.</div></div>
+<div class="map-legend-item">
+<div class="legend-dot" style="background:#887333;"></div>
+<div class="legend-text"><strong>Strong ties</strong>People you speak to regularly. They know your work and will actively support you.</div>
+</div>
+<div class="map-legend-item">
+<div class="legend-dot" style="background:#D4C5B0;"></div>
+<div class="legend-text"><strong>Weak ties</strong>Acquaintances and occasional contacts. Research shows weak ties are often the source of new opportunities.</div>
+</div>
+<div class="map-legend-item">
+<div class="legend-dot" style="background:#E2D0D5;"></div>
+<div class="legend-text"><strong>Dormant</strong>People you have not spoken to in a long time but the relationship still has value.</div>
 </div>
 </div>
+</div>
+
 <hr class="form-divider">
+
 <p class="panel-subtitle" style="margin-bottom: 0.5rem;">How to reach out without it feeling transactional</p>
 <p style="font-size: 0.82rem; color: var(--muted); margin-bottom: 1.25rem; line-height: 1.6;">Most people do not reach out because they do not know what to say, or they only reach out when they want something. Neither builds a relationship. The approach below works because it is specific, low-burden, and does not require an immediate favour in return.</p>
+
 <div style="background: var(--tag-bg); border-radius: 3px; padding: 1.25rem; margin-bottom: 1.5rem;">
 <p style="font-size: 0.82rem; color: var(--warm-dark); line-height: 1.7; margin-bottom: 0.75rem;"><strong>The three-part message</strong></p>
 <p style="font-size: 0.82rem; color: var(--muted); line-height: 1.7; margin-bottom: 0.5rem;">1. A genuine reason to reach out (something they said, published, or did)</p>
 <p style="font-size: 0.82rem; color: var(--muted); line-height: 1.7; margin-bottom: 0.5rem;">2. One specific thing you want (a 20-minute call, their view on something, an introduction)</p>
 <p style="font-size: 0.82rem; color: var(--muted); line-height: 1.7;">3. Make it easy to say no ("no pressure if timing is off")</p>
 </div>
+
 <label style="font-size: 0.82rem; font-weight: 500; color: var(--warm-dark); margin-bottom: 0.5rem;">Draft a message to one person you have been meaning to reach out to</label>
 <textarea style="min-height:120px;" placeholder="Use the three-part structure above. First draft, not final copy."></textarea>
+
 <hr class="form-divider">
+
 <p class="panel-subtitle" style="margin-bottom: 0.5rem;">Staying in contact without a reason</p>
 <p style="font-size: 0.82rem; color: var(--muted); margin-bottom: 1.25rem; line-height: 1.6;">The easiest way to maintain a relationship is to give before you need. Share something useful. React to their work. Make an introduction. You do not need a reason to reach out.</p>
+
 <div style="background: var(--tag-bg); border-radius: 3px; padding: 1.25rem; margin-bottom: 1.5rem;">
 <p style="font-size: 0.82rem; color: var(--warm-dark); line-height: 1.7; margin-bottom: 0.75rem;"><strong>Low-effort, high-value touchpoints</strong></p>
 <p style="font-size: 0.82rem; color: var(--muted); line-height: 1.7; margin-bottom: 0.5rem;">Share an article with a one-line note on why you thought of them</p>
@@ -290,90 +337,161 @@ footer { padding: 1.25rem; flex-direction: column; align-items: flex-start; }
 <p style="font-size: 0.82rem; color: var(--muted); line-height: 1.7; margin-bottom: 0.5rem;">Make an introduction without being asked</p>
 <p style="font-size: 0.82rem; color: var(--muted); line-height: 1.7;">Comment meaningfully on something they published or presented</p>
 </div>
+
 <label style="font-size: 0.82rem; font-weight: 500; color: var(--warm-dark); margin-bottom: 0.5rem;">Two or three people you want to stay warm with, and how</label>
-<textarea style="min-height:100px;" placeholder="Name the person and the action."></textarea>
+<textarea style="min-height:100px;" placeholder="Name the person and the action. e.g. &quot;Forward the GRESB article to Sarah, mention we discussed this at the ANREV panel.&quot;"></textarea>
+
 <div class="actions">
 <button class="btn-primary" onclick="window.print()">Print / Save as PDF</button>
 <p class="save-note">Your answers stay in your browser. Nothing is sent anywhere.</p>
 </div>
-</div>
-</div>
+
+</div><!-- /.panel-card -->
+</div><!-- /.tool-panel -->
 
 <!-- IN THE ROOM -->
 <div class="tool-panel" id="panel-intheroom">
 <div class="panel-card">
-<div class="mentor-note">Use this before your next industry event. Go through each section, identify one or two things you want to try, and come back with what happened.</div>
+
+<div class="mentor-note">
+Use this before your next industry event. Go through each section, identify one or two things you want to try, and come back with what happened.
+</div>
+
+<!-- Before you go -->
 <div class="ref-section">
 <h3 class="ref-heading">Before you go</h3>
 <div class="ref-row">
 <div class="ref-col">
-<div class="ref-item"><div class="ref-label">Research</div><div class="ref-text">Check who is speaking and who is attending. Identify two or three people you want to speak to. Know one thing about each of them.</div></div>
-<div class="ref-item"><div class="ref-label">Reach out beforehand</div><div class="ref-text">If you know someone will be there, message them in advance. <em>"I saw you are speaking at X. I will be there and would love to catch up briefly."</em> Much easier than a cold approach on the day.</div></div>
+<div class="ref-item">
+<div class="ref-label">Research</div>
+<div class="ref-text">Check who is speaking and who is attending. Identify two or three people you want to speak to. Know one thing about each of them.</div>
+</div>
+<div class="ref-item">
+<div class="ref-label">Reach out beforehand</div>
+<div class="ref-text">If you know someone will be there, message them in advance. <em>"I saw you are speaking at X. I will be there and would love to catch up briefly."</em> Much easier than a cold approach on the day.</div>
+</div>
 </div>
 <div class="ref-col">
-<div class="ref-item"><div class="ref-label">Set a goal</div><div class="ref-text">One real conversation is worth more than fifteen exchanges of cards. Decide in advance: who do you want to meet and what do you want to learn?</div></div>
-<div class="ref-item"><div class="ref-label">Go with someone senior</div><div class="ref-text">If possible, arrive with a senior colleague who can introduce you. A warm introduction carries more weight than a cold one.</div></div>
+<div class="ref-item">
+<div class="ref-label">Set a goal</div>
+<div class="ref-text">One real conversation is worth more than fifteen exchanges of cards. Decide in advance: who do you want to meet and what do you want to learn?</div>
 </div>
+<div class="ref-item">
+<div class="ref-label">Go with someone senior</div>
+<div class="ref-text">If possible, arrive with a senior colleague who can introduce you. A warm introduction carries more weight than a cold one.</div>
 </div>
-</div>
-<div class="ref-section">
-<h3 class="ref-heading">Where to stand</h3>
-<div class="ref-row">
-<div class="ref-col">
-<div class="ref-item"><div class="ref-label">High-traffic zones</div><div class="ref-text">Near the entrance, registration desk, or drinks station. People move through these areas, so conversations start naturally.</div></div>
-<div class="ref-item"><div class="ref-label">Not the edges</div><div class="ref-text">Avoid standing at the perimeter or near the exit. It signals disengagement and makes you harder to approach.</div></div>
-</div>
-<div class="ref-col">
-<div class="ref-item"><div class="ref-label">Read the room</div><div class="ref-text">Closed circles (people turned in, shoulders together) are harder to enter. Open groups or people standing alone are easier starting points.</div></div>
-</div>
-</div>
-</div>
-<div class="ref-section">
-<h3 class="ref-heading">Starting a conversation</h3>
-<div class="ref-row">
-<div class="ref-col">
-<div class="ref-item"><div class="ref-label">The handshake</div><div class="ref-text">Firm, palm tilted slightly upward. It signals openness rather than dominance. Match the energy of the other person.</div></div>
-<div class="ref-item"><div class="ref-label">Entering a group</div><div class="ref-text">Approach from the side, not the front. Make eye contact with one person, smile, and wait for a natural pause. Do not interrupt.</div></div>
-</div>
-<div class="ref-col">
-<div class="ref-item"><div class="ref-label">Approaching someone alone</div><div class="ref-text">Easier than it looks. A direct introduction works: <em>"Hi, I do not think we have met. I am [name], I work in [function] at [organisation]."</em> People standing alone at events are almost always relieved to be approached.</div></div>
-<div class="ref-item"><div class="ref-label">The opening question</div><div class="ref-text">Skip "What do you do?" and try something more specific: <em>"Are you here for the panel on X?"</em> or <em>"Did you catch the earlier session?"</em> Gives them something real to respond to.</div></div>
-</div>
-</div>
-</div>
-<div class="ref-section">
-<h3 class="ref-heading">Moving through the room</h3>
-<div class="ref-row">
-<div class="ref-col">
-<div class="ref-item"><div class="ref-label">Bring others in</div><div class="ref-text">If you are talking to someone and you see another person you know, bring them into the conversation. <em>"Have you met [name]? She works in [area], you two should talk."</em> It shows confidence and generosity.</div></div>
-<div class="ref-item"><div class="ref-label">Depth over volume</div><div class="ref-text">Two real conversations are better than ten superficial ones. When you find someone interesting, don't feel rushed to move on too quickly because you feel you have to work the room. A genuine connection is worth your time, any day.</div></div>
-</div>
-<div class="ref-col">
-<div class="ref-item"><div class="ref-label">Exiting gracefully</div><div class="ref-text">"It was great to meet you. I am going to grab a drink and say hello to a few people, but let us stay in touch." Then follow up. Do not just drift away.</div></div>
-</div>
-</div>
-</div>
-<div class="ref-section">
-<h3 class="ref-heading">After the event</h3>
-<div class="ref-row">
-<div class="ref-col">
-<div class="ref-item"><div class="ref-label">Follow up within 24 hours</div><div class="ref-text">A short message is enough: <em>"Good to meet you at [event]. I enjoyed our conversation about [topic]. Worth staying in touch."</em> The sooner the better, while you are still fresh in their mind.</div></div>
-</div>
-<div class="ref-col">
-<div class="ref-item"><div class="ref-label">Be specific</div><div class="ref-text">Reference something from your conversation. It shows you were paying attention, and it makes you memorable.</div></div>
-</div>
-</div>
-</div>
-<div class="actions">
-<button class="btn-primary" onclick="window.print()">Print / Save as PDF</button>
 </div>
 </div>
 </div>
 
+<!-- Where to stand -->
+<div class="ref-section">
+<h3 class="ref-heading">Where to stand</h3>
+<div class="ref-row">
+<div class="ref-col">
+<div class="ref-item">
+<div class="ref-label">High-traffic zones</div>
+<div class="ref-text">Near the entrance, registration desk, or drinks station. People move through these areas, so conversations start naturally.</div>
+</div>
+<div class="ref-item">
+<div class="ref-label">Not the edges</div>
+<div class="ref-text">Avoid standing at the perimeter or near the exit. It signals disengagement and makes you harder to approach.</div>
+</div>
+</div>
+<div class="ref-col">
+<div class="ref-item">
+<div class="ref-label">Read the room</div>
+<div class="ref-text">Closed circles (people turned in, shoulders together) are harder to enter. Open groups or people standing alone are easier starting points.</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Starting a conversation -->
+<div class="ref-section">
+<h3 class="ref-heading">Starting a conversation</h3>
+<div class="ref-row">
+<div class="ref-col">
+<div class="ref-item">
+<div class="ref-label">The handshake</div>
+<div class="ref-text">Firm, palm tilted slightly upward. It signals openness rather than dominance. Match the energy of the other person.</div>
+</div>
+<div class="ref-item">
+<div class="ref-label">Entering a group</div>
+<div class="ref-text">Approach from the side, not the front. Make eye contact with one person, smile, and wait for a natural pause. Do not interrupt.</div>
+</div>
+</div>
+<div class="ref-col">
+<div class="ref-item">
+<div class="ref-label">Approaching someone alone</div>
+<div class="ref-text">Easier than it looks. A direct introduction works: <em>"Hi, I do not think we have met. I am [name], I work in [function] at [organisation]."</em> People standing alone at events are almost always relieved to be approached.</div>
+</div>
+<div class="ref-item">
+<div class="ref-label">The opening question</div>
+<div class="ref-text">Skip "What do you do?" and try something more specific: <em>"Are you here for the panel on X?"</em> or <em>"Did you catch the earlier session?"</em> Gives them something real to respond to.</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Moving through the room -->
+<div class="ref-section">
+<h3 class="ref-heading">Moving through the room</h3>
+<div class="ref-row">
+<div class="ref-col">
+<div class="ref-item">
+<div class="ref-label">Bring others in</div>
+<div class="ref-text">If you are talking to someone and you see another person you know, bring them into the conversation. <em>"Have you met [name]? She works in [area], you two should talk."</em> It shows confidence and generosity.</div>
+</div>
+<div class="ref-item">
+<div class="ref-label">Depth over volume</div>
+<div class="ref-text">Two real conversations are better than ten superficial ones. When you find someone interesting, don't feel rushed to move on too quickly because you feel you have to work the room. A genuine connection is worth your time, any day.</div>
+</div>
+</div>
+<div class="ref-col">
+<div class="ref-item">
+<div class="ref-label">Exiting gracefully</div>
+<div class="ref-text">"It was great to meet you. I am going to grab a drink and say hello to a few people, but let us stay in touch." Then follow up. Do not just drift away.</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- After the event -->
+<div class="ref-section">
+<h3 class="ref-heading">After the event</h3>
+<div class="ref-row">
+<div class="ref-col">
+<div class="ref-item">
+<div class="ref-label">Follow up within 24 hours</div>
+<div class="ref-text">A short message is enough: <em>"Good to meet you at [event]. I enjoyed our conversation about [topic]. Worth staying in touch."</em> The sooner the better, while you are still fresh in their mind.</div>
+</div>
+</div>
+<div class="ref-col">
+<div class="ref-item">
+<div class="ref-label">Be specific</div>
+<div class="ref-text">Reference something from your conversation. It shows you were paying attention, and it makes you memorable.</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="actions">
+<button class="btn-primary" onclick="window.print()">Print / Save as PDF</button>
+</div>
+
+</div><!-- /.panel-card -->
+</div><!-- /.tool-panel -->
+
 </main>
 <footer>
 <p class="footer-copy">© The Working Ground</p>
-<nav><ul class="footer-nav"><li><a href="/about/">About</a></li><li><a href="/about/#what-to-build">What to build next?</a></li></ul></nav>
+<nav>
+<ul class="footer-nav">
+<li><a href="/about/">About</a></li>
+<li><a href="/about/#what-to-build">What to build next?</a></li>
+</ul>
+</nav>
 </footer>
 <script>
 function switchTab(id, btn) {
