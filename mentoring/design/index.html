@@ -68,7 +68,8 @@
 
     @media print {
       .site-nav, .tool-tabs, .actions, footer { display: none !important; }
-      .tool-panel { display: block !important; }
+      .tool-panel { display: none !important; }
+      .tool-panel.active { display: block !important; }
       body { background: #fff; }
       .panel-card { box-shadow: none; padding: 0; margin-top: 0; }
       header { padding: 0 0 1rem; } main { padding: 0; }
