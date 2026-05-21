@@ -39,6 +39,8 @@
     .btn-secondary { background: transparent; color: var(--muted); border: 1px solid var(--border); border-radius: 3px; padding: 0.6rem 1.2rem; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 300; cursor: pointer; transition: border-color 0.15s, color 0.15s; }
     .btn-secondary:hover { border-color: var(--accent); color: var(--warm-dark); }
     .save-note { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+
+    /* Career Line */
     .career-table { width: 100%; border-collapse: collapse; margin-top: 0.75rem; }
     .career-table th { text-align: left; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); padding: 0.4rem 0.5rem 0.6rem; border-bottom: 1px solid var(--border); }
     .career-table td { padding: 0.4rem 0.5rem; border-bottom: 1px solid var(--tag-bg); vertical-align: middle; }
@@ -49,6 +51,8 @@
     .sentiment-btn.mid.selected { background: #C4A97A; border-color: #C4A97A; color: #fff; }
     .sentiment-btn.low.selected { background: #E2D0D5; border-color: #7A7167; color: var(--warm-dark); }
     .career-note { font-size: 0.8rem; color: var(--muted); margin-top: 1rem; line-height: 1.6; }
+
+    /* Glass balls */
     .ball-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin-top: 0.75rem; }
     .ball-card { border: 1px solid var(--border); border-radius: 3px; padding: 0.85rem 1rem; cursor: pointer; transition: background 0.12s, border-color 0.12s; user-select: none; }
     .ball-card .ball-label { font-size: 0.85rem; font-weight: 400; color: var(--warm-dark); margin-bottom: 0.2rem; }
@@ -59,18 +63,39 @@
     .ball-legend span { display: flex; align-items: center; gap: 0.35rem; }
     .ball-reflect { margin-top: 1.5rem; }
     .ball-reflect-q { font-size: 0.85rem; color: var(--warm-dark); margin-bottom: 0.4rem; font-weight: 400; }
+
+    /* Ikigai */
     .ikigai-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.75rem; }
     .ikigai-quadrant { background: var(--cream); border: 1px solid var(--border); border-radius: 3px; padding: 1rem; }
     .iq-label { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.3rem; }
     .iq-prompt { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.6rem; line-height: 1.5; }
     .ikigai-grid textarea { min-height: 100px; background: var(--card-bg); }
+    .ikigai-overlap { margin-top: 1.5rem; }
+    .ikigai-overlap-q { font-size: 0.88rem; color: var(--warm-dark); margin-bottom: 0.5rem; font-weight: 400; }
+
     footer { border-top: 2px solid var(--border); padding: 1.5rem 2rem; max-width: 760px; margin: 0 auto; width: 100%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
     .footer-copy { font-size: 0.82rem; color: var(--muted); }
     .footer-nav { display: flex; gap: 1.5rem; list-style: none; }
     .footer-nav a { font-size: 0.78rem; color: var(--muted); text-decoration: none; }
     .footer-nav a:hover { color: var(--warm-dark); }
-    @media print { .site-nav, .tool-tabs, .actions, footer { display: none !important; } .tool-panel { display: block !important; } body { background: #fff; } .panel-card { box-shadow: none; padding: 0; margin-top: 0; } header { padding: 0 0 1rem; } main { padding: 0; } textarea { border: none; border-bottom: 1px solid #ccc; background: transparent; border-radius: 0; min-height: 60px; } .career-table td input[type="text"] { border: none; border-bottom: 1px solid #ccc; border-radius: 0; } @page { margin: 2cm 2.5cm; } }
-    @media (max-width: 600px) { header { padding: 2rem 1.25rem 1.25rem; } main { padding: 0.5rem 1.25rem 3rem; } .panel-card { padding: 1.5rem 1.25rem; } footer { padding: 1.25rem; flex-direction: column; align-items: flex-start; } .tool-tab { padding: 0.6rem 0.75rem; font-size: 0.78rem; } .ball-grid { grid-template-columns: 1fr; } .ikigai-grid { grid-template-columns: 1fr; } }
+
+    @media print {
+      .site-nav, .tool-tabs, .actions, footer { display: none !important; }
+      .tool-panel { display: block !important; }
+      body { background: #fff; }
+      .panel-card { box-shadow: none; padding: 0; margin-top: 0; }
+      header { padding: 0 0 1rem; } main { padding: 0; }
+      textarea { border: none; border-bottom: 1px solid #ccc; background: transparent; border-radius: 0; min-height: 60px; }
+      .career-table td input[type="text"] { border: none; border-bottom: 1px solid #ccc; border-radius: 0; }
+      @page { margin: 2cm 2.5cm; }
+    }
+    @media (max-width: 600px) {
+      header { padding: 2rem 1.25rem 1.25rem; } main { padding: 0.5rem 1.25rem 3rem; }
+      .panel-card { padding: 1.5rem 1.25rem; } footer { padding: 1.25rem; flex-direction: column; align-items: flex-start; }
+      .tool-tab { padding: 0.6rem 0.75rem; font-size: 0.78rem; }
+      .ball-grid { grid-template-columns: 1fr; }
+      .ikigai-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -78,7 +103,7 @@
   <header>
     <span class="page-tag">Step 1</span>
     <h1 class="page-title">Know yourself</h1>
-    <p class="page-intro">Three exercises for building self-awareness before you start designing your career. Work through them in order, or return to any one of them on its own. They take time — don't rush.</p>
+    <p class="page-intro">Three exercises for building self-awareness before you start designing your career. Career Line maps what energises you. Glass Balls surfaces what matters beyond work. Ikigai is a visioning exercise: what you are good at, what the world needs, and what legacy you are building toward.</p>
   </header>
   <main>
     <div class="tool-tabs">
@@ -86,15 +111,26 @@
       <button class="tool-tab" onclick="switchTab('glass', this)">Glass balls</button>
       <button class="tool-tab" onclick="switchTab('ikigai', this)">Ikigai</button>
     </div>
+
+    <!-- CAREER LINE -->
     <div id="panel-career" class="tool-panel active">
       <div class="panel-card">
-        <p class="panel-intro">Map the arc of your career so far — the high points, the low points, and the moments that shaped how you think about work. Don't summarise. Be specific about what actually happened and how it felt.</p>
+        <p class="panel-intro">Map the arc of your career so far. The goal is not a summary of your CV. It is to identify the moments, roles, and tasks that gave you energy versus the ones that drained it. Be specific about what actually happened and how it felt.</p>
         <p class="section-label">Your career, event by event</p>
         <table class="career-table">
-          <thead><tr><th style="width:70px">Year</th><th>Role or event</th><th style="width:100px">High / Low</th><th>What it meant</th></tr></thead>
+          <thead>
+            <tr>
+              <th style="width:70px">Year</th>
+              <th>Role or event</th>
+              <th style="width:100px">High / Low</th>
+              <th>What it meant</th>
+            </tr>
+          </thead>
           <tbody id="career-tbody"></tbody>
         </table>
-        <div style="margin-top: 0.75rem;"><button class="btn-secondary" onclick="addRow()" style="font-size:0.8rem; padding: 0.4rem 0.9rem;">+ Add event</button></div>
+        <div style="margin-top: 0.75rem;">
+          <button class="btn-secondary" onclick="addRow()" style="font-size:0.8rem; padding: 0.4rem 0.9rem;">+ Add event</button>
+        </div>
         <div class="form-divider"></div>
         <div style="margin-bottom: 1.25rem;">
           <p class="panel-subtitle" style="margin-bottom:0.5rem;">Looking at the whole picture</p>
@@ -103,64 +139,187 @@
         </div>
         <p class="career-note">Share this with your mentor before session 1. Walk them through it verbally — the conversation matters more than the document.</p>
       </div>
-      <div class="actions"><button class="btn-primary" onclick="window.print()">Print / Save as PDF</button><p class="save-note">Your answers stay in your browser — nothing is sent anywhere.</p></div>
+      <div class="actions">
+        <button class="btn-primary" onclick="window.print()">Print / Save as PDF</button>
+        <p class="save-note">Your answers stay in your browser — nothing is sent anywhere.</p>
+      </div>
     </div>
+
+    <!-- GLASS BALLS -->
     <div id="panel-glass" class="tool-panel">
       <div class="panel-card">
-        <p class="panel-intro">Bryan Dyson's glass ball exercise: imagine life is a game of juggling. Some balls are glass — if you drop them, they shatter. Others are rubber — they bounce back. Tap each area below to mark it as glass or rubber for you right now.</p>
+        <p class="panel-intro">Bryan Dyson's glass ball exercise: imagine life is a game of juggling. Some balls are glass; if you drop them, they shatter. Others are rubber; they bounce back. This is a life exercise, not just a career one. Career development can only solve career problems. Some of what feels like a career issue is something else entirely. Tap each area to mark it as glass or rubber for you right now.</p>
         <p class="section-label">Your life areas</p>
-        <div class="ball-grid">
-          <div class="ball-card" onclick="toggleBall(this)"><div class="ball-label">Health</div><div class="ball-desc">Physical and mental wellbeing, energy, sleep</div></div>
-          <div class="ball-card" onclick="toggleBall(this)"><div class="ball-label">Career</div><div class="ball-desc">Work, ambition, professional identity</div></div>
-          <div class="ball-card" onclick="toggleBall(this)"><div class="ball-label">Family</div><div class="ball-desc">Parents, siblings, partner, children — whoever counts as family to you</div></div>
-          <div class="ball-card" onclick="toggleBall(this)"><div class="ball-label">Friendships</div><div class="ball-desc">Close friendships and broader social life</div></div>
-          <div class="ball-card" onclick="toggleBall(this)"><div class="ball-label">Meaning &amp; purpose</div><div class="ball-desc">Spirituality, religion, service, what makes life feel worthwhile</div></div>
-          <div class="ball-card" onclick="toggleBall(this)"><div class="ball-label">Finances</div><div class="ball-desc">Financial security, independence, savings, obligations</div></div>
-          <div class="ball-card" onclick="toggleBall(this)"><div class="ball-label">Learning &amp; growth</div><div class="ball-desc">Education, skill-building, creative development</div></div>
-          <div class="ball-card" onclick="toggleBall(this)"><div class="ball-label">Community</div><div class="ball-desc">Belonging, contribution, neighbourhood, causes</div></div>
+        <div class="ball-grid" id="ball-grid">
+          <div class="ball-card" onclick="toggleBall(this)" data-area="health">
+            <div class="ball-label">Health</div>
+            <div class="ball-desc">Physical and mental wellbeing, energy, sleep</div>
+          </div>
+          <div class="ball-card" onclick="toggleBall(this)" data-area="career">
+            <div class="ball-label">Career</div>
+            <div class="ball-desc">Work, ambition, professional identity</div>
+          </div>
+          <div class="ball-card" onclick="toggleBall(this)" data-area="family">
+            <div class="ball-label">Family</div>
+            <div class="ball-desc">Parents, siblings, partner, children — whoever counts as family to you</div>
+          </div>
+          <div class="ball-card" onclick="toggleBall(this)" data-area="friendships">
+            <div class="ball-label">Friendships</div>
+            <div class="ball-desc">Close friendships and broader social life</div>
+          </div>
+          <div class="ball-card" onclick="toggleBall(this)" data-area="meaning">
+            <div class="ball-label">Meaning & purpose</div>
+            <div class="ball-desc">Spirituality, religion, service, what makes life feel worthwhile</div>
+          </div>
+          <div class="ball-card" onclick="toggleBall(this)" data-area="finances">
+            <div class="ball-label">Finances</div>
+            <div class="ball-desc">Financial security, independence, savings, obligations</div>
+          </div>
+          <div class="ball-card" onclick="toggleBall(this)" data-area="growth">
+            <div class="ball-label">Learning & growth</div>
+            <div class="ball-desc">Education, skill-building, creative development</div>
+          </div>
+          <div class="ball-card" onclick="toggleBall(this)" data-area="community">
+            <div class="ball-label">Community</div>
+            <div class="ball-desc">Belonging, contribution, neighbourhood, causes</div>
+          </div>
         </div>
         <div class="ball-legend">
           <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--accent);"></span> Glass — would shatter</span>
           <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;border:1px solid var(--border);background:var(--card-bg);"></span> Rubber — would bounce back</span>
         </div>
+
         <div class="form-divider"></div>
-        <div class="ball-reflect"><p class="ball-reflect-q">Which glass ball are you most at risk of dropping right now?</p><textarea id="glass-q1" style="min-height:70px;"></textarea></div>
-        <div class="ball-reflect" style="margin-top:1rem;"><p class="ball-reflect-q">Which rubber ball have you been treating as glass — and worrying about more than necessary?</p><textarea id="glass-q2" style="min-height:70px;"></textarea></div>
-        <div class="ball-reflect" style="margin-top:1rem;"><p class="ball-reflect-q">What does this picture tell you about how you're currently spending your time and energy?</p><textarea id="glass-q3" style="min-height:90px;"></textarea></div>
+
+        <div class="ball-reflect">
+          <p class="ball-reflect-q">Which glass ball are you most at risk of dropping right now?</p>
+          <textarea id="glass-q1" style="min-height:70px;"></textarea>
+        </div>
+        <div class="ball-reflect" style="margin-top:1rem;">
+          <p class="ball-reflect-q">Which rubber ball have you been treating as glass — and worrying about more than necessary?</p>
+          <textarea id="glass-q2" style="min-height:70px;"></textarea>
+        </div>
+        <div class="ball-reflect" style="margin-top:1rem;">
+          <p class="ball-reflect-q">What does this picture tell you about how you're currently spending your time and energy?</p>
+          <textarea id="glass-q3" style="min-height:90px;"></textarea>
+        </div>
       </div>
-      <div class="actions"><button class="btn-primary" onclick="window.print()">Print / Save as PDF</button><p class="save-note">Your answers stay in your browser — nothing is sent anywhere.</p></div>
+      <div class="actions">
+        <button class="btn-primary" onclick="window.print()">Print / Save as PDF</button>
+        <p class="save-note">Your answers stay in your browser — nothing is sent anywhere.</p>
+      </div>
     </div>
+
+    <!-- IKIGAI -->
     <div id="panel-ikigai" class="tool-panel">
       <div class="panel-card">
-        <p class="panel-intro">Ikigai is a Japanese concept meaning "reason for being." The exercise maps four overlapping questions: what you love, what you're good at, what the world needs, and what you can be paid for. Fill in each quadrant, then look for what appears across more than one.</p>
+        <p class="panel-intro">Ikigai is a Japanese concept meaning "reason for being." It maps four questions: what you love, what you are good at, what the world needs, and what you can be paid for. Use it as a visioning exercise. Once you have found your overlap, the two questions at the bottom ask you to go further: what do you want to be known for, and what are you building toward?</p>
         <div class="ikigai-grid">
-          <div class="ikigai-quadrant"><div class="iq-label">What you love</div><p class="iq-prompt">Work, activities, topics, or problems that pull you in — even when no one asks you to engage with them.</p><textarea id="ik-love"></textarea></div>
-          <div class="ikigai-quadrant"><div class="iq-label">What you're good at</div><p class="iq-prompt">Skills, capabilities, or ways of working that others regularly rely on you for — including things that feel easy to you but hard for others.</p><textarea id="ik-good"></textarea></div>
-          <div class="ikigai-quadrant"><div class="iq-label">What the world needs</div><p class="iq-prompt">Problems, gaps, or areas where you can see a genuine need — in your industry, your community, or the world.</p><textarea id="ik-world"></textarea></div>
-          <div class="ikigai-quadrant"><div class="iq-label">What you can be paid for</div><p class="iq-prompt">Work someone would pay you for — currently or in the near future. Be practical, not wishful.</p><textarea id="ik-paid"></textarea></div>
+          <div class="ikigai-quadrant">
+            <div class="iq-label">What you love</div>
+            <p class="iq-prompt">Work, activities, topics, or problems that pull you in — even when no one asks you to engage with them.</p>
+            <textarea id="ik-love" placeholder=""></textarea>
+          </div>
+          <div class="ikigai-quadrant">
+            <div class="iq-label">What you're good at</div>
+            <p class="iq-prompt">Skills, capabilities, or ways of working that others regularly rely on you for — including things that feel easy to you but hard for others.</p>
+            <textarea id="ik-good" placeholder=""></textarea>
+          </div>
+          <div class="ikigai-quadrant">
+            <div class="iq-label">What the world needs</div>
+            <p class="iq-prompt">Problems, gaps, or areas where you can see a genuine need — in your industry, your community, or the world.</p>
+            <textarea id="ik-world" placeholder=""></textarea>
+          </div>
+          <div class="ikigai-quadrant">
+            <div class="iq-label">What you can be paid for</div>
+            <p class="iq-prompt">Work someone would pay you for — currently or in the near future. Be practical, not wishful.</p>
+            <textarea id="ik-paid" placeholder=""></textarea>
+          </div>
         </div>
+
         <div class="form-divider"></div>
-        <div><p style="font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--warm-dark);margin-bottom:0.6rem;">Where does it overlap?</p><p style="font-size:0.82rem;color:var(--muted);margin-bottom:0.75rem;line-height:1.6;">Look across your four quadrants. What themes, words, or ideas appear in more than one?</p><textarea id="ik-overlap" style="min-height:110px;"></textarea></div>
+
+        <div class="ikigai-overlap">
+          <p class="ikigai-overlap-q" style="font-family: 'DM Serif Display', serif; font-size:1.05rem; margin-bottom:0.6rem;">Where does it overlap?</p>
+          <p style="font-size:0.82rem; color:var(--muted); margin-bottom:0.75rem; line-height:1.6;">Look across your four quadrants. What themes, words, or ideas appear in more than one? What does that tell you about where the overlap might be for you?</p>
+          <textarea id="ik-overlap" style="min-height:110px;"></textarea>
+        </div>
+
         <div class="form-divider"></div>
-        <p style="font-size:0.82rem;color:var(--muted);line-height:1.6;">A caution: ikigai is a starting point, not an answer. Most people find several possible overlaps. The point isn't to identify one perfect calling — it's to notice what keeps coming up, and to use that as input for the conversations ahead.</p>
+
+        <div>
+          <p style="font-size:0.82rem; color:var(--muted); line-height:1.6; margin-bottom:0.5rem;">A caution: ikigai is a starting point, not an answer. Most people find several possible overlaps. The point isn't to identify one perfect calling — it's to notice what keeps coming up, and to use that as input for the conversations ahead.</p>
+        </div>
+
+        <div class="form-divider"></div>
+
+        <div style="margin-bottom: 1rem;">
+          <p class="panel-subtitle">Reputation and legacy</p>
+          <p style="font-size:0.82rem; color:var(--muted); margin-bottom:1.25rem; line-height:1.6;">Use your ikigai answers to go one level further. These two questions feed directly into your Personal Development Plan.</p>
+        </div>
+        <div class="field-group">
+          <label for="ik-known">What do you want to be known for? <span style="font-weight:300; color:var(--muted);">What is the reputation you want after you have left the room?</span></label>
+          <textarea id="ik-known" style="min-height:80px;" placeholder="e.g. The person who brings rigour and calm to complex problems. The leader who develops other leaders."></textarea>
+        </div>
+        <div class="field-group">
+          <label for="ik-legacy">What does your working life look like at its best? <span style="font-weight:300; color:var(--muted);">Not next year. At the peak of what you are building toward.</span></label>
+          <textarea id="ik-legacy" style="min-height:80px;" placeholder="Think about impact, contribution, and what you want to have built or changed by then."></textarea>
+        </div>
+        <div style="background: var(--tag-bg); border-radius: 3px; padding: 0.75rem 1rem; margin-top: 0.5rem;">
+          <p style="font-size:0.82rem; color:var(--muted); line-height:1.6;">Take your answers to these two questions into your <a href="/mentoring/design" style="color:var(--accent); text-decoration: none; font-weight: 400;">Personal Development Plan</a>. They are the foundation for your focus area and actions.</p>
+        </div>
       </div>
-      <div class="actions"><button class="btn-primary" onclick="window.print()">Print / Save as PDF</button><p class="save-note">Your answers stay in your browser — nothing is sent anywhere.</p></div>
+      <div class="actions">
+        <button class="btn-primary" onclick="window.print()">Print / Save as PDF</button>
+        <p class="save-note">Your answers stay in your browser — nothing is sent anywhere.</p>
+      </div>
     </div>
   </main>
-  <footer><p class="footer-copy">© The Working Ground</p><nav><ul class="footer-nav"><li><a href="/about/">About</a></li><li><a href="/about/#what-to-build">What to build next?</a></li></ul></nav></footer>
+  <footer>
+    <p class="footer-copy">© The Working Ground</p>
+    <nav><ul class="footer-nav"><li><a href="/about/">About</a></li><li><a href="/about/#what-to-build">What to build next?</a></li></ul></nav>
+  </footer>
   <script>
-    function switchTab(id, btn) { document.querySelectorAll('.tool-tab').forEach(t => t.classList.remove('active')); document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active')); btn.classList.add('active'); document.getElementById('panel-' + id).classList.add('active'); }
+    function switchTab(id, btn) {
+      document.querySelectorAll('.tool-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('panel-' + id).classList.add('active');
+    }
+
+    // Career Line
     let rowCount = 0;
     function addRow() {
-      if (rowCount >= 12) return; rowCount++;
+      if (rowCount >= 12) return;
+      rowCount++;
       const tbody = document.getElementById('career-tbody');
       const tr = document.createElement('tr');
-      tr.innerHTML = '<td><input type="text" placeholder="e.g. 2018" style="width:60px;"></td><td><input type="text" placeholder="Role, company, or event"></td><td><div class="sentiment-btns"><button class="sentiment-btn high" onclick="setSentiment(this)" title="High">▲</button><button class="sentiment-btn mid" onclick="setSentiment(this)" title="Neutral">–</button><button class="sentiment-btn low" onclick="setSentiment(this)" title="Low">▼</button></div></td><td><input type="text" placeholder="One sentence on what it meant"></td>';
+      tr.innerHTML = `
+        <td><input type="text" placeholder="e.g. 2018" style="width:60px;"></td>
+        <td><input type="text" placeholder="Role, company, or event"></td>
+        <td>
+          <div class="sentiment-btns">
+            <button class="sentiment-btn high" onclick="setSentiment(this,'high')" title="High point">▲</button>
+            <button class="sentiment-btn mid" onclick="setSentiment(this,'mid')" title="Neutral">–</button>
+            <button class="sentiment-btn low" onclick="setSentiment(this,'low')" title="Low point">▼</button>
+          </div>
+        </td>
+        <td><input type="text" placeholder="One sentence on what it meant"></td>
+      `;
       tbody.appendChild(tr);
     }
-    function setSentiment(btn) { const btns = btn.closest('.sentiment-btns').querySelectorAll('.sentiment-btn'); btns.forEach(b => b.classList.remove('selected')); btn.classList.add('selected'); }
+    function setSentiment(btn, val) {
+      const btns = btn.closest('.sentiment-btns').querySelectorAll('.sentiment-btn');
+      btns.forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+    }
+    // Initialise with 5 rows
     for (let i = 0; i < 5; i++) addRow();
-    function toggleBall(card) { card.classList.toggle('glass'); }
+
+    // Glass balls
+    function toggleBall(card) {
+      card.classList.toggle('glass');
+    }
   </script>
 </body>
 </html>
