@@ -91,7 +91,8 @@
 
     @media print {
       .site-nav, .tool-tabs, .actions, footer { display: none !important; }
-      .tool-panel { display: block !important; }
+      .tool-panel { display: none !important; }
+      .tool-panel.active { display: block !important; }
       body { background: #fff; }
       .panel-card { box-shadow: none; }
       @page { margin: 2cm 2.5cm; }
@@ -182,7 +183,7 @@
 
           <!-- Seat 6: Challenger -->
           <div class="board-seat seat-empty">
-            <span class="seat-tag" style="color:var(--muted)">Challenger</span>
+            <span class="seat-tag">Challenger</span>
             <p class="seat-title">The contrarian</p>
             <p class="seat-desc">Someone who disagrees with you productively. They stop you from operating in an echo chamber.</p>
             <div class="seat-field"><label>Name (if you have one)</label><input type="text" placeholder=""></div>
@@ -343,7 +344,7 @@
       <div class="panel-card">
 
         <div class="mentor-note">
-          <strong>For your mentor session:</strong> Use this before your next industry event. Go through each section, identify one or two things you want to try, and come back with what happened.
+          Use this before your next industry event. Go through each section, identify one or two things you want to try, and come back with what happened.
         </div>
 
         <!-- Before you go -->
