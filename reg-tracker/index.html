@@ -21,10 +21,21 @@
   .tooltip-wrap .tip { display: none; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); background: #1e293b; color: white; padding: 4px 8px; border-radius: 4px; font-size: 10px; white-space: nowrap; z-index: 50; pointer-events: none; margin-bottom: 4px; }
   .tooltip-wrap:hover .tip { display: block; }
   .popover-card { position: fixed; background: white; border: 1px solid #e2e8f0; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); z-index: 200; width: 360px; max-height: 320px; overflow-y: auto; }
+  .site-nav { display: flex; align-items: center; padding: 8px 16px; border-bottom: 1px solid #e2e8f0; background: white; font-size: 12px; }
+  .site-nav-back { color: #64748b; text-decoration: none; }
+  .site-nav-back:hover { color: #0f172a; }
+  .site-footer { display: flex; justify-content: center; gap: 8px; padding: 10px 16px; font-size: 11px; color: #94a3b8; }
+  .site-footer a { color: #94a3b8; text-decoration: none; }
+  .site-footer a:hover { color: #64748b; }
+  .site-footer-sep { color: #cbd5e1; }
 </style>
 </head>
 <body class="bg-slate-100 text-slate-900">
+<nav class="site-nav no-print"><a href="/" class="site-nav-back">← The Working Ground</a></nav>
 <div id="root"></div>
+<footer class="site-footer no-print">
+  <a href="/about/">About</a><span class="site-footer-sep">·</span><a href="/about/#suggest">What to build next</a>
+</footer>
 
 <script>
 const {
