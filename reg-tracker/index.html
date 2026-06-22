@@ -436,12 +436,13 @@ function App() {
     }
   }, [data, initialised]);
 
+  const matrix = useMemo(() => data ? buildMatrix(data.COUNTRIES, data.THEMES, data.REGS) : {}, [data]);
+
   if (error) return <div className="p-8 text-red-600">Failed to load data: {error}</div>;
   if (!data) return <div className="p-8 text-slate-400">Loading tracker data…</div>;
 
   const { COUNTRIES, REGIONS, THEMES, THEME_DEFINITIONS, MATURITY_LABELS, MATURITY_SHORT, REGS, PERIOD } = data;
   const visibleCountries = COUNTRIES.filter(c => selected.includes(c.code));
-  const matrix = useMemo(() => buildMatrix(COUNTRIES, THEMES, REGS), [COUNTRIES, THEMES, REGS]);
   const newCount = REGS.filter(r => r.isNew && selected.includes(r.country)).length;
 
   return (
