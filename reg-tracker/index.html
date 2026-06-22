@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Sustainable Real Estate Tracker for Regulatory, Standards and Industry Updates</title>
+<title>APAC Sustainability Regulatory Tracker</title>
 <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.17.12/babel.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; padding-top: 2.25rem; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
   @media print {
-    body { background: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; padding-top: 0; }
+    body { background: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     .no-print { display: none !important; }
     .page { box-shadow: none !important; border: none !important; margin: 0 !important; padding: 16px !important; max-width: 100% !important; }
   }
@@ -22,30 +22,21 @@
   .tooltip-wrap .tip { display: none; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); background: #1e293b; color: white; padding: 4px 8px; border-radius: 4px; font-size: 10px; white-space: nowrap; z-index: 50; pointer-events: none; margin-bottom: 4px; }
   .tooltip-wrap:hover .tip { display: block; }
   .popover-card { position: fixed; background: white; border: 1px solid #e2e8f0; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); z-index: 200; width: 360px; max-height: 320px; overflow-y: auto; }
-  /* ── SITE NAV ── */
-  .site-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 300; background: #f1f5f9; border-bottom: 1px solid #e2e8f0; padding: 0.45rem 1rem; }
-  .site-nav-back { font-size: 0.75rem; color: #64748b; text-decoration: none; }
-  .site-nav-back:hover { color: #1e293b; }
-  /* ── SITE FOOTER ── */
-  .site-footer { text-align: center; padding: 0.75rem 1rem 1.25rem; font-size: 0.75rem; color: #94a3b8; }
-  .site-footer a { color: #64748b; text-decoration: none; }
-  .site-footer a:hover { color: #1e293b; }
-  .site-footer-sep { margin: 0 0.5rem; }
 </style>
 </head>
 <body class="bg-slate-100 text-slate-900">
-<nav class="site-nav no-print"><a href="/" class="site-nav-back">← The Working Ground</a></nav>
 <div id="root"></div>
-<footer class="site-footer no-print">
-  <a href="/about/">About</a><span class="site-footer-sep">·</span><a href="/about/#suggest">What to build next</a>
-</footer>
 
 <script type="text/babel">
 const { useState, useMemo, useCallback, useEffect } = React;
 
+// ============================================================
+// DATA LOADER — fetches from JSON files
+// ============================================================
 function useTrackerData() {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
+
   useEffect(() => {
     Promise.all([
       fetch('data/countries.json').then(r => r.json()),
@@ -54,34 +45,60 @@ function useTrackerData() {
     ])
     .then(([countryData, themeData, regData]) => {
       setData({
-        COUNTRIES: countryData.countries, REGIONS: countryData.regions,
-        THEMES: themeData.themes, THEME_DEFINITIONS: themeData.definitions,
-        MATURITY_LABELS: themeData.maturityLabels, MATURITY_SHORT: themeData.maturityShort,
-        REGS: regData.regulations, PERIOD: regData.period,
+        COUNTRIES: countryData.countries,
+        REGIONS: countryData.regions,
+        THEMES: themeData.themes,
+        THEME_DEFINITIONS: themeData.definitions,
+        MATURITY_LABELS: themeData.maturityLabels,
+        MATURITY_SHORT: themeData.maturityShort,
+        REGS: regData.regulations,
+        PERIOD: regData.period,
       });
     })
     .catch(e => setError(e.message));
   }, []);
+
   return { data, error };
 }
 
+// ============================================================
+// HELPERS
+// ============================================================
 function buildMatrix(countries, themes, regs) {
   const m = {};
-  countries.forEach(c => { m[c.code] = {}; themes.forEach(t => { m[c.code][t.code] = { maturity: 0, regs: [], hasNew: false }; }); });
-  regs.forEach(r => { const cell = m[r.country]?.[r.theme]; if (!cell) return; cell.regs.push(r); if (r.maturity > cell.maturity) cell.maturity = r.maturity; if (r.isNew) cell.hasNew = true; });
+  countries.forEach(c => {
+    m[c.code] = {};
+    themes.forEach(t => { m[c.code][t.code] = { maturity: 0, regs: [], hasNew: false }; });
+  });
+  regs.forEach(r => {
+    const cell = m[r.country]?.[r.theme];
+    if (!cell) return;
+    cell.regs.push(r);
+    if (r.maturity > cell.maturity) cell.maturity = r.maturity;
+    if (r.isNew) cell.hasNew = true;
+  });
   return m;
 }
 
+// ============================================================
+// COUNTRY PICKER (sidebar panel)
+// ============================================================
 function CountryPicker({ selected, setSelected, COUNTRIES, REGIONS }) {
-  function toggle(code) { setSelected(prev => prev.includes(code) ? prev.filter(c => c !== code) : [...prev, code]); }
+  function toggle(code) {
+    setSelected(prev => prev.includes(code) ? prev.filter(c => c !== code) : [...prev, code]);
+  }
   function selectRegion(region) {
     const codes = COUNTRIES.filter(c => c.region === region).map(c => c.code);
     const allSelected = codes.every(c => selected.includes(c));
-    if (allSelected) { setSelected(prev => prev.filter(c => !codes.includes(c))); }
-    else { setSelected(prev => [...new Set([...prev, ...codes])]); }
+    if (allSelected) {
+      setSelected(prev => prev.filter(c => !codes.includes(c)));
+    } else {
+      setSelected(prev => [...new Set([...prev, ...codes])]);
+    }
   }
   function selectAll() { setSelected(COUNTRIES.map(c => c.code)); }
   function clearAll() { setSelected([]); }
+
   return (
     <div className="bg-white rounded-lg border border-slate-200 shadow-sm p-3 no-print">
       <div className="flex items-center justify-between mb-2">
@@ -97,10 +114,18 @@ function CountryPicker({ selected, setSelected, COUNTRIES, REGIONS }) {
         const allOn = cs.every(c => selected.includes(c.code));
         return (
           <div key={region} className="mb-2">
-            <button onClick={() => selectRegion(region)} className={`text-[9px] font-semibold uppercase tracking-wide mb-0.5 block ${allOn ? 'text-emerald-700' : 'text-slate-400'} hover:text-slate-700`}>{region}</button>
+            <button onClick={() => selectRegion(region)}
+              className={`text-[9px] font-semibold uppercase tracking-wide mb-0.5 block ${allOn ? 'text-emerald-700' : 'text-slate-400'} hover:text-slate-700`}>
+              {region}
+            </button>
             <div className="flex flex-wrap gap-1">
               {cs.map(c => (
-                <button key={c.code} onClick={() => toggle(c.code)} className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] border transition ${selected.includes(c.code) ? 'border-slate-400 bg-white font-medium' : 'border-transparent bg-slate-100 text-slate-400'}`}>
+                <button key={c.code} onClick={() => toggle(c.code)}
+                  className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] border transition ${
+                    selected.includes(c.code)
+                      ? 'border-slate-400 bg-white font-medium'
+                      : 'border-transparent bg-slate-100 text-slate-400'
+                  }`}>
                   <span className="w-2 h-2 rounded-full inline-block" style={{backgroundColor: selected.includes(c.code) ? c.colour : '#cbd5e1'}}></span>
                   {c.code}
                   {c.footnote && <span className="text-[7px] text-amber-500">*</span>}
@@ -110,24 +135,37 @@ function CountryPicker({ selected, setSelected, COUNTRIES, REGIONS }) {
           </div>
         );
       })}
-      <div className="mt-2 text-[8px] text-slate-400"><span className="text-amber-500">*</span> = see footnote for inclusion rationale</div>
+      <div className="mt-2 text-[8px] text-slate-400">
+        <span className="text-amber-500">*</span> = see footnote for inclusion rationale
+      </div>
     </div>
   );
 }
 
+// ============================================================
+// DOT MATRIX
+// ============================================================
 function RegPopover({ country, theme, cell, onClose, anchorRect, THEMES, MATURITY_SHORT }) {
   const themeDef = THEMES.find(t => t.code === theme);
-  const popW = 360; const popH = Math.min(320, 60 + cell.regs.length * 70);
+  const popW = 360;
+  const popH = Math.min(320, 60 + cell.regs.length * 70);
   let top, left;
-  if (anchorRect) { left = Math.max(8, Math.min(window.innerWidth - popW - 8, anchorRect.left + anchorRect.width / 2 - popW / 2)); top = anchorRect.top > popH + 12 ? anchorRect.top - popH - 8 : anchorRect.bottom + 8; }
+  if (anchorRect) {
+    left = Math.max(8, Math.min(window.innerWidth - popW - 8, anchorRect.left + anchorRect.width / 2 - popW / 2));
+    top = anchorRect.top > popH + 12 ? anchorRect.top - popH - 8 : anchorRect.bottom + 8;
+  }
   return (
     <div className="popover-card" style={anchorRect ? {top, left} : {}} onClick={e => e.stopPropagation()}>
       <div className="px-3 py-2 border-b border-slate-100 flex items-center justify-between">
-        <div><span className="font-semibold text-[11px]">{country.name}</span><span className="text-[10px] text-slate-400 ml-1.5">· {themeDef?.short}</span></div>
+        <div>
+          <span className="font-semibold text-[11px]">{country.name}</span>
+          <span className="text-[10px] text-slate-400 ml-1.5">· {themeDef?.short}</span>
+        </div>
         <button onClick={onClose} className="text-slate-400 hover:text-slate-700 text-xs px-1">✕</button>
       </div>
       <div className="px-3 py-2">
-        {cell.regs.length === 0 ? (<div className="text-[10px] text-slate-400 py-2">No regulations recorded.</div>
+        {cell.regs.length === 0 ? (
+          <div className="text-[10px] text-slate-400 py-2">No regulations recorded.</div>
         ) : cell.regs.map(r => (
           <div key={r.id} className="mb-2 last:mb-0">
             <div className="flex items-start gap-1.5">
@@ -136,7 +174,7 @@ function RegPopover({ country, theme, cell, onClose, anchorRect, THEMES, MATURIT
                 <div className="text-[10.5px] font-medium leading-tight">{r.name}</div>
                 <div className="text-[9.5px] text-slate-500 mt-0.5">{r.obligation}</div>
                 <div className="text-[9px] text-slate-400 mt-0.5">
-                  Effective: {r.effectiveDate === 'TBD' ? 'TBD' : r.effectiveDate === 'stayed' ? 'Stayed' : r.effectiveDate}
+                  Eff: {r.effectiveDate === 'TBD' ? 'TBD' : r.effectiveDate === 'stayed' ? 'Stayed' : r.effectiveDate}
                   <span className="mx-1">·</span>
                   <span className={r.isNew ? 'text-emerald-600 font-medium' : ''}>{r.isNew ? 'New / upcoming' : 'Pre-existing'}</span>
                   <span className="mx-1">·</span>
@@ -153,40 +191,86 @@ function RegPopover({ country, theme, cell, onClose, anchorRect, THEMES, MATURIT
 
 function DotMatrix({ matrix, visibleCountries, THEMES, MATURITY_SHORT, MATURITY_LABELS }) {
   const [activePopover, setActivePopover] = useState(null);
+
   const grid = {};
-  THEMES.forEach(t => { grid[t.code] = {}; for (let lvl = 0; lvl <= 5; lvl++) grid[t.code][lvl] = []; visibleCountries.forEach(c => { const lvl = matrix[c.code]?.[t.code]?.maturity || 0; grid[t.code][lvl].push(c); }); });
-  const levels = [5,4,3,2,1,0]; const dotSize = 21;
-  function togglePopover(countryCode, themeCode, e) { if (activePopover && activePopover.country === countryCode && activePopover.theme === themeCode) { setActivePopover(null); } else { const rect = e.currentTarget.getBoundingClientRect(); setActivePopover({ country: countryCode, theme: themeCode, rect }); } }
-  function handleTableClick(e) { if (!e.target.closest('.popover-card') && !e.target.closest('.dot')) setActivePopover(null); }
-  const isIntl = (c) => ['Europe','Americas','International'].includes(c.region);
+  THEMES.forEach(t => {
+    grid[t.code] = {};
+    for (let lvl = 0; lvl <= 5; lvl++) grid[t.code][lvl] = [];
+    visibleCountries.forEach(c => {
+      const lvl = matrix[c.code]?.[t.code]?.maturity || 0;
+      grid[t.code][lvl].push(c);
+    });
+  });
+
+  const levels = [5,4,3,2,1,0];
+  const dotSize = 21;
+
+  function togglePopover(countryCode, themeCode, e) {
+    if (activePopover && activePopover.country === countryCode && activePopover.theme === themeCode) {
+      setActivePopover(null);
+    } else {
+      const rect = e.currentTarget.getBoundingClientRect();
+      setActivePopover({ country: countryCode, theme: themeCode, rect });
+    }
+  }
+
+  function handleTableClick(e) {
+    if (!e.target.closest('.popover-card') && !e.target.closest('.dot')) setActivePopover(null);
+  }
+
+  const isIntl = (c) => ['Europe','Americas'].includes(c.region);
+
   return (
     <div className="overflow-auto" onClick={handleTableClick}>
       <table className="w-full" style={{borderCollapse:'separate', borderSpacing:'0'}}>
-        <thead><tr>
-          <th className="w-20 pr-2 text-right text-[10px] text-slate-400 font-normal align-bottom pb-1">Maturity</th>
-          {THEMES.map((t, i) => (<th key={t.code} className="text-center pb-1 px-0.5" style={{borderLeft: i > 0 ? '1px solid #e2e8f0' : 'none'}}><div className="text-[9px] font-semibold leading-tight text-slate-700 whitespace-pre-line">{t.name}</div></th>))}
-        </tr></thead>
+        <thead>
+          <tr>
+            <th className="w-20 pr-2 text-right text-[10px] text-slate-400 font-normal align-bottom pb-1">Maturity</th>
+            {THEMES.map((t, i) => (
+              <th key={t.code} className="text-center pb-1 px-0.5" style={{borderLeft: i > 0 ? '1px solid #e2e8f0' : 'none'}}>
+                <div className="text-[9px] font-semibold leading-tight text-slate-700 whitespace-pre-line">{t.name}</div>
+              </th>
+            ))}
+          </tr>
+        </thead>
         <tbody>
           {levels.map((lvl, rowIdx) => (
-            <tr key={lvl} className={lvl === 0 ? 'border-t-2 border-slate-300 border-b border-slate-100' : 'border-b border-slate-100'} style={{backgroundColor: lvl === 0 ? '#f1f5f9' : rowIdx % 2 === 0 ? '#f8fafc' : '#ffffff'}}>
-              <td className="pr-2 text-right align-middle py-0.5"><div className="text-[9px] text-slate-500 leading-tight">{MATURITY_SHORT[lvl]}</div></td>
+            <tr key={lvl} className={lvl === 0 ? 'border-t-2 border-dashed border-slate-300 border-b border-slate-100' : 'border-b border-slate-100'} style={{backgroundColor: rowIdx % 2 === 0 ? '#f8fafc' : '#ffffff'}}>
+              <td className="pr-2 text-right align-middle py-0.5">
+                <div className="text-[9px] text-slate-500 leading-tight">{MATURITY_SHORT[lvl]}</div>
+              </td>
               {THEMES.map((t, i) => {
                 const dots = grid[t.code][lvl];
                 return (
                   <td key={t.code} className="align-middle px-0.5 py-0.5" style={{borderLeft: i > 0 ? '1px solid #f1f5f9' : 'none'}}>
                     <div className="flex flex-wrap justify-center gap-0.5 min-h-[24px]">
                       {dots.map(c => {
-                        const cell = matrix[c.code]?.[t.code]; const intl = isIntl(c);
+                        const cell = matrix[c.code]?.[t.code];
+                        const intl = isIntl(c);
                         const isActive = activePopover && activePopover.country === c.code && activePopover.theme === t.code;
                         return (
                           <div key={c.code} className="tooltip-wrap" style={{position:'relative'}}>
                             <div className="dot rounded-full flex items-center justify-center text-white font-bold"
                               onClick={(e) => { e.stopPropagation(); togglePopover(c.code, t.code, e); }}
-                              style={{ width: dotSize, height: dotSize, fontSize: 7.5, backgroundColor: lvl === 0 ? '#c8d0db' : c.colour,
+                              style={{
+                                width: dotSize, height: dotSize, fontSize: 7.5,
+                                backgroundColor: c.colour,
                                 border: isActive ? '2px solid #0f172a' : cell?.hasNew ? '2px solid #facc15' : intl ? '2px dashed #94a3b8' : 'none',
-                              }}>{c.code}</div>
-                            {!isActive && (<div className="tip">{c.name} · {MATURITY_LABELS[lvl]}{cell?.hasNew && ' · NEW/UPCOMING'}{cell?.regs.length > 0 && ` · Click for ${cell.regs.length} reg${cell.regs.length > 1 ? 's' : ''}`}</div>)}
-                            {isActive && cell && (<RegPopover country={c} theme={t.code} cell={cell} onClose={() => setActivePopover(null)} anchorRect={activePopover.rect} THEMES={THEMES} MATURITY_SHORT={MATURITY_SHORT} />)}
+                              }}>
+                              {c.code}
+                            </div>
+                            {!isActive && (
+                              <div className="tip">
+                                {c.name} · {MATURITY_LABELS[lvl]}
+                                {cell?.hasNew && ' · NEW/UPCOMING'}
+                                {cell?.regs.length > 0 && ` · Click for ${cell.regs.length} reg${cell.regs.length > 1 ? 's' : ''}`}
+                              </div>
+                            )}
+                            {isActive && cell && (
+                              <RegPopover country={c} theme={t.code} cell={cell}
+                                onClose={() => setActivePopover(null)} anchorRect={activePopover.rect}
+                                THEMES={THEMES} MATURITY_SHORT={MATURITY_SHORT} />
+                            )}
                           </div>
                         );
                       })}
@@ -202,21 +286,52 @@ function DotMatrix({ matrix, visibleCountries, THEMES, MATURITY_SHORT, MATURITY_
   );
 }
 
+// ============================================================
+// NEW & UPCOMING
+// ============================================================
 function NewUpcoming({ visibleCountries, REGS, COUNTRIES, THEMES }) {
   const codes = new Set(visibleCountries.map(c => c.code));
-  const items = REGS.filter(r => r.isNew && codes.has(r.country)).sort((a,b) => { const da = a.effectiveDate === 'stayed' || a.effectiveDate === 'TBD' ? '9999' : a.effectiveDate; const db = b.effectiveDate === 'stayed' || b.effectiveDate === 'TBD' ? '9999' : b.effectiveDate; return da.localeCompare(db); });
+  const items = REGS.filter(r => r.isNew && codes.has(r.country))
+    .sort((a,b) => {
+      const da = a.effectiveDate === 'stayed' || a.effectiveDate === 'TBD' ? '9999' : a.effectiveDate;
+      const db = b.effectiveDate === 'stayed' || b.effectiveDate === 'TBD' ? '9999' : b.effectiveDate;
+      return da.localeCompare(db);
+    });
+
   return (
     <table className="w-full text-[10.5px]">
-      <thead><tr className="border-b-2 border-slate-300"><th className="text-left py-0.5 pr-1.5 w-16">Market</th><th className="text-left py-0.5 pr-1.5">Instrument</th><th className="text-left py-0.5 pr-1.5 w-[44%]">Key obligation</th><th className="text-right py-0.5">Announced</th></tr></thead>
+      <thead>
+        <tr className="border-b-2 border-slate-300">
+          <th className="text-left py-0.5 pr-1.5 w-16">Market</th>
+          <th className="text-left py-0.5 pr-1.5">Instrument</th>
+          <th className="text-left py-0.5 pr-1.5 w-[44%]">Key obligation</th>
+          <th className="text-right py-0.5 w-16">Effective</th>
+        </tr>
+      </thead>
       <tbody>
-        {items.map(r => { const c = COUNTRIES.find(x => x.code === r.country); const t = THEMES.find(x => x.code === r.theme);
-          return (<tr key={r.id} className="border-b border-slate-100"><td className="py-0.5 pr-1.5 font-medium" style={{color: c?.colour}}>{c?.name}</td><td className="py-0.5 pr-1.5"><span className="inline-block w-1.5 h-1.5 rounded-full mr-1 align-middle" style={{backgroundColor: t?.colour}}></span>{r.name}</td><td className="py-0.5 pr-1.5 text-slate-600">{r.obligation}</td><td className="py-0.5 text-right font-mono text-[9.5px]">{r.effectiveDate === 'TBD' ? 'TBD' : r.effectiveDate === 'stayed' ? 'Stayed' : r.effectiveDate.slice(0,7)}</td></tr>);
+        {items.map(r => {
+          const c = COUNTRIES.find(x => x.code === r.country);
+          const t = THEMES.find(x => x.code === r.theme);
+          return (
+            <tr key={r.id} className="border-b border-slate-100">
+              <td className="py-0.5 pr-1.5 font-medium" style={{color: c?.colour}}>{c?.name}</td>
+              <td className="py-0.5 pr-1.5">
+                <span className="inline-block w-1.5 h-1.5 rounded-full mr-1 align-middle" style={{backgroundColor: t?.colour}}></span>
+                {r.name}
+              </td>
+              <td className="py-0.5 pr-1.5 text-slate-600">{r.obligation}</td>
+              <td className="py-0.5 text-right font-mono text-[9.5px]">{r.effectiveDate === 'TBD' ? 'TBD' : r.effectiveDate === 'stayed' ? 'Stayed' : r.effectiveDate.slice(0,7)}</td>
+            </tr>
+          );
         })}
       </tbody>
     </table>
   );
 }
 
+// ============================================================
+// FOOTNOTES
+// ============================================================
 function Footnotes({ visibleCountries, showPanel, setShowPanel, THEMES, THEME_DEFINITIONS, MATURITY_LABELS, COUNTRIES }) {
   if (!showPanel) return null;
   return (
@@ -229,25 +344,71 @@ function Footnotes({ visibleCountries, showPanel, setShowPanel, THEMES, THEME_DE
         <div className="px-6 py-4">
           <h3 className="text-[11px] font-semibold text-slate-700 uppercase tracking-wide mb-2">Theme definitions</h3>
           <table className="w-full text-[10.5px] mb-6">
-            <thead><tr className="border-b-2 border-slate-300"><th className="text-left py-1 pr-3 w-32">Theme</th><th className="text-left py-1 pr-3">Scope</th><th className="text-left py-1 w-[35%]">Real estate examples</th></tr></thead>
+            <thead><tr className="border-b-2 border-slate-300">
+              <th className="text-left py-1 pr-3 w-32">Theme</th>
+              <th className="text-left py-1 pr-3">Scope</th>
+              <th className="text-left py-1 w-[35%]">Real estate examples</th>
+            </tr></thead>
             <tbody className="text-slate-700">
-              {THEME_DEFINITIONS.map(td => { const t = THEMES.find(x => x.code === td.code);
-                return (<tr key={td.code} className="border-b border-slate-100"><td className="py-1.5 pr-3 font-medium align-top"><span className="inline-block w-2 h-2 rounded-full mr-1" style={{backgroundColor: t?.colour}}></span>{t?.short}</td><td className="py-1.5 pr-3">{td.scope}</td><td className="py-1.5">{td.examples}</td></tr>);
+              {THEME_DEFINITIONS.map(td => {
+                const t = THEMES.find(x => x.code === td.code);
+                return (
+                  <tr key={td.code} className="border-b border-slate-100">
+                    <td className="py-1.5 pr-3 font-medium align-top">
+                      <span className="inline-block w-2 h-2 rounded-full mr-1" style={{backgroundColor: t?.colour}}></span>
+                      {t?.short}
+                    </td>
+                    <td className="py-1.5 pr-3">{td.scope}</td>
+                    <td className="py-1.5">{td.examples}</td>
+                  </tr>
+                );
               })}
             </tbody>
           </table>
+
           <h3 className="text-[11px] font-semibold text-slate-700 uppercase tracking-wide mb-2">Maturity ladder</h3>
           <table className="w-full text-[10.5px] mb-6">
-            <thead><tr className="border-b-2 border-slate-300"><th className="text-left py-1 w-10">Level</th><th className="text-left py-1 pr-3 w-32">Label</th><th className="text-left py-1">Observable test</th></tr></thead>
+            <thead><tr className="border-b-2 border-slate-300">
+              <th className="text-left py-1 w-10">Level</th>
+              <th className="text-left py-1 pr-3 w-32">Label</th>
+              <th className="text-left py-1">Observable test</th>
+            </tr></thead>
             <tbody className="text-slate-700">
-              {MATURITY_LABELS.map((label, i) => (<tr key={i} className="border-b border-slate-100"><td className="py-1">{i}</td><td className="py-1 pr-3 font-medium">{label}</td><td className="py-1">{['No regulation, standard, or rating scheme recorded for this country × theme.','An instrument exists (consultation paper, draft regulation, or standard under development) but has not been finalised or brought into force.','A voluntary rating, standard, or incentive scheme is in force but there is no mandatory requirement.','A mandatory requirement exists but scope is limited — by building size threshold, entity type, geography, or asset class.','A mandatory requirement captures the majority of the relevant building stock or entity base in that jurisdiction.','A mandatory requirement is in force with active enforcement mechanisms: financial penalties, compliance audits, mandatory assurance, or licence/consent conditions.'][i]}</td></tr>))}
+              {MATURITY_LABELS.map((label, i) => (
+                <tr key={i} className="border-b border-slate-100">
+                  <td className="py-1">{i}</td>
+                  <td className="py-1 pr-3 font-medium">{label}</td>
+                  <td className="py-1">{[
+                    'No regulation, standard, or rating scheme recorded for this country × theme.',
+                    'An instrument exists (consultation paper, draft regulation, or standard under development) but has not been finalised or brought into force.',
+                    'A voluntary rating, standard, or incentive scheme is in force but there is no mandatory requirement.',
+                    'A mandatory requirement exists but scope is limited — by building size threshold, entity type, geography, or asset class.',
+                    'A mandatory requirement captures the majority of the relevant building stock or entity base in that jurisdiction.',
+                    'A mandatory requirement is in force with active enforcement mechanisms: financial penalties, compliance audits, mandatory assurance, or licence/consent conditions.',
+                  ][i]}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
+
           <h3 className="text-[11px] font-semibold text-slate-700 uppercase tracking-wide mb-2">Market inclusion rationale</h3>
           <table className="w-full text-[10.5px]">
-            <thead><tr className="border-b-2 border-slate-300"><th className="text-left py-1 pr-3 w-28">Market</th><th className="text-left py-1 pr-3 w-24">Region</th><th className="text-left py-1">Rationale</th></tr></thead>
+            <thead><tr className="border-b-2 border-slate-300">
+              <th className="text-left py-1 pr-3 w-28">Market</th>
+              <th className="text-left py-1 pr-3 w-24">Region</th>
+              <th className="text-left py-1">Rationale</th>
+            </tr></thead>
             <tbody className="text-slate-700">
-              {COUNTRIES.map(c => (<tr key={c.code} className="border-b border-slate-100"><td className="py-1 pr-3 font-medium"><span className="inline-block w-2 h-2 rounded-full mr-1" style={{backgroundColor: c.colour}}></span>{c.name}</td><td className="py-1 pr-3">{c.region}</td><td className="py-1">{c.footnote || 'Core Asia-Pacific market.'}</td></tr>))}
+              {COUNTRIES.map(c => (
+                <tr key={c.code} className="border-b border-slate-100">
+                  <td className="py-1 pr-3 font-medium">
+                    <span className="inline-block w-2 h-2 rounded-full mr-1" style={{backgroundColor: c.colour}}></span>
+                    {c.name}
+                  </td>
+                  <td className="py-1 pr-3">{c.region}</td>
+                  <td className="py-1">{c.footnote || 'Core Asia-Pacific market.'}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
@@ -256,66 +417,141 @@ function Footnotes({ visibleCountries, showPanel, setShowPanel, THEMES, THEME_DE
   );
 }
 
+// ============================================================
+// APP
+// ============================================================
 function App() {
   const { data, error } = useTrackerData();
   const [selected, setSelected] = useState([]);
   const [showNotes, setShowNotes] = useState(false);
   const [initialised, setInitialised] = useState(false);
-  useEffect(() => { if (data && !initialised) { setSelected(data.COUNTRIES.filter(c => ['East Asia','Oceania','Southeast Asia','South Asia'].includes(c.region)).map(c => c.code)); setInitialised(true); } }, [data, initialised]);
-  const COUNTRIES = data?.COUNTRIES ?? [];
-  const THEMES = data?.THEMES ?? [];
-  const REGS = data?.REGS ?? [];
-  const matrix = useMemo(() => buildMatrix(COUNTRIES, THEMES, REGS), [COUNTRIES, THEMES, REGS]);
+
+  // Set default selection once data loads
+  useEffect(() => {
+    if (data && !initialised) {
+      setSelected(
+        data.COUNTRIES.filter(c => ['East Asia','Oceania','Southeast Asia','South Asia'].includes(c.region)).map(c => c.code)
+      );
+      setInitialised(true);
+    }
+  }, [data, initialised]);
+
   if (error) return <div className="p-8 text-red-600">Failed to load data: {error}</div>;
   if (!data) return <div className="p-8 text-slate-400">Loading tracker data…</div>;
-  const { REGIONS, THEME_DEFINITIONS, MATURITY_LABELS, MATURITY_SHORT, PERIOD } = data;
+
+  const { COUNTRIES, REGIONS, THEMES, THEME_DEFINITIONS, MATURITY_LABELS, MATURITY_SHORT, REGS, PERIOD } = data;
   const visibleCountries = COUNTRIES.filter(c => selected.includes(c.code));
+  const matrix = useMemo(() => buildMatrix(COUNTRIES, THEMES, REGS), [COUNTRIES, THEMES, REGS]);
   const newCount = REGS.filter(r => r.isNew && selected.includes(r.country)).length;
+
   return (
     <div className="min-h-screen flex gap-3 p-3">
+      {/* Sidebar */}
       <div className="w-44 flex-shrink-0 no-print">
         <CountryPicker selected={selected} setSelected={setSelected} COUNTRIES={COUNTRIES} REGIONS={REGIONS} />
-        <button onClick={() => setShowNotes(true)} className="mt-2 w-full text-left bg-white rounded-lg border border-slate-200 shadow-sm p-3 text-[10px] text-slate-600 hover:text-emerald-700 hover:border-emerald-300">Definitions & notes ↗</button>
-        <button onClick={() => window.print()} className="mt-2 w-full bg-slate-700 text-white px-3 py-1.5 rounded text-[10px] hover:bg-slate-800">Print</button>
+        <button onClick={() => setShowNotes(true)}
+          className="mt-2 w-full text-left bg-white rounded-lg border border-slate-200 shadow-sm p-3 text-[10px] text-slate-600 hover:text-emerald-700 hover:border-emerald-300">
+          Definitions & notes ↗
+        </button>
+        <button onClick={() => window.print()}
+          className="mt-2 w-full bg-slate-700 text-white px-3 py-1.5 rounded text-[10px] hover:bg-slate-800">
+          Print
+        </button>
       </div>
+
+      {/* Main */}
       <div className="flex-1 min-w-0">
         <div className="page bg-white shadow-lg rounded border border-slate-200">
+          {/* Header */}
           <div className="px-5 pt-4 pb-2 border-b border-slate-200">
-            <h1 className="text-sm font-semibold text-slate-900">Sustainable Real Estate Tracker for Regulatory, Standards and Industry Updates</h1>
-            <p className="text-[10px] text-slate-500 mt-0.5">Real estate, building & construction · {PERIOD} · Showing {visibleCountries.length} of {COUNTRIES.length} markets · {REGS.length} instruments</p>
+            <h1 className="text-sm font-semibold text-slate-900">APAC Sustainability Regulatory Tracker</h1>
+            <p className="text-[10px] text-slate-500 mt-0.5">
+              Real estate, building & construction · {PERIOD} · Showing {visibleCountries.length} of {COUNTRIES.length} markets · {REGS.length} regulations
+            </p>
           </div>
-          {visibleCountries.length === 0 && (<div className="px-5 py-12 text-center text-slate-400 text-sm">Select markets from the left panel to display the tracker.</div>)}
-          {visibleCountries.length > 0 && (<>
-            <div className="px-5 pt-3 pb-1.5">
-              <div className="flex items-center justify-between mb-1.5">
-                <h2 className="text-[10px] font-semibold text-slate-700 uppercase tracking-wide">Regulatory maturity by theme</h2>
-                <div className="flex items-center gap-3 text-[9px] text-slate-500">
-                  <span className="flex items-center gap-1"><span className="inline-block w-3.5 h-3.5 rounded-full border-2 border-yellow-400 bg-slate-300"></span>Recent / Upcoming</span>
-                  <span className="flex items-center gap-1"><span className="inline-block w-3.5 h-3.5 rounded-full border-2 border-dashed border-slate-400 bg-slate-300"></span>Europe / Americas</span>
-                  <span className="flex items-center gap-1"><span className="inline-block w-3.5 h-3.5 rounded-full bg-slate-300"></span>Asia-Pacific</span>
+
+          {/* Empty state */}
+          {visibleCountries.length === 0 && (
+            <div className="px-5 py-12 text-center text-slate-400 text-sm">Select markets from the left panel to display the tracker.</div>
+          )}
+
+          {visibleCountries.length > 0 && (
+            <>
+              {/* Dot matrix */}
+              <div className="px-5 pt-3 pb-1.5">
+                <div className="flex items-center justify-between mb-1.5">
+                  <h2 className="text-[10px] font-semibold text-slate-700 uppercase tracking-wide">Regulatory maturity by theme</h2>
+                  <div className="flex items-center gap-3 text-[9px] text-slate-500">
+                    <span className="flex items-center gap-1">
+                      <span className="inline-block w-3.5 h-3.5 rounded-full border-2 border-yellow-400 bg-slate-300"></span>
+                      New / upcoming
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <span className="inline-block w-3.5 h-3.5 rounded-full border-2 border-dashed border-slate-400 bg-slate-300"></span>
+                      Europe / Americas
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <span className="inline-block w-3.5 h-3.5 rounded-full bg-slate-300"></span>
+                      Asia-Pacific
+                    </span>
+                  </div>
+                </div>
+                <DotMatrix matrix={matrix} visibleCountries={visibleCountries}
+                  THEMES={THEMES} MATURITY_SHORT={MATURITY_SHORT} MATURITY_LABELS={MATURITY_LABELS} />
+              </div>
+
+              {/* Country legend */}
+              <div className="px-5 pb-1">
+                <div className="flex flex-wrap gap-x-2.5 gap-y-0 text-[9px]">
+                  {visibleCountries.map(c => (
+                    <span key={c.code} className="flex items-center gap-0.5">
+                      <span className="inline-block w-2 h-2 rounded-full" style={{backgroundColor: c.colour}}></span>
+                      <span className="text-slate-500">{c.code} {c.name}</span>
+                      {c.footnote && <span className="text-amber-500 text-[7px]">*</span>}
+                    </span>
+                  ))}
                 </div>
               </div>
-              <DotMatrix matrix={matrix} visibleCountries={visibleCountries} THEMES={THEMES} MATURITY_SHORT={MATURITY_SHORT} MATURITY_LABELS={MATURITY_LABELS} />
-            </div>
-            <div className="px-5 pb-1"><div className="flex flex-wrap gap-x-2.5 gap-y-0 text-[9px]">{visibleCountries.map(c => (<span key={c.code} className="flex items-center gap-0.5"><span className="inline-block w-2 h-2 rounded-full" style={{backgroundColor: c.colour}}></span><span className="text-slate-500">{c.code} {c.name}</span>{c.footnote && <span className="text-amber-500 text-[7px]">*</span>}</span>))}</div></div>
-            <div className="mx-5 border-t border-slate-300 my-1.5"></div>
-            <div className="px-5 pb-3">
-              <div className="flex items-center justify-between mb-1.5">
-                <h2 className="text-[10px] font-semibold text-slate-700 uppercase tracking-wide">Recent / Upcoming ({newCount} items)</h2>
-                <div className="flex gap-3 text-[9px] text-slate-400">{THEMES.map(t => (<span key={t.code} className="flex items-center gap-0.5"><span className="inline-block w-1.5 h-1.5 rounded-full" style={{backgroundColor: t.colour}}></span>{t.short}</span>))}</div>
+
+              {/* Divider */}
+              <div className="mx-5 border-t border-slate-300 my-1.5"></div>
+
+              {/* New & Upcoming */}
+              <div className="px-5 pb-3">
+                <div className="flex items-center justify-between mb-1.5">
+                  <h2 className="text-[10px] font-semibold text-slate-700 uppercase tracking-wide">
+                    New & upcoming ({newCount} items)
+                  </h2>
+                  <div className="flex gap-3 text-[9px] text-slate-400">
+                    {THEMES.map(t => (
+                      <span key={t.code} className="flex items-center gap-0.5">
+                        <span className="inline-block w-1.5 h-1.5 rounded-full" style={{backgroundColor: t.colour}}></span>
+                        {t.short}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <NewUpcoming visibleCountries={visibleCountries} REGS={REGS} COUNTRIES={COUNTRIES} THEMES={THEMES} />
               </div>
-              <NewUpcoming visibleCountries={visibleCountries} REGS={REGS} COUNTRIES={COUNTRIES} THEMES={THEMES} />
-            </div>
-            <div className="px-5 py-2 bg-slate-50 border-t border-slate-200 rounded-b">
-              <div className="flex items-center justify-between text-[8px] text-slate-400">
-                <span>Illustrative data — verify before citing ·<button onClick={() => setShowNotes(true)} className="text-emerald-600 hover:underline ml-1">Definitions & notes</button></span>
-                <span>Generated {new Date().toLocaleDateString('en-GB', {day:'numeric', month:'long', year:'numeric'})}</span>
+
+              {/* Footer */}
+              <div className="px-5 py-2 bg-slate-50 border-t border-slate-200 rounded-b">
+                <div className="flex items-center justify-between text-[8px] text-slate-400">
+                  <span>
+                    Illustrative data — verify before citing ·
+                    <button onClick={() => setShowNotes(true)} className="text-emerald-600 hover:underline ml-1">Definitions & notes</button>
+                  </span>
+                  <span>Generated {new Date().toLocaleDateString('en-GB', {day:'numeric', month:'long', year:'numeric'})}</span>
+                </div>
               </div>
-            </div>
-          </>)}
+            </>
+          )}
         </div>
       </div>
-      <Footnotes visibleCountries={visibleCountries} showPanel={showNotes} setShowPanel={setShowNotes} THEMES={THEMES} THEME_DEFINITIONS={THEME_DEFINITIONS} MATURITY_LABELS={MATURITY_LABELS} COUNTRIES={COUNTRIES} />
+
+      {/* Footnotes modal */}
+      <Footnotes visibleCountries={visibleCountries} showPanel={showNotes} setShowPanel={setShowNotes}
+        THEMES={THEMES} THEME_DEFINITIONS={THEME_DEFINITIONS} MATURITY_LABELS={MATURITY_LABELS} COUNTRIES={COUNTRIES} />
     </div>
   );
 }
