@@ -230,7 +230,12 @@ function RegPopover({
     className: r.isNew ? 'text-emerald-600 font-medium' : ''
   }, r.isNew ? 'New / upcoming' : 'Pre-existing'), /*#__PURE__*/React.createElement("span", {
     className: "mx-1"
-  }, "·"), "Maturity: ", MATURITY_SHORT[r.maturity])))))));
+  }, "·"), "Maturity: ", MATURITY_SHORT[r.maturity]), r.url && /*#__PURE__*/React.createElement("a", {
+    href: r.url,
+    target: "_blank",
+    rel: "noopener noreferrer",
+    className: "text-[9px] text-blue-500 hover:underline mt-0.5 block"
+  }, "Source ↗")))))))
 }
 function DotMatrix({
   matrix,
@@ -389,7 +394,12 @@ function NewUpcoming({
       style: {
         backgroundColor: t?.colour
       }
-    }), r.name), /*#__PURE__*/React.createElement("td", {
+    }), r.url ? /*#__PURE__*/React.createElement("a", {
+      href: r.url,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "text-blue-600 hover:underline"
+    }, r.name) : r.name), /*#__PURE__*/React.createElement("td", {
       className: "py-0.5 pr-1.5 text-slate-600"
     }, r.obligation), /*#__PURE__*/React.createElement("td", {
       className: "py-0.5 text-right font-mono text-[9.5px]"
