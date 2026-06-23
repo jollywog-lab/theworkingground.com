@@ -171,7 +171,7 @@
       "isNew": true,
       "effectiveDate": "2025-01-01",
       "obligation": "Mandatory for Main Board issuers. All issuers by 2027.",
-      "url": "https://www.hkex.com.hk/Listing/Rules-and-Guidance/Environmental-Social-and-Governance/Climate-Disclosure"
+      "url": "https://www.hkex.com.hk/Listing/Sustainability/ESG-Academy/Rules-and-Regulations?sc_lang=en"
     },
     {
       "id": 31,
@@ -193,7 +193,7 @@
       "isNew": false,
       "effectiveDate": "2024-06-01",
       "obligation": "Voluntary. Enhanced climate resilience and wellbeing credits.",
-      "url": "https://www.beamsociety.org.hk/en_beam-plus.php"
+      "url": "https://www.beamsociety.org.hk/"
     },
     {
       "id": 34,
@@ -226,7 +226,7 @@
       "isNew": true,
       "effectiveDate": "2025-01-01",
       "obligation": "Mandatory climate disclosure for entities >$500m revenue. Group 2 from Jul 2026.",
-      "url": "https://www.aasb.gov.au/standards/sustainability-disclosure-standards/"
+      "url": "https://www.aasb.gov.au/news/australian-sustainability-reporting-standards-aasb-s1-and-s2-are-now-available-on-the-aasb-digital-standards-portal/"
     },
     {
       "id": 2,
@@ -248,7 +248,7 @@
       "isNew": false,
       "effectiveDate": "2011-11-01",
       "obligation": "Office >1,000 sqm NLA: NABERS rating at sale/lease. Penalties for non-disclosure.",
-      "url": "https://www.nabers.gov.au/about/legislation-and-policy/nabers-mandatory-disclosure"
+      "url": "https://www.dcceew.gov.au/energy/energy-efficiency/buildings/commercial-buildings"
     },
     {
       "id": 4,
@@ -259,7 +259,7 @@
       "isNew": false,
       "effectiveDate": "2023-05-01",
       "obligation": "Mandatory energy efficiency standards for all new commercial buildings.",
-      "url": "https://ncc.abcb.gov.au/editions/ncc-2022"
+      "url": "https://ncc.abcb.gov.au/editions/ncc-2022/adopted/volume-one/j-energy-efficiency/part-j1-energy-efficiency-performance-requirements"
     },
     {
       "id": 5,
@@ -314,7 +314,7 @@
       "isNew": true,
       "effectiveDate": "2025-06-01",
       "obligation": "First Australian taxonomy. Defines green and credible transition activities. Treasury transition planning guidance expected. Voluntary.",
-      "url": "https://www.sustainablefinance.org.au/taxonomy"
+      "url": "https://www.sustainablefinance.org.au/"
     },
     {
       "id": 130,
@@ -325,7 +325,7 @@
       "isNew": false,
       "effectiveDate": "2024-01-01",
       "obligation": "Mandatory for large listed issuers, banks, insurers, asset managers. World-first.",
-      "url": "https://www.xrb.govt.nz/standards/climate-standards/"
+      "url": "https://www.xrb.govt.nz/standards/climate-related-disclosures/aotearoa-new-zealand-climate-standards/"
     },
     {
       "id": 131,
@@ -369,7 +369,7 @@
       "isNew": false,
       "effectiveDate": "2021-11-01",
       "obligation": "Mandatory for new buildings >5,000 sqm GFA.",
-      "url": "https://www1.bca.gov.sg/buildsg/sustainability/green-mark-certification-scheme"
+      "url": "https://www1.bca.gov.sg/sustainability/greenmark/"
     },
     {
       "id": 11,
@@ -391,7 +391,7 @@
       "isNew": false,
       "effectiveDate": "2022-01-01",
       "obligation": "ISSB-aligned climate disclosure for all listed issuers, phased.",
-      "url": "https://www.sgx.com/regulation/sustainability-reporting"
+      "url": "https://www.sgx.com/sustainable-finance/sustainability-reporting"
     },
     {
       "id": 13,
@@ -402,7 +402,7 @@
       "isNew": true,
       "effectiveDate": "2027-09-01",
       "obligation": "Banks, insurers, asset managers: transition plans, engagement over divestment.",
-      "url": "https://www.mas.gov.sg/development/sustainable-finance/transition-planning"
+      "url": "https://www.mas.gov.sg/news/media-releases/2026/guidelines-on-transition-planning"
     },
     {
       "id": 14,
@@ -413,7 +413,7 @@
       "isNew": true,
       "effectiveDate": "2026-04-01",
       "obligation": "Islandwide reverse-vending network. Retail assets must accommodate infrastructure.",
-      "url": "https://www.towardszerowaste.gov.sg/beverage-container-return-scheme/"
+      "url": "https://www.nea.gov.sg/our-services/waste-management/beverage-container-return-scheme"
     },
     {
       "id": 15,
@@ -467,7 +467,7 @@
       "isNew": true,
       "effectiveDate": "2025-01-01",
       "obligation": "Enhanced sustainability reporting for FIs. Transition plan expectations.",
-      "url": "https://www.ojk.go.id/en/berita-dan-kegiatan/siaran-pers/Default.aspx"
+      "url": "https://www.ojk.go.id/"
     },
     {
       "id": 71,
@@ -577,7 +577,7 @@
       "isNew": false,
       "effectiveDate": "2018-04-01",
       "obligation": "EPC E minimum for all lettings. Penalties up to £150k. Proposed uplift to C/B.",
-      "url": "https://www.gov.uk/guidance/domestic-private-rented-property-minimum-energy-efficiency-standard-landlord-guidance"
+      "url": "https://www.gov.uk/guidance/non-domestic-private-rented-property-minimum-energy-efficiency-standard-landlord-guidance"
     },
     {
       "id": 81,
@@ -849,7 +849,7 @@
       "isNew": false,
       "effectiveDate": "2003-01-01",
       "obligation": "Voluntary water efficiency rating (0–6 stars) for commercial offices, hotels, and data centres. Benchmarks water consumption intensity. Widely adopted alongside NABERS Energy; mandatory disclosure applies to NABERS Energy only.",
-      "url": "https://www.nabers.gov.au/buildings/water"
+      "url": "https://www.nabers.gov.au/ratings/our-ratings/nabers-water"
     },
     {
       "id": 151,
@@ -860,7 +860,7 @@
       "isNew": false,
       "effectiveDate": "2009-01-01",
       "obligation": "Voluntary rating for indoor environment quality (IEQ): thermal comfort, air quality, lighting, acoustics, and occupant control. Commercial offices. Provides standalone IEQ certification independent of Green Star.",
-      "url": "https://www.nabers.gov.au/buildings/indoor-environment"
+      "url": "https://www.nabers.gov.au/ratings/our-ratings/nabers-indoor-environment"
     },
     {
       "id": 152,
@@ -871,7 +871,7 @@
       "isNew": true,
       "effectiveDate": "2023-06-01",
       "obligation": "Pilot framework launched Jun 2023 to rate whole-of-life embodied carbon in commercial buildings. Not yet a formal certified scheme. Informs future mandatory WLC requirements under NCC reform discussions.",
-      "url": "https://www.nabers.gov.au/buildings/embodied-carbon"
+      "url": "https://www.nabers.gov.au/ratings/our-ratings/nabers-embodied-carbon"
     },
     {
       "id": 153,
@@ -882,7 +882,7 @@
       "isNew": false,
       "effectiveDate": "2019-01-01",
       "obligation": "Carbon tax on facilities emitting ≥25,000 tCO2e/yr. S$5/tCO2 (2019–2023); raised to S$25 from 2024; S$45 from 2026; S$50–80 by 2030. Large commercial buildings and REITs with on-site combustion exposed. Significant stranded-asset signal.",
-      "url": "https://www.mse.gov.sg/our-commitments/climate-change/carbon-tax"
+      "url": "https://www.mse.gov.sg/policies/climate-change/carbon-pricing-act/"
     },
     {
       "id": 154,
@@ -915,7 +915,7 @@
       "isNew": false,
       "effectiveDate": "2015-01-01",
       "obligation": "Mandatory ETS covering ~70% of national GHG emissions across ~730 entities. Phase 3 (2021–2025). Buildings indirectly covered through electricity allocation to large energy consumers. Commercial building operators with on-site combustion may be directly covered above threshold.",
-      "url": "https://www.gir.go.kr/home/index.do"
+      "url": "https://www.gir.go.kr/"
     },
     {
       "id": 157,
@@ -959,7 +959,7 @@
       "isNew": false,
       "effectiveDate": "2012-01-01",
       "obligation": "Mandatory energy efficiency scheme for Designated Consumers (DCs) >1,000 TOE/yr, including large commercial buildings. Energy Saving Certificates (ESCerts) tradeable on power exchanges. Cycle VII ongoing. Excess efficiency earns credits; shortfalls require purchase or face penalties.",
-      "url": "https://beeindia.gov.in/en/pat-scheme"
+      "url": "https://beeindia.gov.in/en/programmes/perform-achieve-and-trade-pat"
     },
     {
       "id": 161,
@@ -1014,7 +1014,7 @@
       "isNew": false,
       "effectiveDate": "1949-06-04",
       "obligation": "Mandatory building restrictions in nationally designated flood-prone and sediment-disaster areas. Developers must obtain permits for construction in Special Flood-Threatened Areas and Sediment Disaster Special Caution Zones (under Sediment Disaster Prevention Act 2000). Disclosure required at property transactions. Climate change integration: revised flood projections now use 2°C and 4°C scenarios for zone mapping. Affects site selection and basement design for large commercial projects.",
-      "url": "https://www.mlit.go.jp/river/flood-risk-information/"
+      "url": "https://www.mlit.go.jp/river/"
     },
     {
       "id": 166,
