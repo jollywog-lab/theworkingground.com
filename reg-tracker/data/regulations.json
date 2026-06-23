@@ -31,7 +31,8 @@
       "maturity": 1,
       "isNew": true,
       "effectiveDate": "2027-01-01",
-      "obligation": "Proposed replacement for BELS. Under consideration H2 2026–2027."
+      "obligation": "Proposed replacement for BELS. Under consideration H2 2026–2027.",
+      "url": "https://resourcehub.bakermckenzie.com/en/resources/global-sustainable-buildings/asia-pacific/japan/topics/energy-performance-certificates-and-minimum-energy-standards"
     },
     {
       "id": 47,
@@ -85,7 +86,8 @@
       "maturity": 3,
       "isNew": true,
       "effectiveDate": "2026-01-01",
-      "obligation": "Mandates recycling/incineration before landfill. Seoul single-use reduction."
+      "obligation": "Mandates recycling/incineration before landfill. Seoul single-use reduction.",
+      "url": "https://en.sedaily.com/finance/2026/05/22/korea-doubles-waste-incineration-surcharge-to-speed-up"
     },
     {
       "id": 52,
@@ -117,7 +119,8 @@
       "maturity": 4,
       "isNew": false,
       "effectiveDate": "2012-07-22",
-      "obligation": "Mandatory EIA and Strategic Environmental Assessment for developments above thresholds. Biodiversity offset requirements for habitat loss. Nature baseline surveys required."
+      "obligation": "Mandatory EIA and Strategic Environmental Assessment for developments above thresholds. Biodiversity offset requirements for habitat loss. Nature baseline surveys required.",
+      "url": "https://elaw.klri.re.kr/eng_service/lawView.do?hseq=45064&lang=ENG"
     },
     {
       "id": 20,
@@ -160,7 +163,8 @@
       "maturity": 4,
       "isNew": false,
       "effectiveDate": "2022-03-01",
-      "obligation": "Ultra-low energy building targets. 30% of new urban buildings green by 2025."
+      "obligation": "Ultra-low energy building targets. 30% of new urban buildings green by 2025.",
+      "url": "https://english.www.gov.cn/policies/latestreleases/202201/24/content_WS61ee88b6c6d09c94e48a4301.html"
     },
     {
       "id": 30,
@@ -434,7 +438,8 @@
       "maturity": 4,
       "isNew": false,
       "effectiveDate": "2009-01-01",
-      "obligation": "Mandatory greenery replacement for developments that remove existing landscaping. Quantified replacement ratio enforced through planning approval."
+      "obligation": "Mandatory greenery replacement for developments that remove existing landscaping. Quantified replacement ratio enforced through planning approval.",
+      "url": "https://www.ura.gov.sg/Corporate/Guidelines/Circulars/dc09-09"
     },
     {
       "id": 60,
@@ -584,10 +589,11 @@
       "country": "UK",
       "theme": "RD",
       "name": "UK SDS (ISSB endorsement)",
-      "maturity": 1,
+      "maturity": 2,
       "isNew": true,
-      "effectiveDate": "2026-07-01",
-      "obligation": "UK endorsement of ISSB S1/S2. Consultation ongoing."
+      "effectiveDate": "2026-02-25",
+      "obligation": "Final UK SRS S1/S2 endorsed by UK Government 25 Feb 2026. ISSB-aligned with UK adaptations. FCA consulting (CP26/5) on mandatory application for listed companies; rules expected from 1 Jan 2027. Voluntary use from Feb 2026.",
+      "url": "https://www.gov.uk/guidance/uk-sustainability-reporting-standards"
     },
     {
       "id": 82,
@@ -652,7 +658,8 @@
       "maturity": 4,
       "isNew": false,
       "effectiveDate": "1991-11-01",
-      "obligation": "Mandatory planning obligations on major developments — affordable housing quotas, community infrastructure, local employment and training plans. Developer contributions enforced through planning consent."
+      "obligation": "Mandatory planning obligations on major developments — affordable housing quotas, community infrastructure, local employment and training plans. Developer contributions enforced through planning consent.",
+      "url": "https://www.gov.uk/guidance/planning-obligations"
     },
     {
       "id": 86,
@@ -746,11 +753,12 @@
       "id": 94,
       "country": "EU",
       "theme": "RD",
-      "name": "CSRD Omnibus — Scope Narrowing (Draft)",
-      "maturity": 1,
+      "name": "CSRD Omnibus I — Scope Narrowing",
+      "maturity": 4,
       "isNew": true,
-      "effectiveDate": "TBD",
-      "obligation": "Proposes narrowing CSRD to >1,000 employees. Delays wave 2."
+      "effectiveDate": "2027-01-01",
+      "obligation": "EU Council adopted 24 Feb 2026. Narrows CSRD scope from ~50,000 to ~5,000 entities: mandatory only for >1,000 employees AND >€450m turnover. Listed SMEs fully exempt. Wave 1 companies (FY2024 reporters) exempt for FY2025–26. Effective for FY2027. Reduces CSRD's reach in buildings/RE sector significantly.",
+      "url": "https://www.consilium.europa.eu/en/press/press-releases/2026/02/24/council-signs-off-simplification-of-sustainability-reporting-and-due-diligence-requirements-to-boost-eu-competitiveness/"
     },
     {
       "id": 95,
