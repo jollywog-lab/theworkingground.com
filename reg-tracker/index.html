@@ -331,7 +331,8 @@ function DotMatrix({
           width: dotSize,
           height: dotSize,
           fontSize: 7.5,
-          backgroundColor: c.colour,
+          backgroundColor: lvl === 0 ? '#cbd5e1' : c.colour,
+          color: lvl === 0 ? '#64748b' : 'white',
           border: isActive ? '2px solid #0f172a' : cell?.hasNew ? '2px solid #facc15' : intl ? '2px dashed #94a3b8' : 'none'
         }
       }, c.code), !isActive && /*#__PURE__*/React.createElement("div", {
