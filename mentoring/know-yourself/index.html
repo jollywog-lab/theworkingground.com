@@ -118,41 +118,23 @@
       <div class="panel-card">
         <p class="panel-intro">Map the arc of your career so far. The goal is not a summary of your CV. It is to identify the moments, roles, and tasks that gave you energy versus the ones that drained it. Be specific about what actually happened and how it felt.</p>
 
-        <!-- Career line example diagram -->
-        <div style="margin-bottom:1.75rem;">
-          <span style="font-size:0.72rem; font-weight:500; letter-spacing:0.5em; text-transform:uppercase; color:var(--muted); display:block; margin-bottom:0.75rem;">Example</span>
-          <svg viewBox="0 0 580 220" width="100%" style="display:block;">
-            <line x1="70" y1="48"  x2="550" y2="48"  stroke="#E2D0D5" stroke-width="1" stroke-dasharray="4,4"/>
-            <line x1="70" y1="108" x2="550" y2="108" stroke="#E2D0D5" stroke-width="1" stroke-dasharray="4,4"/>
-            <line x1="70" y1="168" x2="550" y2="168" stroke="#E2D0D5" stroke-width="1" stroke-dasharray="4,4"/>
-            <text x="62" y="52"  text-anchor="end" font-family="'DM Sans', sans-serif" font-size="9" fill="#7A7167">High</text>
-            <text x="62" y="112" text-anchor="end" font-family="'DM Sans', sans-serif" font-size="9" fill="#7A7167">Mid</text>
-            <text x="62" y="172" text-anchor="end" font-family="'DM Sans', sans-serif" font-size="9" fill="#7A7167">Low</text>
-            <text x="14" y="112" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="8.5" fill="#7A7167" transform="rotate(-90,14,112)" letter-spacing="0.05em">ENERGY</text>
-            <polyline points="70,48 166,108 262,48 310,168 358,108 454,48 550,108" fill="none" stroke="#C4A97A" stroke-width="2" stroke-linejoin="round"/>
-            <circle cx="70"  cy="48"  r="5" fill="#887333"/>
-            <circle cx="262" cy="48"  r="5" fill="#887333"/>
-            <circle cx="454" cy="48"  r="5" fill="#887333"/>
-            <circle cx="166" cy="108" r="5" fill="#B8A878"/>
-            <circle cx="358" cy="108" r="5" fill="#B8A878"/>
-            <circle cx="550" cy="108" r="5" fill="#B8A878"/>
-            <circle cx="310" cy="168" r="5" fill="#C4A0A0"/>
-            <text x="70"  y="33"  text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" fill="#1C1A17" font-style="italic">Internship</text>
-            <text x="166" y="126" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" fill="#7A7167" font-style="italic">First analyst role</text>
-            <text x="262" y="33"  text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" fill="#1C1A17" font-style="italic">Led ESG project</text>
-            <text x="310" y="186" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" fill="#7A7167" font-style="italic">Team restructure</text>
-            <text x="370" y="93"  text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" fill="#7A7167" font-style="italic">Moved firms</text>
-            <text x="454" y="33"  text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" fill="#1C1A17" font-style="italic">Led own team</text>
-            <text x="550" y="126" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" fill="#7A7167" font-style="italic">Scope expanded</text>
-            <text x="70"  y="200" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" fill="#7A7167">2015</text>
-            <text x="166" y="200" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" fill="#7A7167">2017</text>
-            <text x="262" y="200" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" fill="#7A7167">2019</text>
-            <text x="310" y="200" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" fill="#7A7167">2020</text>
-            <text x="358" y="200" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" fill="#7A7167">2021</text>
-            <text x="454" y="200" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" fill="#7A7167">2023</text>
-            <text x="550" y="200" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="9" fill="#7A7167">2024</text>
+        <!-- Live career line chart -->
+        <div style="margin-bottom:1.5rem; background:var(--cream); border:1px solid var(--border); border-radius:3px; padding:1rem 1rem 0.6rem;">
+          <span style="font-size:0.72rem; font-weight:500; letter-spacing:0.5em; text-transform:uppercase; color:var(--muted); display:block; margin-bottom:0.6rem;">Your career line</span>
+          <svg id="career-chart" viewBox="0 0 560 180" width="100%" style="display:block; overflow:visible;">
+            <line x1="54" y1="28"  x2="540" y2="28"  stroke="#E2D0D5" stroke-width="1" stroke-dasharray="4,4"/>
+            <line x1="54" y1="88"  x2="540" y2="88"  stroke="#E2D0D5" stroke-width="1" stroke-dasharray="4,4"/>
+            <line x1="54" y1="148" x2="540" y2="148" stroke="#E2D0D5" stroke-width="1" stroke-dasharray="4,4"/>
+            <text x="48" y="32"  text-anchor="end" font-family="'DM Sans',sans-serif" font-size="9" fill="#7A7167">High</text>
+            <text x="48" y="92"  text-anchor="end" font-family="'DM Sans',sans-serif" font-size="9" fill="#7A7167">Mid</text>
+            <text x="48" y="152" text-anchor="end" font-family="'DM Sans',sans-serif" font-size="9" fill="#7A7167">Low</text>
+            <g id="chart-placeholder">
+              <text x="297" y="96" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="11" fill="#C4B8A8" font-style="italic">Add a year and a High / Low rating to see your career line</text>
+            </g>
+            <polyline id="chart-line" points="" fill="none" stroke="#C4A97A" stroke-width="2" stroke-linejoin="round"/>
+            <g id="chart-dots"></g>
+            <g id="chart-year-labels"></g>
           </svg>
-          <p style="font-size:0.76rem; color:var(--muted); margin-top:0.75rem; font-style:italic; line-height:1.6;">This is a fictional example. Your career line may look entirely different — there is no right shape.</p>
         </div>
 
         <p class="section-label">Your career, event by event</p>
@@ -284,11 +266,13 @@
           <div class="ikigai-quadrant">
             <div class="iq-label">What you love</div>
             <p class="iq-prompt">Work, activities, topics, or problems that pull you in — even when no one asks you to engage with them.</p>
+            <p class="iq-prompt" style="font-style:italic; margin-top:0.3rem;">Think across scales: in the flow of a single day, in your current role, and in life more broadly.</p>
             <textarea id="ik-love" placeholder=""></textarea>
           </div>
           <div class="ikigai-quadrant">
             <div class="iq-label">What you're good at</div>
             <p class="iq-prompt">Skills, capabilities, or ways of working that others regularly rely on you for — including things that feel easy to you but hard for others.</p>
+            <p class="iq-prompt" style="font-style:italic; margin-top:0.3rem;">Think across scales: in your current team, in your field, and in contexts you haven't tried yet.</p>
             <textarea id="ik-good" placeholder=""></textarea>
           </div>
           <div class="ikigai-quadrant">
@@ -299,6 +283,7 @@
           <div class="ikigai-quadrant">
             <div class="iq-label">What you can be paid for</div>
             <p class="iq-prompt">Work someone would pay you for — currently or in the near future. Be practical, not wishful.</p>
+            <p class="iq-prompt" style="font-style:italic; margin-top:0.3rem;">Think across scales: in your current sector, in adjacent roles, and in where your industry is heading.</p>
             <textarea id="ik-paid" placeholder=""></textarea>
           </div>
         </div>
@@ -354,6 +339,7 @@
     }
 
     // Career Line
+    const CHART_Y = { high: 28, mid: 88, low: 148 };
     let rowCount = 0;
     function addRow() {
       if (rowCount >= 12) return;
@@ -361,7 +347,7 @@
       const tbody = document.getElementById('career-tbody');
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td><input type="text" placeholder="e.g. 2018" style="width:60px;"></td>
+        <td><input type="text" placeholder="e.g. 2018" style="width:60px;" oninput="renderChart()"></td>
         <td><input type="text" placeholder="Role, company, or event"></td>
         <td>
           <div class="sentiment-btns">
@@ -373,11 +359,62 @@
         <td><input type="text" placeholder="One sentence on what it meant"></td>
       `;
       tbody.appendChild(tr);
+      renderChart();
     }
     function setSentiment(btn, val) {
       const btns = btn.closest('.sentiment-btns').querySelectorAll('.sentiment-btn');
       btns.forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
+      renderChart();
+    }
+    function renderChart() {
+      const rows = document.querySelectorAll('#career-tbody tr');
+      const points = [];
+      rows.forEach(row => {
+        const yearInput = row.querySelector('td:first-child input');
+        const selectedBtn = row.querySelector('.sentiment-btn.selected');
+        const year = parseInt(yearInput ? yearInput.value : '');
+        if (!isNaN(year) && year > 1900 && year < 2100 && selectedBtn) {
+          const level = selectedBtn.classList.contains('high') ? 'high'
+                      : selectedBtn.classList.contains('mid')  ? 'mid' : 'low';
+          points.push({ year, level });
+        }
+      });
+      points.sort((a, b) => a.year - b.year);
+      const placeholder = document.getElementById('chart-placeholder');
+      const line = document.getElementById('chart-line');
+      const dotsG = document.getElementById('chart-dots');
+      const labelsG = document.getElementById('chart-year-labels');
+      dotsG.innerHTML = '';
+      labelsG.innerHTML = '';
+      if (points.length === 0) {
+        placeholder.style.display = '';
+        line.setAttribute('points', '');
+        return;
+      }
+      placeholder.style.display = 'none';
+      const minYear = points[0].year;
+      const maxYear = points[points.length - 1].year;
+      const xMin = 70, xMax = 530;
+      function xOf(year) {
+        return maxYear === minYear ? (xMin + xMax) / 2 : xMin + (year - minYear) / (maxYear - minYear) * (xMax - xMin);
+      }
+      line.setAttribute('points', points.map(p => `${xOf(p.year)},${CHART_Y[p.level]}`).join(' '));
+      const dotColors = { high: '#887333', mid: '#B8A878', low: '#C4A0A0' };
+      points.forEach(p => {
+        const cx = xOf(p.year), cy = CHART_Y[p.level];
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('cx', cx); circle.setAttribute('cy', cy);
+        circle.setAttribute('r', 5); circle.setAttribute('fill', dotColors[p.level]);
+        dotsG.appendChild(circle);
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', cx); text.setAttribute('y', 170);
+        text.setAttribute('text-anchor', 'middle');
+        text.setAttribute('font-family', "'DM Sans', sans-serif");
+        text.setAttribute('font-size', '9'); text.setAttribute('fill', '#7A7167');
+        text.textContent = p.year;
+        labelsG.appendChild(text);
+      });
     }
     // Initialise with 5 rows
     for (let i = 0; i < 5; i++) addRow();
