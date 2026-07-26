@@ -372,12 +372,14 @@
       const points = [];
       rows.forEach(row => {
         const yearInput = row.querySelector('td:first-child input');
+        const eventInput = row.querySelector('td:nth-child(2) input');
         const selectedBtn = row.querySelector('.sentiment-btn.selected');
         const year = parseInt(yearInput ? yearInput.value : '');
         if (!isNaN(year) && year > 1900 && year < 2100 && selectedBtn) {
           const level = selectedBtn.classList.contains('high') ? 'high'
                       : selectedBtn.classList.contains('mid')  ? 'mid' : 'low';
-          points.push({ year, level });
+          const event = eventInput ? eventInput.value.trim() : '';
+          points.push({ year, level, event });
         }
       });
       points.sort((a, b) => a.year - b.year);
@@ -407,13 +409,30 @@
         circle.setAttribute('cx', cx); circle.setAttribute('cy', cy);
         circle.setAttribute('r', 5); circle.setAttribute('fill', dotColors[p.level]);
         dotsG.appendChild(circle);
-        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        text.setAttribute('x', cx); text.setAttribute('y', 170);
-        text.setAttribute('text-anchor', 'middle');
-        text.setAttribute('font-family', "'DM Sans', sans-serif");
-        text.setAttribute('font-size', '9'); text.setAttribute('fill', '#7A7167');
-        text.textContent = p.year;
-        labelsG.appendChild(text);
+        // Year label at bottom
+        const yearText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        yearText.setAttribute('x', cx); yearText.setAttribute('y', 170);
+        yearText.setAttribute('text-anchor', 'middle');
+        yearText.setAttribute('font-family', "'DM Sans', sans-serif");
+        yearText.setAttribute('font-size', '9'); yearText.setAttribute('fill', '#7A7167');
+        yearText.textContent = p.year;
+        labelsG.appendChild(yearText);
+        // Event label above or below dot
+        if (p.event) {
+          const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+          label.setAttribute('x', cx);
+          // High dots: label above; mid/low dots: label below
+          const labelY = p.level === 'low' ? cy + 16 : cy - 10;
+          label.setAttribute('y', labelY);
+          label.setAttribute('text-anchor', 'middle');
+          label.setAttribute('font-family', "'DM Sans', sans-serif");
+          label.setAttribute('font-size', '9');
+          label.setAttribute('fill', p.level === 'high' ? '#1C1A17' : '#7A7167');
+          label.setAttribute('font-style', 'italic');
+          const truncated = p.event.length > 22 ? p.event.substring(0, 21) + '…' : p.event;
+          label.textContent = truncated;
+          labelsG.appendChild(label);
+        }
       });
     }
     // Initialise with 5 rows
