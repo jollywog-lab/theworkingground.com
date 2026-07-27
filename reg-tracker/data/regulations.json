@@ -94,10 +94,10 @@
       "country": "KR",
       "theme": "RD",
       "name": "KSSB Sustainability Disclosure Standards",
-      "maturity": 2,
+      "maturity": 3,
       "isNew": true,
       "effectiveDate": "2026-01-01",
-      "obligation": "FSC approved KSSB K-ISSB standards Dec 2023. Mandatory for top 100 listed companies from FY2026, all listed from FY2030. Voluntary from FY2025.",
+      "obligation": "Korea FSC finalized mandatory KSSB-based sustainability reporting roadmap (8 Jul 2026). KOSPI-listed companies with consolidated assets KRW 10T+ must report from 2028 on FY2027 data; threshold falls to KRW 5T+ in 2029, expanding coverage to ~3,171 entities. Scope 3 deferred three years per cohort; mandatory assurance from 2030. Legislative FSCMA amendments still required but policy direction is final.",
       "url": "https://www.fsc.go.kr/"
     },
     {
@@ -526,7 +526,7 @@
       "maturity": 4,
       "isNew": false,
       "effectiveDate": "2023-07-01",
-      "obligation": "Mandatory for top 1,000 listed companies. BRSR Core with assurance from FY2024.",
+      "obligation": "Mandatory BRSR Core sustainability reporting for India top 1,000 listed entities by market cap. From FY2026-27: mandatory third-party reasonable assurance on BRSR Core KPIs including Scope 1/2/3 GHG emissions, water intensity, circular economy practices, gender diversity and supply chain ESG. Reasonable assurance requires active testing of controls and underlying data — an audit-grade obligation on ESG data systems.",
       "url": "https://www.sebi.gov.in/legal/circulars/may-2021/business-responsibility-and-sustainability-reporting-by-listed-entities_50096.html"
     },
     {
@@ -759,17 +759,6 @@
       "effectiveDate": "2027-01-01",
       "obligation": "EU Council adopted 24 Feb 2026. Narrows CSRD scope from ~50,000 to ~5,000 entities: mandatory only for >1,000 employees AND >€450m turnover. Listed SMEs fully exempt. Wave 1 companies (FY2024 reporters) exempt for FY2025–26. Effective for FY2027. Reduces CSRD's reach in buildings/RE sector significantly.",
       "url": "https://www.consilium.europa.eu/en/press/press-releases/2026/02/24/council-signs-off-simplification-of-sustainability-reporting-and-due-diligence-requirements-to-boost-eu-competitiveness/"
-    },
-    {
-      "id": 95,
-      "country": "EU",
-      "theme": "GB",
-      "name": "EPBD Recast — Energy Performance of Buildings",
-      "maturity": 4,
-      "isNew": true,
-      "effectiveDate": "2025-05-29",
-      "obligation": "Zero-emission building standard for new builds from 2030. Renovation passports.",
-      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024L1275"
     },
     {
       "id": 100,
@@ -1094,6 +1083,36 @@
       "isNew": false,
       "effectiveDate": "2022-01-01",
       "obligation": "EU Taxonomy Regulation requires financial market participants to disclose alignment with climate change mitigation technical screening criteria. Real estate covered under NACE L68 with primary energy demand thresholds for substantial contribution."
+    },
+    {
+      "id": 173,
+      "country": "EU",
+      "theme": "TR",
+      "name": "EU Carbon Border Adjustment Mechanism (CBAM)",
+      "maturity": 4,
+      "isNew": true,
+      "effectiveDate": "2026-01-01",
+      "obligation": "CBAM definitively entered paying phase for 2026 reporting year (surrender deadline September 2027). Applies carbon cost to imports of cement, steel, aluminium, fertilisers, hydrogen and electricity. Expansion to ~180 downstream products proposed July 2026; legislative close targeted Q1 2027. Directly affects APAC manufacturers exporting to EU."
+    },
+    {
+      "id": 174,
+      "country": "CN",
+      "theme": "EO",
+      "name": "NDRC Binding Renewable Energy Target 2030",
+      "maturity": 4,
+      "isNew": true,
+      "effectiveDate": "2026-07-24",
+      "obligation": "China first binding renewable energy target integrated into 15th Five-Year Plan: total renewable generation of 1.8 billion tce by 2030 (+53% from 2025). Mandates storage-backed wind/solar at 8% of peak installed capacity; green hydrogen 2 million tonnes/year; 570GW hydropower. First time failure to meet renewable targets carries regulatory accountability."
+    },
+    {
+      "id": 175,
+      "country": "EU",
+      "theme": "TR",
+      "name": "ECB Climate Risk Haircuts — Private Corporate Credit Collateral",
+      "maturity": 2,
+      "isNew": true,
+      "effectiveDate": "2027-12-31",
+      "obligation": "ECB Governing Council approved applying climate-related valuation adjustments to corporate credit used as Eurosystem collateral. Assets in transition-sensitive sectors face up to 5% additional haircut based on sector stress tests and remaining maturity. Implementation no earlier than end-2027; annually updated. First major central bank embedding transition risk haircuts into private credit markets."
     }
   ]
 }
