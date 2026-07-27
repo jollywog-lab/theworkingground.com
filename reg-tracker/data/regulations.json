@@ -1,5 +1,5 @@
 {
-  "period": "April 2025 – June 2026",
+  "period": "April 2025 – July 2026",
   "regulations": [
     {
       "id": 40,
@@ -851,7 +851,7 @@
     {
       "id": 150,
       "country": "AU",
-      "theme": "NB",
+      "theme": "WC",
       "name": "NABERS Water Rating",
       "maturity": 2,
       "isNew": false,
@@ -876,7 +876,7 @@
       "theme": "EC",
       "name": "NABERS Embodied Carbon (Pilot)",
       "maturity": 1,
-      "isNew": true,
+      "isNew": false,
       "effectiveDate": "2023-06-01",
       "obligation": "Pilot framework launched Jun 2023 to rate whole-of-life embodied carbon in commercial buildings. Not yet a formal certified scheme. Informs future mandatory WLC requirements under NCC reform discussions.",
       "url": "https://www.nabers.gov.au/ratings/our-ratings/nabers-embodied-carbon"
@@ -953,7 +953,7 @@
       "theme": "EO",
       "name": "Government Regulation PP 33/2023 — Energy Conservation",
       "maturity": 2,
-      "isNew": true,
+      "isNew": false,
       "effectiveDate": "2023-06-12",
       "obligation": "Mandatory energy conservation and efficiency programme for large energy consumers (>500 TOE/yr). Applies to commercial and government buildings. Requires energy management systems, audits, and reporting. Designates energy managers. Replaces PP 70/2009.",
       "url": "https://jdih.esdm.go.id/"
@@ -1034,6 +1034,66 @@
       "effectiveDate": "2022-01-01",
       "obligation": "Mandatory for activities claiming Taxonomy alignment under 'substantial contribution to climate change adaptation': requires climate risk and vulnerability assessment using IPCC scenarios, and implementation of adaptation solutions that do not increase physical risk elsewhere. Applies to all six environmental objectives — buildings sector covered under real estate and construction activities. Mandatory for EU Green Bond issuers and EU-funded infrastructure. Voluntary for other taxonomy-aligned reporting.",
       "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32021R2139"
+    },
+    {
+      "id": 167,
+      "country": "NZ",
+      "theme": "PC",
+      "name": "Mandatory Climate-Related Disclosures — Physical Risk (FMC Act)",
+      "maturity": 4,
+      "isNew": false,
+      "effectiveDate": "2023-01-01",
+      "obligation": "Mandatory physical climate risk scenario analysis and disclosure under NZ Financial Markets Conduct Act. Applies to large listed issuers, registered banks, licensed insurers and managers of registered investment schemes."
+    },
+    {
+      "id": 168,
+      "country": "UK",
+      "theme": "PC",
+      "name": "UK Mandatory TCFD — Physical Risk Reporting",
+      "maturity": 4,
+      "isNew": false,
+      "effectiveDate": "2022-04-06",
+      "obligation": "Mandatory TCFD-aligned disclosures including physical climate risk scenario analysis. Applies to premium/standard listed companies, large UK registered companies, banks, insurers and FCA-regulated asset managers."
+    },
+    {
+      "id": 169,
+      "country": "FR",
+      "theme": "PC",
+      "name": "Article 29 Loi Énergie-Climat — Physical Risk Disclosure",
+      "maturity": 4,
+      "isNew": false,
+      "effectiveDate": "2021-07-01",
+      "obligation": "Requires institutional investors and asset managers to disclose physical climate risk exposure and scenario analysis in annual reports. Covers real estate portfolio physical risk assessment."
+    },
+    {
+      "id": 170,
+      "country": "INTL",
+      "theme": "PC",
+      "name": "PCRAM — Physical Climate Risk Assessment Methodology (IIGCC)",
+      "maturity": 2,
+      "isNew": false,
+      "effectiveDate": "2022-06-01",
+      "obligation": "Voluntary framework by IIGCC providing standardised methodology for assessing physical climate risks in real estate portfolios. Covers scenario analysis aligned with IPCC pathways. Widely adopted by European institutional investors."
+    },
+    {
+      "id": 171,
+      "country": "EU",
+      "theme": "EO",
+      "name": "Energy Performance of Buildings Directive — EPBD Recast 2024",
+      "maturity": 4,
+      "isNew": true,
+      "effectiveDate": "2024-05-28",
+      "obligation": "Recast EPBD entered into force May 2024. Requires member states to phase out fossil fuel heating in buildings, implement minimum energy performance standards for worst-performing buildings, and introduce zero-emission building standards for new builds from 2030."
+    },
+    {
+      "id": 172,
+      "country": "EU",
+      "theme": "TR",
+      "name": "EU Taxonomy — Climate Change Mitigation Screening (Buildings)",
+      "maturity": 4,
+      "isNew": false,
+      "effectiveDate": "2022-01-01",
+      "obligation": "EU Taxonomy Regulation requires financial market participants to disclose alignment with climate change mitigation technical screening criteria. Real estate covered under NACE L68 with primary energy demand thresholds for substantial contribution."
     }
   ]
 }
