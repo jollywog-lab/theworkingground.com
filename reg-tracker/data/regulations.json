@@ -62,7 +62,7 @@
       "theme": "TR",
       "name": "GX-ETS — Mandatory Emissions Trading",
       "maturity": 4,
-      "isNew": false,
+      "isNew": true,
       "effectiveDate": "2026-04-01",
       "obligation": "Mandatory for emitters >100,000 tCO2/yr from FY2026. ~300–400 companies covering 50–60% of national CO2. Price floor JPY 1,700/tCO2, ceiling JPY 4,300/tCO2; J-Credits and JCM credits usable up to 10% of compliance. Carbon levy (GX carbon levy) from FY2028.",
       "url": "https://www.meti.go.jp/policy/energy_environment/global_warming/"
@@ -84,7 +84,7 @@
       "theme": "WC",
       "name": "Waste Policy — Mandatory Recycling Before Landfill",
       "maturity": 3,
-      "isNew": false,
+      "isNew": true,
       "effectiveDate": "2026-01-01",
       "obligation": "Mandates recycling/incineration before landfill. Seoul single-use reduction.",
       "url": "https://en.sedaily.com/finance/2026/05/22/korea-doubles-waste-incineration-surcharge-to-speed-up"
@@ -95,7 +95,7 @@
       "theme": "RD",
       "name": "KSSB Sustainability Disclosure Standards",
       "maturity": 3,
-      "isNew": false,
+      "isNew": true,
       "effectiveDate": "2026-01-01",
       "obligation": "Korea FSC finalized mandatory KSSB-based sustainability reporting roadmap (8 Jul 2026). KOSPI-listed companies with consolidated assets KRW 10T+ must report from 2028 on FY2027 data; threshold falls to KRW 5T+ in 2029, expanding coverage to ~3,171 entities. Scope 3 deferred three years per cohort; mandatory assurance from 2030. Legislative FSCMA amendments still required but policy direction is final.",
       "url": "https://www.fsc.go.kr/"
@@ -128,7 +128,7 @@
       "theme": "RD",
       "name": "SSE/SZSE/BSE Sustainability Reporting",
       "maturity": 3,
-      "isNew": false,
+      "isNew": true,
       "effectiveDate": "2026-01-01",
       "obligation": "Mandatory for key index constituents (SSE 180, STAR 50, SZSE 100, ChiNext) and dual-listed companies: first sustainability reports covering FY2025 due 30 April 2026. ~400+ large listed entities in scope. Phased voluntary for all other listed companies; broader mandatory expansion to wider listed universe expected before 2030.",
       "url": "https://www.sse.com.cn/"
@@ -172,7 +172,7 @@
       "theme": "RD",
       "name": "HKEX Climate Disclosure (ISSB-aligned)",
       "maturity": 4,
-      "isNew": false,
+      "isNew": true,
       "effectiveDate": "2025-01-01",
       "obligation": "Mandatory for Main Board issuers (IFRS S2-aligned) from FY commencing on or after 1 Jan 2025. LargeCap Index constituents: Scope 3 mandatory from FY commencing on or after 1 Jan 2026. Cross-government roadmap (Dec 2024) sets full HKFRS S1/S2 adoption for all listed and significant publicly accountable entities no later than 2028.",
       "url": "https://www.hkex.com.hk/Listing/Sustainability/ESG-Academy/Rules-and-Regulations?sc_lang=en"
@@ -227,7 +227,7 @@
       "theme": "RD",
       "name": "AASB S1/S2 Climate Disclosure (Group 1)",
       "maturity": 4,
-      "isNew": false,
+      "isNew": true,
       "effectiveDate": "2025-01-01",
       "obligation": "Mandatory climate disclosure (AASB S1/S2, ISSB-aligned). Group 1 (consolidated revenue ≥$500m, or assets ≥$1bn, or >500 employees) from FY starting 1 Jan 2025. Group 2 (revenue ≥$200m, assets ≥$500m, >250 employees; or AUM ≥$5bn) from FY starting 1 Jul 2026. Group 3 (all others with large entity test) from 1 Jul 2027. Penalties up to A$15m or 10% of turnover for false/misleading statements.",
       "url": "https://www.aasb.gov.au/news/australian-sustainability-reporting-standards-aasb-s1-and-s2-are-now-available-on-the-aasb-digital-standards-portal/"
@@ -271,7 +271,7 @@
       "theme": "EO",
       "name": "NABERS Expansion — BTR & PBSA",
       "maturity": 1,
-      "isNew": false,
+      "isNew": true,
       "effectiveDate": "2026-06-01",
       "obligation": "Consultation on extending NABERS to build-to-rent and student accommodation.",
       "url": "https://www.nabers.gov.au/"
@@ -403,7 +403,7 @@
       "theme": "TR",
       "name": "MAS Transition Planning Guidelines",
       "maturity": 3,
-      "isNew": false,
+      "isNew": true,
       "effectiveDate": "2027-09-01",
       "obligation": "Banks, insurers, asset managers: transition plans, engagement over divestment.",
       "url": "https://www.mas.gov.sg/news/media-releases/2026/guidelines-on-transition-planning"
@@ -414,7 +414,7 @@
       "theme": "WC",
       "name": "Beverage Container Return Scheme",
       "maturity": 3,
-      "isNew": false,
+      "isNew": true,
       "effectiveDate": "2026-04-01",
       "obligation": "Islandwide reverse-vending network. Retail assets must accommodate infrastructure.",
       "url": "https://www.nea.gov.sg/our-services/waste-management/beverage-container-return-scheme"
@@ -469,7 +469,7 @@
       "theme": "RD",
       "name": "OJK Sustainable Finance Roadmap Phase II",
       "maturity": 3,
-      "isNew": false,
+      "isNew": true,
       "effectiveDate": "2025-01-01",
       "obligation": "Enhanced sustainability reporting for OJK-regulated entities and listed companies. OJK consulted (Feb 2026) on amending OJK Reg 51/2017 to align with IFRS S1/S2; amendments targeted for FY2027 implementation. TKBI 3.0 taxonomy expected 2026, expanding coverage to agriculture, IPPU and waste sectors. Transition plan expectations for financial institutions.",
       "url": "https://www.ojk.go.id/"
@@ -590,7 +590,7 @@
       "theme": "RD",
       "name": "UK SDS (ISSB endorsement)",
       "maturity": 2,
-      "isNew": false,
+      "isNew": true,
       "effectiveDate": "2026-02-25",
       "obligation": "Final UK SRS S1/S2 endorsed by UK Government 25 Feb 2026. ISSB-aligned with UK adaptations. FCA consulting (CP26/5) on mandatory application for listed companies; rules expected from 1 Jan 2027. Voluntary use from Feb 2026.",
       "url": "https://www.gov.uk/guidance/uk-sustainability-reporting-standards"
@@ -755,7 +755,7 @@
       "theme": "RD",
       "name": "CSRD Omnibus I — Scope Narrowing",
       "maturity": 4,
-      "isNew": false,
+      "isNew": true,
       "effectiveDate": "2027-01-01",
       "obligation": "EU Council adopted 24 Feb 2026. Narrows CSRD scope from ~50,000 to ~5,000 entities: mandatory only for >1,000 employees AND >€450m turnover. Listed SMEs fully exempt. Wave 1 companies (FY2024 reporters) exempt for FY2025–26. Effective for FY2027. Reduces CSRD's reach in buildings/RE sector significantly.",
       "url": "https://www.consilium.europa.eu/en/press/press-releases/2026/02/24/council-signs-off-simplification-of-sustainability-reporting-and-due-diligence-requirements-to-boost-eu-competitiveness/"
@@ -788,7 +788,7 @@
       "theme": "EO",
       "name": "WA Clean Buildings Performance Standard",
       "maturity": 4,
-      "isNew": false,
+      "isNew": true,
       "effectiveDate": "2026-06-01",
       "obligation": "Tier 1 >50,000 sqft by Jun 2026, Tier 2 >20,000 sqft by 2028.",
       "url": "https://ecology.wa.gov/waste-toxics/reducing-recycling-waste/zero-waste/clean-buildings"
@@ -975,7 +975,7 @@
       "theme": "PC",
       "name": "Coastal Protection Bill 2026 & Code of Practice on Coastal Protection (CPCOP)",
       "maturity": 3,
-      "isNew": false,
+      "isNew": true,
       "effectiveDate": "2026-03-01",
       "obligation": "Passed Mar 2026. Establishes private owners and MCSTs as second line of coastal defence. Code of Practice on Coastal Protection (CPCOP) issued Jun 2026 by PUB: sets planning, design, inspection, and maintenance requirements for coastal protection measures on private land. Deployable barriers require prior PUB approval. Preceded by Aug 2025 announcement of coastal barriers and raised structures along City-East Coast (GSW, Changi), forming continuous defence line with Long Island reclamation. Construction from 2030s. Major exposure signal for coastal RE in designated zones.",
       "url": "https://www.pub.gov.sg/Public/KeyInitiatives/Flood-Resilience/Coastal-Protection"
@@ -1090,7 +1090,7 @@
       "theme": "TR",
       "name": "EU Carbon Border Adjustment Mechanism (CBAM)",
       "maturity": 4,
-      "isNew": false,
+      "isNew": true,
       "effectiveDate": "2026-01-01",
       "obligation": "CBAM definitively entered paying phase for 2026 reporting year (surrender deadline September 2027). Applies carbon cost to imports of cement, steel, aluminium, fertilisers, hydrogen and electricity. Expansion to ~180 downstream products proposed July 2026; legislative close targeted Q1 2027. Directly affects APAC manufacturers exporting to EU."
     },
@@ -1100,7 +1100,7 @@
       "theme": "EO",
       "name": "NDRC Binding Renewable Energy Target 2030",
       "maturity": 4,
-      "isNew": false,
+      "isNew": true,
       "effectiveDate": "2026-07-24",
       "obligation": "China first binding renewable energy target integrated into 15th Five-Year Plan: total renewable generation of 1.8 billion tce by 2030 (+53% from 2025). Mandates storage-backed wind/solar at 8% of peak installed capacity; green hydrogen 2 million tonnes/year; 570GW hydropower. First time failure to meet renewable targets carries regulatory accountability."
     },
@@ -1110,7 +1110,7 @@
       "theme": "TR",
       "name": "ECB Climate Risk Haircuts — Private Corporate Credit Collateral",
       "maturity": 2,
-      "isNew": false,
+      "isNew": true,
       "effectiveDate": "2027-12-31",
       "obligation": "ECB Governing Council approved applying climate-related valuation adjustments to corporate credit used as Eurosystem collateral. Assets in transition-sensitive sectors face up to 5% additional haircut based on sector stress tests and remaining maturity. Implementation no earlier than end-2027; annually updated. First major central bank embedding transition risk haircuts into private credit markets."
     },
